@@ -1,6 +1,7 @@
 <?php
 /**
  * Plugin Name:       اسلایدر رولینگ برای المنتور
+ * Plugin URI: https://github.com/saeedamini144/sirstone-hero-slider
  * Description:       ویجت اسلایدر تمام‌عرض (تصویر / ویدیو) با تب‌های ناوبری، متن‌های قابل ویرایش، دکمه، افکت‌های ورود و پشتیبانی کامل از راست‌چین/چپ‌چین بر اساس هسته وردپرس.
  * Version:           1.0.0 
  * Author: Saeed Amini
