@@ -1,0 +1,707 @@
+/* ==========================================================================
+   Rolling Slider for Elementor
+   - تمام جهت‌ها با ویژگی‌های منطقی (start/end, inset-inline, …) نوشته شده‌اند؛
+     پس همان فایل برای راست‌چین و چپ‌چین کار می‌کند و جهت از attribute `dir` می‌آید.
+   - رنگ‌ها و اندازه‌ها متغیر CSS هستند و از پنل المنتور override می‌شوند.
+   ========================================================================== */
+
+.elementor-widget-rolling_slider {
+	width: 100%;
+	max-width: 100%;
+	min-width: 0;
+}
+
+.rsl {
+	--rsl-accent: #f2a736;
+	--rsl-deep: #091625;
+	--rsl-ov: #17324f;
+	--rsl-side: .9;
+	--rsl-bottom: .94;
+	--rsl-flat: 0;
+	--rsl-container: 1240px;
+	--rsl-gutter: clamp(20px, 6vw, 96px);
+	--rsl-pad-block: clamp(24px, 4vh, 56px);
+	--rsl-pad-inline: max(var(--rsl-gutter), calc((100% - var(--rsl-container)) / 2 + 24px));
+	--rsl-speed: .9s;
+	--rsl-out: .3s;
+	--rsl-ease: cubic-bezier(.22, .61, .36, 1);
+	--rsl-rail: rgba(255, 255, 255, .14);
+	--rsl-fill: var(--rsl-accent);
+	--rsl-rail-h: 3px;
+	--rsl-ico: 18px;
+	--rsl-duration: 7000ms;
+	--rsl-cols: 3;
+
+	position: relative;
+	isolation: isolate;
+	overflow: hidden;
+	display: grid;
+	grid-template-rows: 1fr auto;
+	width: 100%;
+	min-width: 0;
+	min-height: 90vh;
+	margin: 0;
+	padding: 0;
+	color: #fff;
+	background-color: var(--rsl-deep);
+	font-family: inherit;
+	text-align: start;
+}
+
+/* جهت: فقط از attribute dir (هستهٔ وردپرس → is_rtl()) */
+.rsl[dir="rtl"] {
+	--rsl-s: 1;
+	--rsl-away-start: to left;
+	--rsl-away-end: to right;
+	--rsl-origin: right center;
+}
+
+.rsl[dir="ltr"] {
+	--rsl-s: -1;
+	--rsl-away-start: to right;
+	--rsl-away-end: to left;
+	--rsl-origin: left center;
+}
+
+.rsl *,
+.rsl *::before,
+.rsl *::after {
+	box-sizing: border-box;
+}
+
+/* ریست سبک (specificity صفر تا کلاس‌های خودمان همیشه برنده باشند) */
+.rsl :where(p, h1, h2, h3, h4, h5, h6, span, div, button, a, ul, ol) {
+	margin: 0;
+	padding: 0;
+}
+
+/* ── رسانه ─────────────────────────────────────────────────────────────── */
+.rsl__stage {
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+}
+
+/* لایهٔ تیره‌کنندهٔ یکدست (اختیاری) */
+.rsl__stage::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	pointer-events: none;
+	background: var(--rsl-ov);
+	opacity: var(--rsl-flat);
+}
+
+.rsl__slide {
+	position: absolute;
+	inset: 0;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity var(--rsl-speed) ease, visibility 0s linear var(--rsl-speed), transform var(--rsl-speed) ease, filter var(--rsl-speed) ease;
+}
+
+.rsl__slide.is-active {
+	opacity: 1;
+	visibility: visible;
+	transition: opacity var(--rsl-speed) ease, visibility 0s, transform var(--rsl-speed) ease, filter var(--rsl-speed) ease;
+}
+
+/* افکت گذار بین اسلایدها */
+.rsl--fx-zoom .rsl__slide:not(.is-active) {
+	transform: scale(1.08);
+}
+
+.rsl--fx-blur .rsl__slide:not(.is-active) {
+	filter: blur(14px);
+}
+
+.rsl .rsl__media {
+	display: block;
+	width: 100%;
+	height: 100%;
+	max-width: none;
+	margin: 0;
+	border-radius: 0;
+	object-fit: cover;
+}
+
+/* حرکت آرام تصویر (Ken Burns) */
+.rsl--kenburns img.rsl__media {
+	transform: scale(1.06);
+	transition: transform 9s linear;
+}
+
+.rsl--kenburns .rsl__slide.is-active img.rsl__media {
+	transform: scale(1.14);
+}
+
+/* پرده: دو گرادیان با ماسک؛ رنگ و شدت از پنل می‌آید */
+.rsl__veil {
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	pointer-events: none;
+}
+
+.rsl__veil::before,
+.rsl__veil::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: var(--rsl-ov);
+}
+
+.rsl__veil::before {
+	opacity: var(--rsl-side);
+	-webkit-mask-image: linear-gradient(var(--rsl-away-start), #000 0%, rgba(0, 0, 0, .22) 42%, rgba(0, 0, 0, .09) 100%);
+	mask-image: linear-gradient(var(--rsl-away-start), #000 0%, rgba(0, 0, 0, .22) 42%, rgba(0, 0, 0, .09) 100%);
+}
+
+.rsl--veil-end .rsl__veil::before {
+	-webkit-mask-image: linear-gradient(var(--rsl-away-end), #000 0%, rgba(0, 0, 0, .22) 42%, rgba(0, 0, 0, .09) 100%);
+	mask-image: linear-gradient(var(--rsl-away-end), #000 0%, rgba(0, 0, 0, .22) 42%, rgba(0, 0, 0, .09) 100%);
+}
+
+.rsl--veil-none .rsl__veil::before {
+	display: none;
+}
+
+.rsl__veil::after {
+	opacity: var(--rsl-bottom);
+	-webkit-mask-image: linear-gradient(to top, #000 0%, rgba(0, 0, 0, .64) 42%, transparent 70%);
+	mask-image: linear-gradient(to top, #000 0%, rgba(0, 0, 0, .64) 42%, transparent 70%);
+}
+
+/* ── محتوا ─────────────────────────────────────────────────────────────── */
+.rsl__body {
+	--rsl-v: center;
+	position: relative;
+	z-index: 2;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	padding: calc(var(--rsl-pad-block) + 24px) var(--rsl-pad-inline) var(--rsl-pad-block);
+}
+
+/* همهٔ پنل‌ها روی هم در یک خانهٔ گرید؛ ارتفاع = بلندترین پنل، پس هیچ پرشی نداریم */
+.rsl__panels {
+	display: grid;
+	width: 100%;
+	max-width: 44rem;
+	min-width: 0;
+}
+
+.rsl__panel {
+	grid-area: 1 / 1;
+	align-self: var(--rsl-v);
+	min-width: 0;
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
+	transition: opacity var(--rsl-out) ease, visibility 0s linear var(--rsl-out);
+}
+
+.rsl__panel.is-active {
+	opacity: 1;
+	visibility: visible;
+	pointer-events: auto;
+	transition: opacity var(--rsl-out) ease, visibility 0s;
+}
+
+/* ── افکت‌های ورود متن ────────────────────────────────────────────────────
+   حالت «قبل از ورود» با متغیرها تعریف می‌شود و روی پنل فعال به حالت نهایی
+   transition می‌خورد؛ پس با هر تغییر اسلاید دوباره پخش می‌شود. */
+.rsl-fx {
+	--rsl-fx-o: 1;
+	--rsl-fx-t: none;
+	--rsl-fx-f: none;
+}
+
+.rsl-fx--fade {
+	--rsl-fx-o: 0;
+}
+
+.rsl-fx--fade-up {
+	--rsl-fx-o: 0;
+	--rsl-fx-t: translateY(var(--rsl-fx-dist, 14px));
+}
+
+.rsl-fx--fade-down {
+	--rsl-fx-o: 0;
+	--rsl-fx-t: translateY(calc(var(--rsl-fx-dist, 14px) * -1));
+}
+
+.rsl-fx--slide-start {
+	--rsl-fx-o: 0;
+	--rsl-fx-t: translateX(calc(var(--rsl-s, 1) * var(--rsl-fx-dist, 14px)));
+}
+
+.rsl-fx--slide-end {
+	--rsl-fx-o: 0;
+	--rsl-fx-t: translateX(calc(var(--rsl-s, 1) * var(--rsl-fx-dist, 14px) * -1));
+}
+
+.rsl-fx--zoom-in {
+	--rsl-fx-o: 0;
+	--rsl-fx-t: scale(.9);
+}
+
+.rsl-fx--zoom-out {
+	--rsl-fx-o: 0;
+	--rsl-fx-t: scale(1.12);
+}
+
+.rsl-fx--blur {
+	--rsl-fx-o: 0;
+	--rsl-fx-f: blur(12px);
+}
+
+.rsl-fx--flip {
+	--rsl-fx-o: 0;
+	--rsl-fx-t: perspective(700px) rotateX(-60deg);
+	transform-origin: 50% 0;
+}
+
+.rsl-fx--reveal {
+	--rsl-fx-o: 0;
+	--rsl-fx-t: translateY(12px);
+	clip-path: inset(-60px);
+}
+
+.rsl__panel:not(.is-active) .rsl-fx {
+	opacity: var(--rsl-fx-o);
+	transform: var(--rsl-fx-t);
+	filter: var(--rsl-fx-f);
+	/* به حالت اولیه برمی‌گردد فقط بعد از اینکه پنل کامل محو شد */
+	transition: opacity 0s linear var(--rsl-out), transform 0s linear var(--rsl-out), filter 0s linear var(--rsl-out), clip-path 0s linear var(--rsl-out);
+}
+
+.rsl__panel:not(.is-active) .rsl-fx--reveal {
+	clip-path: inset(-60px -60px 100% -60px);
+}
+
+.rsl__panel.is-active .rsl-fx {
+	opacity: 1;
+	transform: none;
+	filter: none;
+	transition:
+		opacity var(--rsl-dur, .5s) var(--rsl-ease) var(--rsl-delay, 0s),
+		transform var(--rsl-dur, .5s) var(--rsl-ease) var(--rsl-delay, 0s),
+		filter var(--rsl-dur, .5s) var(--rsl-ease) var(--rsl-delay, 0s),
+		clip-path var(--rsl-dur, .5s) var(--rsl-ease) var(--rsl-delay, 0s);
+}
+
+/* ── زیرعنوان ─────────────────────────────────────────────────────────── */
+.rsl .rsl__eyebrow {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	width: fit-content;
+	max-width: 100%;
+	margin: 0 0 18px;
+	padding: 7px 14px;
+	border-radius: 999px;
+	background: rgba(255, 255, 255, .08);
+	-webkit-backdrop-filter: blur(6px);
+	backdrop-filter: blur(6px);
+	font-family: inherit;
+	font-size: .85rem;
+	font-weight: 600;
+	line-height: 1.7;
+	letter-spacing: normal;
+	text-transform: none;
+	text-align: start;
+	color: rgba(255, 255, 255, .92);
+}
+
+.rsl .rsl__eyebrow::before {
+	content: "";
+	flex: none;
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background: var(--rsl-dot, var(--rsl-accent));
+	box-shadow: 0 0 0 4px rgba(242, 167, 54, .22);
+	box-shadow: 0 0 0 4px color-mix(in srgb, var(--rsl-dot, var(--rsl-accent)) 22%, transparent);
+}
+
+.rsl--no-dot .rsl__eyebrow::before {
+	display: none;
+}
+
+/* ── عنوان ────────────────────────────────────────────────────────────── */
+.rsl .rsl__title {
+	margin: 0;
+	padding: 0;
+	font-family: inherit;
+	font-size: clamp(1.75rem, 4.2vw, 2.5rem);
+	font-weight: 800;
+	line-height: 1.45;
+	letter-spacing: -.005em;
+	text-transform: none;
+	text-align: start;
+	text-wrap: balance;
+	color: #fff;
+	text-shadow: 0 2px 24px rgba(9, 22, 37, .45);
+	overflow-wrap: anywhere;
+}
+
+.rsl .rsl__title :where(b, mark) {
+	font-weight: inherit;
+	color: var(--rsl-hl, var(--rsl-accent));
+	background: none;
+}
+
+/* ── محتوا ────────────────────────────────────────────────────────────── */
+.rsl .rsl__content {
+	max-width: 38rem;
+	margin: 16px 0 0;
+	font-family: inherit;
+	font-size: clamp(.95rem, 1.15vw, 1.12rem);
+	font-weight: 400;
+	line-height: 2.1;
+	text-align: start;
+	text-wrap: pretty;
+	color: rgba(255, 255, 255, .78);
+	overflow-wrap: anywhere;
+}
+
+.rsl .rsl__content > :first-child {
+	margin-top: 0;
+}
+
+.rsl .rsl__content > :last-child {
+	margin-bottom: 0;
+}
+
+.rsl .rsl__content p {
+	margin: 0 0 .8em;
+	font: inherit;
+	color: inherit;
+}
+
+.rsl .rsl__content :where(ul, ol) {
+	margin: 0 0 .8em;
+	padding-inline-start: 1.4em;
+}
+
+.rsl .rsl__content :where(strong, b) {
+	font-weight: 600;
+	color: var(--rsl-strong, #fff);
+}
+
+.rsl .rsl__content a {
+	color: var(--rsl-link, var(--rsl-accent));
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+
+/* ── دکمه‌ها ──────────────────────────────────────────────────────────── */
+.rsl .rsl__actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+	margin: 28px 0 0;
+}
+
+.rsl .rsl__actions a.rsl__btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	min-height: 48px;
+	padding: 0 26px;
+	border: 1px solid transparent;
+	border-radius: 10px;
+	font-family: inherit;
+	font-size: .97rem;
+	font-weight: 500;
+	line-height: 1;
+	text-decoration: none;
+	text-transform: none;
+	white-space: nowrap;
+	cursor: pointer;
+	box-shadow: none;
+	transition: background-color .2s ease, border-color .2s ease, color .2s ease, transform .2s ease, box-shadow .2s ease;
+}
+
+.rsl--icon-start .rsl__btn {
+	flex-direction: row-reverse;
+}
+
+.rsl .rsl__actions a.rsl__btn--primary {
+	background: var(--rsl-accent);
+	color: #1b1200;
+	box-shadow: 0 10px 28px -14px rgba(242, 167, 54, .9);
+}
+
+.rsl .rsl__actions a.rsl__btn--primary:hover,
+.rsl .rsl__actions a.rsl__btn--primary:focus-visible {
+	background: #f7bb5c;
+	background: color-mix(in srgb, var(--rsl-accent) 82%, #fff);
+	color: #1b1200;
+}
+
+.rsl .rsl__actions a.rsl__btn--ghost {
+	background: rgba(255, 255, 255, .06);
+	border-color: rgba(255, 255, 255, .45);
+	color: #fff;
+	-webkit-backdrop-filter: blur(6px);
+	backdrop-filter: blur(6px);
+}
+
+.rsl .rsl__actions a.rsl__btn--ghost:hover,
+.rsl .rsl__actions a.rsl__btn--ghost:focus-visible {
+	background: rgba(255, 255, 255, .16);
+	border-color: #fff;
+	color: #fff;
+}
+
+.rsl a.rsl__btn:focus-visible {
+	outline: 2px solid var(--rsl-accent);
+	outline-offset: 3px;
+}
+
+.rsl__btn-icon {
+	display: inline-flex;
+	flex: none;
+	align-items: center;
+	justify-content: center;
+	transition: transform .2s ease;
+}
+
+.rsl__btn-icon svg,
+.rsl__btn-icon i {
+	width: var(--rsl-ico);
+	height: var(--rsl-ico);
+	font-size: var(--rsl-ico);
+	line-height: 1;
+}
+
+/* آیکن‌های آمادهٔ پلاگین */
+.rsl__svg {
+	fill: none;
+	stroke: currentColor;
+	stroke-width: 2.2;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+
+/* فلش «ادامه» در چپ‌چین برعکس می‌شود تا همیشه به سمت جلو باشد */
+.rsl[dir="ltr"] .rsl__ico--arrow .rsl__svg {
+	transform: scaleX(-1);
+}
+
+/* افکت هاور دکمه */
+.rsl--hover-lift a.rsl__btn:hover {
+	transform: translateY(-2px);
+}
+
+.rsl--hover-grow a.rsl__btn:hover {
+	transform: scale(1.05);
+}
+
+.rsl--hover-glow a.rsl__btn:hover {
+	box-shadow: 0 8px 32px -6px var(--rsl-accent);
+}
+
+.rsl--hover-icon a.rsl__btn:hover .rsl__btn-icon {
+	transform: translateX(calc(var(--rsl-s, 1) * -6px));
+}
+
+/* ── تب‌ها ────────────────────────────────────────────────────────────── */
+.rsl__nav {
+	position: relative;
+	z-index: 2;
+	padding: 0 var(--rsl-pad-inline) var(--rsl-pad-block);
+}
+
+.rsl__tabs {
+	display: flex;
+	gap: clamp(14px, 2.4vw, 44px);
+	align-items: stretch;
+	overflow-x: auto;
+	padding-bottom: 35px;
+	border-top: 1px solid rgba(255, 255, 255, .16);
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+	scroll-snap-type: x proximity;
+	text-align: start;
+}
+
+.rsl__tabs::-webkit-scrollbar {
+	display: none;
+}
+
+.rsl .rsl__tabs button.rsl__tab {
+	position: relative;
+	flex: 0 0 auto;
+	min-width: 0;
+	margin: 0;
+	padding: 16px 0 18px;
+	border: 0;
+	border-radius: 0;
+	background: none;
+	box-shadow: none;
+	-webkit-appearance: none;
+	appearance: none;
+	scroll-snap-align: end;
+	font-family: inherit;
+	font-size: clamp(.82rem, 1.05vw, 1rem);
+	font-weight: 500;
+	line-height: 1.7;
+	letter-spacing: normal;
+	text-transform: none;
+	text-align: inherit;
+	color: rgba(255, 255, 255, .55);
+	cursor: pointer;
+	transition: color .25s ease;
+}
+
+.rsl .rsl__tabs button.rsl__tab:hover {
+	background: none;
+	color: rgba(255, 255, 255, .9);
+}
+
+.rsl .rsl__tabs button.rsl__tab[aria-selected="true"] {
+	background: none;
+	color: #fff;
+	font-weight: 600;
+}
+
+.rsl .rsl__tabs button.rsl__tab:focus-visible {
+	outline: 2px solid var(--rsl-accent);
+	outline-offset: 4px;
+}
+
+/* ریل پیشرفت: خط کم‌رنگ + پرشدن هم‌زمان با تایمر (از سمت «ابتدا») */
+.rsl__tab::before,
+.rsl__tab::after {
+	content: "";
+	position: absolute;
+	inset-inline: 0;
+	bottom: 0;
+	height: var(--rsl-rail-h);
+	border-radius: var(--rsl-rail-h);
+}
+
+.rsl__tab::before {
+	background: var(--rsl-rail);
+}
+
+.rsl__tab::after {
+	background: var(--rsl-fill);
+	transform: scaleX(0);
+	transform-origin: var(--rsl-origin);
+}
+
+.rsl__tab[aria-selected="true"]::after {
+	animation: rsl-fill var(--rsl-duration) linear forwards;
+}
+
+.rsl.is-paused .rsl__tab[aria-selected="true"]::after {
+	animation-play-state: paused;
+}
+
+/* بدون پخش خودکار: ریل تب فعال کامل پر می‌ماند */
+.rsl--static .rsl__tab[aria-selected="true"]::after {
+	animation: none;
+	transform: scaleX(1);
+}
+
+@keyframes rsl-fill {
+	from {
+		transform: scaleX(0);
+	}
+
+	to {
+		transform: scaleX(1);
+	}
+}
+
+/* ── موبایل (هم‌راستا با نقطهٔ شکست موبایل المنتور) ──────────────────── */
+@media (max-width: 767px) {
+	.rsl {
+		min-height: 560px;
+		border-radius: 0 0 20px 20px;
+	}
+
+	.rsl__body {
+		--rsl-v: end;
+		align-items: flex-end;
+		padding-top: 88px;
+	}
+
+	.rsl .rsl__title {
+		line-height: 1.55;
+	}
+
+	.rsl .rsl__content {
+		margin-top: 12px;
+		line-height: 1.95;
+	}
+
+	.rsl .rsl__actions {
+		margin-top: 22px;
+		gap: 10px;
+	}
+
+	.rsl .rsl__actions a.rsl__btn {
+		flex: 1 1 auto;
+		min-width: 46%;
+		padding: 0 16px;
+	}
+
+	/* تب‌ها در شبکه جا می‌گیرند، نه اسکرول افقی */
+	.rsl__tabs {
+		display: grid;
+		grid-template-columns: repeat(var(--rsl-cols), minmax(0, 1fr));
+		column-gap: 10px;
+		row-gap: 4px;
+		overflow: visible;
+		padding-bottom: 0;
+		scroll-snap-type: none;
+		text-align: center;
+	}
+
+	.rsl .rsl__tabs button.rsl__tab {
+		padding: 12px 4px 13px;
+		font-size: .76rem;
+		line-height: 1.55;
+	}
+}
+
+@media (max-width: 380px) {
+	.rsl__tabs {
+		column-gap: 7px;
+	}
+
+	.rsl .rsl__tabs button.rsl__tab {
+		padding-inline: 2px;
+		font-size: .7rem;
+	}
+}
+
+/* ── کاهش انیمیشن ─────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+
+	.rsl__slide,
+	.rsl__panel,
+	.rsl .rsl-fx,
+	.rsl img.rsl__media,
+	.rsl .rsl__btn,
+	.rsl__btn-icon {
+		transition-duration: .01ms !important;
+		transition-delay: 0s !important;
+	}
+
+	.rsl--kenburns .rsl__slide.is-active img.rsl__media {
+		transform: scale(1.06);
+	}
+
+	.rsl__tab[aria-selected="true"]::after {
+		animation: none;
+		transform: scaleX(1);
+	}
+}

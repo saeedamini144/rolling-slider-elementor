@@ -1,0 +1,915 @@
+<style>
+    #khero {
+        /* ── تنظیمات سریع ── */
+        --khero-header: 84px;
+        /* ارتفاع هدر سایت */
+        --khero-accent: #f2a736;
+        /* رنگ لهجه (نارنجی) */
+        --khero-deep: #091625;
+        /* سرمه‌ای تیره پس‌زمینه */
+        --khero-radius: 28px;
+        /* گردی گوشهٔ پایین */
+
+        --khero-pad-inline: max(clamp(20px, 6vw, 96px), calc((100% - 1240px) / 2 + 24px));
+        --khero-pad-block: clamp(24px, 4vh, 56px);
+        --khero-font: "Peyda", "PeydaFaNum", "Vazirmatn", "IRANSans", Tahoma, sans-serif;
+
+        position: relative !important;
+        isolation: isolate;
+        overflow: hidden !important;
+        direction: rtl !important;
+        font-family: var(--khero-font) !important;
+        color: #fff !important;
+        background: var(--khero-deep) !important;
+
+        /* svh تا نوار آدرس موبایل تب‌ها را نبُرد */
+        min-height: clamp(90vh, calc(100svh - var(--khero-header)), 780px) !important;
+        display: grid !important;
+        grid-template-rows: 1fr auto !important;
+        /* قالب‌ها معمولاً روی section یا خود ویجت عرض و پدینگ می‌گذارند */
+        width: 100% !important;
+        max-width: none !important;
+        min-width: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
+        float: none !important;
+        box-shadow: none !important;
+    }
+
+    #khero *,
+    #khero *::before,
+    #khero *::after {
+        box-sizing: border-box;
+    }
+
+    #khero p,
+    #khero h1,
+    #khero span,
+    #khero div,
+    #khero button,
+    #khero a {
+        margin: 0;
+        padding: 0;
+    }
+
+    /* ── لایه‌های مدیا ── */
+    #khero .khero__stage {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+    }
+
+    #khero .khero__slide {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.9s ease, visibility 0s linear 0.9s;
+    }
+
+    #khero .khero__slide.is-active {
+        opacity: 1;
+        visibility: visible;
+        transition: opacity 0.9s ease, visibility 0s;
+    }
+
+    #khero .khero__slide img,
+    #khero .khero__slide video {
+        width: 100% !important;
+        height: 100% !important;
+        max-width: none !important;
+        object-fit: cover !important;
+        display: block !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+    }
+
+    /* حرکت آرام تصویر تا فریم ثابت خشک به نظر نرسد */
+    #khero .khero__slide img {
+        transform: scale(1.06);
+        transition: transform 9s linear;
+    }
+
+    #khero .khero__slide.is-active img {
+        transform: scale(1.14);
+    }
+
+    #khero .khero__veil {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        background:
+            linear-gradient(to left, rgba(23, 50, 79, 0.9) 0%, rgba(50, 95, 143, 0.2) 42%, rgba(50, 95, 143, 0.08) 100%),
+            linear-gradient(to top, rgba(23, 50, 79, 0.94) 0%, rgba(34, 70, 109, 0.6) 42%, transparent 70%),
+            radial-gradient(circle at 30% 20%, rgba(50, 95, 143, 0.25) 0%, transparent 55%);
+    }
+
+    /* ── متن ── */
+    #khero .khero__body {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        padding: calc(var(--khero-pad-block) + 24px) var(--khero-pad-inline) var(--khero-pad-block);
+    }
+
+    #khero .khero__panel {
+        max-width: 44rem;
+        min-width: 0;
+    }
+
+    #khero .khero__eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 14px !important;
+        margin-bottom: 18px !important;
+
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.08);
+        -webkit-backdrop-filter: blur(6px);
+        backdrop-filter: blur(6px);
+        font-size: 0.85rem;
+        font-weight: 600;
+        line-height: 1.7;
+        color: rgba(255, 255, 255, 0.92);
+    }
+
+    #khero .khero__eyebrow::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--khero-accent);
+        box-shadow: 0 0 0 4px rgba(242, 167, 54, 0.22);
+    }
+
+    #khero .khero__title {
+        margin: 0 !important;
+        padding: 0 !important;
+        font-family: inherit !important;
+        font-size: clamp(1.75rem, 4.2vw, 2.5rem) !important;
+        font-weight: 800 !important;
+        line-height: 1.45 !important;
+        letter-spacing: -0.005em !important;
+        text-align: right !important;
+        text-wrap: balance;
+        color: #fff !important;
+        text-shadow: 0 2px 24px rgba(9, 22, 37, 0.45);
+        /* هیچ واژهٔ بلندی نمی‌تواند از قاب بزند بیرون */
+        overflow-wrap: anywhere;
+    }
+
+    #khero .khero__title b {
+        font-weight: 800;
+        color: var(--khero-accent);
+    }
+
+    #khero .khero__lede {
+        margin: 16px 0 0 !important;
+        padding: 0 !important;
+        max-width: 38rem;
+        font-family: inherit !important;
+        font-size: clamp(0.95rem, 1.15vw, 1.12rem) !important;
+        font-weight: 400 !important;
+        line-height: 2.1 !important;
+        text-align: right !important;
+        color: rgba(255, 255, 255, 0.78) !important;
+        text-wrap: pretty;
+        overflow-wrap: anywhere;
+    }
+
+    #khero .khero__lede strong {
+        font-weight: 600;
+        color: #fff;
+    }
+
+    /* حالت پایه «دیده‌شدن» است تا اگر JS اجرا نشد متن باز هم بماند */
+    #khero .khero__eyebrow,
+    #khero .khero__title,
+    #khero .khero__lede,
+    #khero .khero__actions {
+        opacity: 1;
+        transform: none;
+        transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    #khero .khero__eyebrow {
+        transition-delay: 0.02s;
+    }
+
+    #khero .khero__title {
+        transition-delay: 0.08s;
+    }
+
+    #khero .khero__lede {
+        transition-delay: 0.16s;
+    }
+
+    #khero .khero__actions {
+        transition-delay: 0.24s;
+    }
+
+    #khero.is-swapping .khero__eyebrow,
+    #khero.is-swapping .khero__title,
+    #khero.is-swapping .khero__lede,
+    #khero.is-swapping .khero__actions {
+        opacity: 0;
+        transform: translateY(14px);
+        transition-delay: 0s;
+    }
+
+    /* ── دکمه‌ها ── */
+    #khero .khero__actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 28px !important;
+    }
+
+    /* اسلایدهایی که CTA ندارند هیچ فاصله‌ای هم نمی‌گیرند */
+    #khero .khero__actions[hidden] {
+        display: none !important;
+    }
+
+    /* مخزن CTAها فقط منبع محتواست و دیده نمی‌شود */
+    #khero .khero__ctas {
+        display: none !important;
+    }
+
+    #khero a.khero__btn {
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-height: 48px;
+        padding: 0 26px !important;
+        border: 1px solid transparent;
+        border-radius: 10px !important;
+        font-family: inherit !important;
+        font-size: 0.97rem !important;
+        line-height: 1 !important;
+        text-decoration: none !important;
+        white-space: nowrap;
+        cursor: pointer;
+        box-shadow: none;
+        transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+        font-weight: 500 !important;
+    }
+
+    #khero a.khero__btn--primary {
+        background: var(--khero-accent) !important;
+        color: #1b1200 !important;
+        box-shadow: 0 10px 28px -14px rgba(242, 167, 54, 0.9);
+    }
+
+    #khero a.khero__btn--primary:hover {
+        background: #f7bb5c !important;
+        transform: translateY(-2px);
+    }
+
+    #khero a.khero__btn--ghost {
+        background: rgba(255, 255, 255, 0.06) !important;
+        border-color: rgba(255, 255, 255, 0.45) !important;
+        color: #fff !important;
+        -webkit-backdrop-filter: blur(6px);
+        backdrop-filter: blur(6px);
+    }
+
+    #khero a.khero__btn--ghost:hover {
+        background: rgba(255, 255, 255, 0.16) !important;
+        border-color: #fff !important;
+        transform: translateY(-2px);
+    }
+
+    #khero .khero__btn svg {
+        width: 18px;
+        height: 18px;
+        flex: none;
+    }
+
+    /* ── تب‌ها ── */
+    #khero .khero__nav {
+        position: relative;
+        z-index: 2;
+        padding: 0 var(--khero-pad-inline) var(--khero-pad-block);
+    }
+
+    #khero .khero__tabs {
+        display: flex;
+        gap: clamp(14px, 2.4vw, 44px);
+        align-items: stretch;
+        overflow-x: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        scroll-snap-type: x proximity;
+        border-top: 1px solid rgba(255, 255, 255, 0.16);
+        padding-top: 0px;
+        padding-bottom: 35px;
+    }
+
+    #khero .khero__tabs::-webkit-scrollbar {
+        display: none;
+    }
+
+    #khero button.khero__tab {
+        position: relative;
+        flex: 0 0 auto;
+        scroll-snap-align: end;
+        -webkit-appearance: none;
+        appearance: none;
+        background: none !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        padding: 16px 0 18px !important;
+        font-family: inherit !important;
+        font-size: clamp(0.82rem, 1.05vw, 1rem) !important;
+        font-weight: 500 !important;
+        line-height: 1.7 !important;
+        text-align: right !important;
+        color: rgba(255, 255, 255, 0.55) !important;
+        cursor: pointer;
+        box-shadow: none !important;
+        transition: color 0.25s ease;
+    }
+
+    #khero button.khero__tab span {
+        display: block;
+    }
+
+    #khero button.khero__tab:hover {
+        color: rgba(255, 255, 255, 0.9) !important;
+    }
+
+    #khero button.khero__tab:focus-visible {
+        outline: 2px solid var(--khero-accent);
+        outline-offset: 4px;
+    }
+
+    #khero button.khero__tab[aria-selected="true"] {
+        color: #fff !important;
+        font-weight: 600 !important;
+    }
+
+    /* ریل پیشرفت: خط خاکستری + پرشدن نارنجی هم‌زمان با تایمر */
+    #khero button.khero__tab::before,
+    #khero button.khero__tab::after {
+        content: "";
+        position: absolute;
+        inset-inline: 0;
+        bottom: 0;
+        height: 3px;
+        border-radius: 3px;
+    }
+
+    #khero button.khero__tab::before {
+        background: rgba(255, 255, 255, 0.14);
+    }
+
+    #khero button.khero__tab::after {
+        background: var(--khero-accent);
+        transform: scaleX(0);
+        transform-origin: right center;
+        /* RTL: از راست پر می‌شود */
+    }
+
+    #khero button.khero__tab[aria-selected="true"]::after {
+        animation: khero-fill var(--khero-duration, 7000ms) linear forwards;
+    }
+
+    #khero.is-paused button.khero__tab[aria-selected="true"]::after {
+        animation-play-state: paused;
+    }
+
+    @keyframes khero-fill {
+        from {
+            transform: scaleX(0);
+        }
+
+        to {
+            transform: scaleX(1);
+        }
+    }
+
+    /* ── موبایل ── */
+    @media (max-width: 860px) {
+        #khero {
+            min-height: clamp(500px, calc(100svh - var(--khero-header)), 700px) !important;
+            border-radius: 0 0 20px 20px !important;
+        }
+
+        #khero .khero__body {
+            align-items: flex-end;
+            padding-top: 88px;
+        }
+
+        #khero .khero__title {
+            line-height: 1.55 !important;
+        }
+
+        #khero .khero__lede {
+            line-height: 1.95 !important;
+            margin-top: 12px !important;
+        }
+
+        #khero .khero__actions {
+            margin-top: 22px !important;
+            gap: 10px;
+        }
+
+        #khero a.khero__btn {
+            flex: 1 1 auto;
+            min-width: 46%;
+            padding: 0 16px !important;
+        }
+
+        /* پردهٔ موبایل جدا تعریف نمی‌شود؛ همان گرادیان دسکتاپ اعمال می‌شود. */
+
+        /* تب‌ها دیگر افقی اسکرول نمی‌شوند؛ هر پنج تب در یک شبکه جا می‌گیرند.
+     نسخهٔ قبلی نوار اسکرول‌شونده بود و روی ۳۷۵ پیکسل ۱۲۳ پیکسل سرریز
+     داشت: تب چهارم از سمت چپ بریده می‌شد و تب پنجم اصلاً دیده نمی‌شد. */
+        #khero .khero__tabs {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            column-gap: 10px;
+            row-gap: 4px;
+            overflow: visible;
+            scroll-snap-type: none;
+            -webkit-mask-image: none;
+            mask-image: none;
+            padding-bottom: 0;
+        }
+
+        #khero button.khero__tab {
+            padding: 12px 4px 13px !important;
+            font-size: 0.76rem !important;
+            line-height: 1.55 !important;
+            text-align: center !important;
+            min-width: 0;
+        }
+
+        #khero button.khero__tab span {
+            display: block;
+        }
+    }
+
+    @media (max-width: 380px) {
+        #khero .khero__tabs {
+            column-gap: 7px;
+        }
+
+        #khero button.khero__tab {
+            font-size: 0.7rem !important;
+            padding-inline: 2px !important;
+        }
+    }
+
+    /* ── احترام به تنظیم کاهش انیمیشن ── */
+    @media (prefers-reduced-motion: reduce) {
+
+        #khero .khero__slide,
+        #khero .khero__slide img,
+        #khero .khero__eyebrow,
+        #khero .khero__title,
+        #khero .khero__lede,
+        #khero .khero__actions,
+        #khero .khero__btn {
+            transition-duration: 0.01ms !important;
+        }
+
+        #khero .khero__slide.is-active img {
+            transform: scale(1.06);
+        }
+
+        #khero button.khero__tab[aria-selected="true"]::after {
+            animation: none;
+            transform: scaleX(1);
+        }
+    }
+</style>
+
+
+<section id="khero" dir="rtl" data-duration="7000" aria-roledescription="اسلایدر معرفی"
+    aria-label="کارخانجات لوله و پروفیل کیهان">
+
+    <div class="khero__stage" aria-hidden="true">
+
+        <!-- ۱ — کارخانجات کیهان (ویدئو)
+         data-src         نسخهٔ دسکتاپ
+         data-src-mobile  نسخهٔ سبک برای موبایل (اختیاری ولی توصیه‌شده —
+                          فایل فعلی ۲۰ ثانیه و ۱۰۸۰p است و برای دیتای
+                          موبایل سنگین است). بعد از آپلود، آدرسش را
+                          جایگزین کنید؛ اگر نگذارید، همان نسخهٔ دسکتاپ
+                          روی موبایل هم پخش می‌شود. -->
+        <div class="khero__slide is-active">
+            <video muted loop playsinline preload="none"
+                poster="https://keyhanrolling.com/wp-content/uploads/2026/09/video-hero-poster.jpg"
+                data-src="https://keyhanrolling.com/wp-content/uploads/2026/09/4a165a2bc05e40dd94da422330188a25-1.mp4"
+                data-src-mobile="https://keyhanrolling.com/wp-content/uploads/2026/09/4a165a2bc05e40dd94da422330188a25-1.mp4"></video>
+        </div>
+
+        <!-- ۲ — سبد محصولات -->
+        <div class="khero__slide">
+            <img src="https://keyhanrolling.com/wp-content/uploads/2026/09/banner1-2.webp" srcset="https://keyhanrolling.com/wp-content/uploads/2026/09/banner1-2-768x431.webp 768w,
+                   https://keyhanrolling.com/wp-content/uploads/2026/09/banner1-2-1536x862.webp 1536w,
+                   https://keyhanrolling.com/wp-content/uploads/2026/09/banner1-2.webp 2000w" sizes="100vw" alt=""
+                loading="lazy" decoding="async" width="2000" height="1122">
+        </div>
+
+        <!-- ۳ — خط تولید -->
+        <div class="khero__slide">
+            <img src="https://keyhanrolling.com/wp-content/uploads/2026/09/banner-4.webp" srcset="https://keyhanrolling.com/wp-content/uploads/2026/09/banner-4-768x431.webp 768w,
+                   https://keyhanrolling.com/wp-content/uploads/2026/09/banner-4-1536x862.webp 1536w,
+                   https://keyhanrolling.com/wp-content/uploads/2026/09/banner-4.webp 2000w" sizes="100vw" alt=""
+                loading="lazy" decoding="async" width="2000" height="1122">
+        </div>
+
+        <!-- ۴ — کیفیت و استاندارد -->
+        <div class="khero__slide">
+            <img src="https://keyhanrolling.com/wp-content/uploads/2026/09/banner3.webp" srcset="https://keyhanrolling.com/wp-content/uploads/2026/09/banner3-768x431.webp 768w,
+                   https://keyhanrolling.com/wp-content/uploads/2026/09/banner3-1536x862.webp 1536w,
+                   https://keyhanrolling.com/wp-content/uploads/2026/09/banner3.webp 2000w" sizes="100vw" alt=""
+                loading="lazy" decoding="async" width="2000" height="1122">
+        </div>
+
+        <!-- ۵ — تحویل و صادرات -->
+        <div class="khero__slide">
+            <img src="https://keyhanrolling.com/wp-content/uploads/2026/09/banner2-1.webp" srcset="https://keyhanrolling.com/wp-content/uploads/2026/09/banner2-1-768x431.webp 768w,
+                   https://keyhanrolling.com/wp-content/uploads/2026/09/banner2-1-1536x862.webp 1536w,
+                   https://keyhanrolling.com/wp-content/uploads/2026/09/banner2-1.webp 2000w" sizes="100vw" alt=""
+                loading="lazy" decoding="async" width="2000" height="1122">
+        </div>
+
+        <span class="khero__veil"></span>
+    </div>
+
+    <div class="khero__body">
+        <div class="khero__panel" id="khero-panel" role="tabpanel" tabindex="-1">
+            <span class="khero__eyebrow">تولیدکننده لوله و پروفیل فولادی</span>
+            <h1 class="khero__title">بیش از سه دهه تجربه در تولید لوله و پروفیل</h1>
+            <p class="khero__lede">کارخانجات لوله و پروفیل کیهان، تولیدکننده انواع لوله و پروفیل فولادی برای صنایع،
+                پروژه‌های ساختمانی و تأسیساتی؛ با تمرکز بر کیفیت، تنوع محصول و تأمین پایدار سفارش‌های صنعتی.</p>
+
+            <!-- محتوای این بخش با هر اسلاید از «مخزن CTA» پایین جایگزین می‌شود -->
+            <div class="khero__actions">
+                <a class="khero__btn khero__btn--primary" href="#contact">
+                    استعلام قیمت و ثبت سفارش
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                        stroke-linejoin="round" aria-hidden="true">
+                        <path d="M19 12H5" />
+                        <path d="m12 19-7-7 7-7" />
+                    </svg>
+                </a>
+                <a class="khero__btn khero__btn--ghost"
+                    href="https://keyhanrolling.com/wp-content/uploads/2026/09/keyhan-catalog.pdf" target="_blank"
+                    rel="noopener">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                        stroke-linejoin="round" aria-hidden="true">
+                        <path d="M12 3v12" />
+                        <path d="m7 10 5 5 5-5" />
+                        <path d="M5 21h14" />
+                    </svg>
+                    دانلود کاتالوگ محصولات
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ مخزن CTA ═════════════════════════════════════════════════
+       هر بلوک data-for به شمارهٔ همان تب اشاره می‌کند (از صفر).
+       تبی که اینجا بلوک ندارد، اصلاً دکمه نمی‌گیرد.
+       برای عوض کردن لینک‌ها فقط href همین‌ها را ویرایش کنید.
+       ═══════════════════════════════════════════════════════════════ -->
+    <div class="khero__ctas" hidden>
+
+        <!-- تب ۰ — کارخانجات کیهان -->
+        <div data-for="0">
+            <a class="khero__btn khero__btn--primary" href="https://keyhanrolling.com/contact-us/">
+                استعلام قیمت و ثبت سفارش
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                    stroke-linejoin="round" aria-hidden="true">
+                    <path d="M19 12H5" />
+                    <path d="m12 19-7-7 7-7" />
+                </svg>
+            </a>
+            <!-- KEYHAN-CATALOG: آدرس کاتالوگ را بعد از آپلود اینجا بگذارید -->
+            <a class="khero__btn khero__btn--ghost"
+                href="https://keyhanrolling.com/wp-content/uploads/2026/09/CAtALOG-KEYHAN-FA-EA-1.pdf" target="_blank"
+                rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                    stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12 3v12" />
+                    <path d="m7 10 5 5 5-5" />
+                    <path d="M5 21h14" />
+                </svg>
+                دانلود کاتالوگ محصولات
+            </a>
+        </div>
+
+        <!-- تب ۱ — محصولات   (KH-LINK: آدرس صفحهٔ محصولات) -->
+        <div data-for="1">
+            <a class="khero__btn khero__btn--primary" href="https://keyhanrolling.com/products/">
+                دیدن محصولات
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                    stroke-linejoin="round" aria-hidden="true">
+                    <path d="M19 12H5" />
+                    <path d="m12 19-7-7 7-7" />
+                </svg>
+            </a>
+        </div>
+
+        <!-- تب ۳ — کیفیت و استاندارد   (KH-LINK: آدرس صفحهٔ گواهینامه‌ها) -->
+        <div data-for="3">
+            <a class="khero__btn khero__btn--primary" href="https://keyhanrolling.com/#trust">
+                گواهینامه‌ها و استانداردها
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                    stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="9" r="5.5" />
+                    <path d="m8.5 13.4-1.6 7.1 5.1-2.7 5.1 2.7-1.6-7.1" />
+                </svg>
+            </a>
+        </div>
+
+        <!-- تب ۲ (ظرفیت تولید) و تب ۴ (تحویل و صادرات) عمداً CTA ندارند -->
+    </div>
+
+    <!-- متنِ هر اسلاید روی همان تب نوشته شده؛ برای ویرایش متن‌ها فقط
+       data-eyebrow / data-title / data-lede را عوض کنید. -->
+    <div class="khero__nav">
+        <div class="khero__tabs" role="tablist" aria-label="بخش‌های معرفی کیهان">
+
+            <button class="khero__tab" type="button" role="tab" id="khero-tab-0" aria-controls="khero-panel"
+                aria-selected="true" tabindex="0" data-eyebrow="تولیدکننده لوله و پروفیل فولادی"
+                data-title="کارخانجات لوله و پروفیل کیهان <br>بیش از سه دهه تجربه"
+                data-lede="کارخانجات لوله و پروفیل کیهان، تولیدکننده انواع لوله و پروفیل فولادی برای صنایع، پروژه‌های ساختمانی و تأسیساتی؛ با تمرکز بر کیفیت، تنوع محصول و تأمین پایدار سفارش‌های صنعتی.">
+                <span>کارخانجات</span> <span>کیهان</span>
+            </button>
+
+            <button class="khero__tab" type="button" role="tab" id="khero-tab-1" aria-controls="khero-panel"
+                aria-selected="false" tabindex="-1" data-eyebrow="محصولات"
+                data-title="لوله و پروفیل برای نیازهای مختلف صنعت"
+                data-lede="از لوله‌های صنعتی و گاز تا لوله‌های حرارتی و انواع پروفیل فولادی؛ محصولات کیهان برای تأمین نیاز ماشین‌سازی، تأسیسات، ساختمان، سازه‌های فلزی و تولیدکنندگان تجهیزات عرضه می‌شوند.">
+                <span>محصولات</span> <span>کیهان</span>
+            </button>
+
+            <button class="khero__tab" type="button" role="tab" id="khero-tab-2" aria-controls="khero-panel"
+                aria-selected="false" tabindex="-1" data-eyebrow="زیرساخت تولید صنعتی"
+                data-title="ظرفیت تولید سالانه ۳۵۰ هزار تن"
+                data-lede="مجموعه تولیدی کیهان با مساحت ۱۱۰ هزار مترمربع و زیرساخت صنعتی گسترده، برای تأمین مستمر سفارش‌های عمده و نیاز پروژه‌های بزرگ فعالیت می‌کند. این اعداد مطابق اطلاعات کاتالوگ شرکت هستند.">
+                <span>ظرفیت</span> <span>تولید</span>
+            </button>
+
+            <button class="khero__tab" type="button" role="tab" id="khero-tab-3" aria-controls="khero-panel"
+                aria-selected="false" tabindex="-1" data-eyebrow="کنترل کیفیت"
+                data-title="تولید بر پایه استانداردهای معتبر"
+                data-lede="فرآیندهای کیهان با تکیه بر سیستم‌های مدیریت کیفیت و استانداردهای فنی محصول توسعه یافته‌اند؛ از ISO 9001 و ISO 29001 تا استانداردهای تخصصی تولید لوله و پروفیل.">
+                <span>کیفیت</span> <span>و استاندارد</span>
+            </button>
+
+            <button class="khero__tab" type="button" role="tab" id="khero-tab-4" aria-controls="khero-panel"
+                aria-selected="false" tabindex="-1" data-eyebrow="تحویل و صادرات"
+                data-title="از خط تولید تا پای پروژه؛ تحویل سرِ وقت"
+                data-lede="محصولات کیهان علاوه بر بازار ایران، به <strong>عراق، ترکمنستان، تاجیکستان</strong> و دیگر کشورهای منطقه صادر می‌شود و در پروژه‌های عمرانی و سازه‌های فلزی به کار رفته است.">
+                <span>تحویل</span> <span>و صادرات</span>
+            </button>
+
+        </div>
+    </div>
+</section>
+
+
+<script>
+    (function () {
+        'use strict';
+
+        function init() {
+            var hero = document.getElementById('khero');
+            if (!hero || hero.dataset.kheroReady === '1') return;   // جلوگیری از اجرای دوباره در ادیتور المنتور
+            hero.dataset.kheroReady = '1';
+
+            var stage = hero.querySelector('.khero__stage');
+            var slides = Array.prototype.slice.call(hero.querySelectorAll('.khero__slide'));
+            var tabs = Array.prototype.slice.call(hero.querySelectorAll('.khero__tab'));
+            var panel = hero.querySelector('.khero__panel');
+            var eyebrow = hero.querySelector('.khero__eyebrow');
+            var title = hero.querySelector('.khero__title');
+            var lede = hero.querySelector('.khero__lede');
+            var actions = hero.querySelector('.khero__actions');
+            var ctaStore = hero.querySelector('.khero__ctas');
+
+            if (!slides.length || tabs.length !== slides.length) return;
+
+            var DURATION = parseInt(hero.dataset.duration, 10) || 7000;
+            var reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+            var wide = window.matchMedia('(min-width: 861px)');
+            var conn = navigator.connection || {};
+            var lightMode = conn.saveData === true || /2g/.test(conn.effectiveType || '');
+
+            // متن و CTA هر اسلاید از خودِ مارک‌آپ خوانده می‌شود
+            var content = tabs.map(function (tab, i) {
+                var box = ctaStore && ctaStore.querySelector('[data-for="' + i + '"]');
+                return {
+                    eyebrow: tab.dataset.eyebrow || '',
+                    title: tab.dataset.title || '',
+                    lede: tab.dataset.lede || '',
+                    cta: box ? box.innerHTML : ''
+                };
+            });
+
+            var current = 0, timer = null, swapTimer = null, paused = false, started = false;
+
+            hero.style.setProperty('--khero-duration', DURATION + 'ms');
+
+            /* ---- ویدئو ----
+               روی موبایل هم پخش می‌شود، ولی فقط ویدئوی اسلاید فعال لود می‌گردد.
+               اگر روی تگ video یک data-src-mobile هم گذاشته باشید، در عرض‌های
+               کم همان نسخهٔ سبک سرو می‌شود. با Data Saver یا اینترنت 2G و
+               تنظیم «کاهش انیمیشن»، اصلاً ویدئویی لود نمی‌شود و پوستر می‌ماند. */
+            function videosAllowed() {
+                return !reduced.matches && !lightMode;
+            }
+
+            function hydrateVideo(i) {
+                if (!videosAllowed()) return;
+                var slide = slides[i];
+                var video = slide && slide.querySelector('video[data-src]');
+                if (!video || video.dataset.loaded) return;
+                // روی صفحهٔ کوچک، اگر نسخهٔ سبک معرفی شده باشد همان را می‌گیریم
+                var src = (!wide.matches && video.dataset.srcMobile) ? video.dataset.srcMobile : video.dataset.src;
+                var source = document.createElement('source');
+                source.src = src;
+                source.type = 'video/mp4';
+                video.appendChild(source);
+                video.dataset.loaded = '1';
+                // play() که هم‌زمان با load() صدا زده شود اثر ندارد؛ هر بار که
+                // ویدئو قابل پخش شد (یا بعد از بافر دوباره) پخش را هماهنگ می‌کنیم.
+                video.addEventListener('canplay', function () { syncPlayback(); });
+                video.load();
+            }
+
+            function hydrateRest() {
+                // پیش‌لودِ بقیهٔ ویدئوها فقط روی دسکتاپ؛ موبایل نباید چند فایل بگیرد
+                if (!videosAllowed() || !wide.matches) return;
+                var idle = window.requestIdleCallback || function (fn) { return setTimeout(fn, 1200); };
+                idle(function () { slides.forEach(function (_, i) { hydrateVideo(i); }); });
+            }
+
+            // ویدئوی اسلاید فعال همیشه در حال پخش و لوپ می‌ماند — هاور فقط
+            // چرخش اسلایدها را نگه می‌دارد، نه خود فیلم را.
+            function syncPlayback() {
+                slides.forEach(function (slide, i) {
+                    var video = slide.querySelector('video');
+                    if (!video || !video.dataset.loaded) return;
+                    if (i === current && !document.hidden) {
+                        var p = video.play();
+                        if (p && p.catch) p.catch(function () { /* اتوپلی بسته است — پوستر می‌ماند */ });
+                    } else {
+                        video.pause();
+                    }
+                });
+            }
+
+            function render(i) {
+                var data = content[i];
+                if (eyebrow) eyebrow.innerHTML = data.eyebrow;
+                if (title) title.innerHTML = data.title;
+                if (lede) lede.innerHTML = data.lede;
+                if (actions) {
+                    // کامنت‌ها متن حساب نمی‌شوند؛ بلوک خالی یعنی این اسلاید CTA ندارد
+                    var has = data.cta.replace(/<!--[\s\S]*?-->/g, '').trim() !== '';
+                        actions.innerHTML = has ? data.cta : '';
+                    actions.hidden = !has;
+                }
+            }
+
+            function go(i) {
+                i = (i + slides.length) % slides.length;
+                if (i === current && started) return;
+
+                current = i;
+
+                slides.forEach(function (slide, n) { slide.classList.toggle('is-active', n === i); });
+                tabs.forEach(function (tab, n) {
+                    var on = n === i;
+                    tab.setAttribute('aria-selected', on ? 'true' : 'false');
+                    tab.tabIndex = on ? 0 : -1;
+                });
+
+                var active = tabs[i];
+                if (panel) panel.setAttribute('aria-labelledby', active.id);
+                centerTab(active);
+
+                clearTimeout(swapTimer);
+                if (started) {
+                    hero.classList.add('is-swapping');
+                    var delay = reduced.matches ? 0 : 260;
+                    swapTimer = setTimeout(function () {
+                        render(i);
+                        hero.classList.remove('is-swapping');
+                    }, delay);
+                } else {
+                    started = true;
+                    render(i);
+                }
+
+                hydrateVideo(i);
+                syncPlayback();
+                restart();
+            }
+
+            // نوار تب را جابه‌جا می‌کنیم، نه کل صفحه را.
+            // روی موبایل که تب‌ها شبکه‌ای‌اند و سرریز ندارند، این تابع کاری نمی‌کند.
+            function centerTab(el) {
+                var strip = el.parentNode;
+                if (strip.scrollWidth <= strip.clientWidth + 1) return;
+                var r = el.getBoundingClientRect();
+                var s = strip.getBoundingClientRect();
+                strip.scrollBy({ left: (r.left + r.width / 2) - (s.left + s.width / 2), behavior: 'smooth' });
+            }
+
+            function restart() {
+                clearInterval(timer);
+                if (reduced.matches || paused) return;
+                timer = setInterval(function () { go(current + 1); }, DURATION);
+            }
+
+            function setPaused(value) {
+                if (paused === value) return;
+                paused = value;
+                hero.classList.toggle('is-paused', paused);
+                if (paused) clearInterval(timer); else restart();
+            }
+
+            tabs.forEach(function (tab, i) {
+                tab.addEventListener('click', function () { go(i); });
+                tab.addEventListener('keydown', function (e) {
+                    // RTL: چپ = بعدی، راست = قبلی
+                    var map = { ArrowLeft: 1, ArrowRight: -1, Home: 'first', End: 'last' };
+                    var move = map[e.key];
+                    if (move === undefined) return;
+                    e.preventDefault();
+                    var next = move === 'first' ? 0 : move === 'last' ? tabs.length - 1 : i + move;
+                    next = (next + tabs.length) % tabs.length;
+                    tabs[next].focus();
+                    go(next);
+                });
+            });
+
+            hero.addEventListener('mouseenter', function () { setPaused(true); });
+            hero.addEventListener('mouseleave', function () { setPaused(false); });
+            hero.addEventListener('focusin', function () { setPaused(true); });
+            hero.addEventListener('focusout', function (e) {
+                if (!hero.contains(e.relatedTarget)) setPaused(false);
+            });
+
+            document.addEventListener('visibilitychange', function () {
+                if (document.hidden) { clearInterval(timer); } else if (!paused) { restart(); }
+                syncPlayback();
+            });
+
+            // سوایپ (RTL: کشیدن به چپ = اسلاید بعدی)
+            var startX = null, startY = null;
+            var swipeTarget = stage || hero;
+            swipeTarget.addEventListener('touchstart', function (e) {
+                startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
+            }, { passive: true });
+            swipeTarget.addEventListener('touchend', function (e) {
+                if (startX === null) return;
+                var dx = e.changedTouches[0].clientX - startX;
+                var dy = e.changedTouches[0].clientY - startY;
+                startX = startY = null;
+                if (Math.abs(dx) < 48 || Math.abs(dx) < Math.abs(dy)) return;
+                go(dx < 0 ? current + 1 : current - 1);
+            }, { passive: true });
+
+            var resumeTimer = null;
+            hero.addEventListener('touchstart', function () {
+                setPaused(true);
+                clearTimeout(resumeTimer);
+                resumeTimer = setTimeout(function () { setPaused(false); }, 4000);
+            }, { passive: true });
+
+            wide.addEventListener('change', function () { hydrateVideo(current); syncPlayback(); });
+
+            render(0);
+            hydrateVideo(0);
+            requestAnimationFrame(function () { go(0); });
+
+            if (document.readyState === 'complete') hydrateRest();
+            else window.addEventListener('load', hydrateRest, { once: true });
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+        // المنتور محتوا را در ادیتور دوباره می‌سازد
+        if (window.jQuery) {
+            jQuery(window).on('elementor/frontend/init', function () { setTimeout(init, 0); });
+        }
+    })();
+</script>
