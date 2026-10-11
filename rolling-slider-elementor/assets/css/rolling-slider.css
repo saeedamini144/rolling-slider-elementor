@@ -31,6 +31,9 @@
 	--rsl-ico: 18px;
 	--rsl-duration: 7000ms;
 	--rsl-cols: 3;
+	--rsl-te: ease;
+	--rsl-d: 1;
+	--rsl-k: calc(var(--rsl-s, 1) * var(--rsl-d, 1));
 
 	position: relative;
 	isolation: isolate;
@@ -87,33 +90,166 @@
 	content: "";
 	position: absolute;
 	inset: 0;
-	z-index: 1;
+	z-index: 10;
 	pointer-events: none;
 	background: var(--rsl-ov);
 	opacity: var(--rsl-flat);
 }
 
+/* ── افکت‌های تغییر اسلاید ────────────────────────────────────────────────
+   اسلاید جدید (is-active) از «حالت شروع» خودش (متغیرهای --t-*) به حالت نهایی
+   می‌رود و روی اسلاید قبلی (is-prev) می‌نشیند؛ اسلاید قبلی تا پایان افکت زیر آن
+   می‌ماند و بعد پنهان می‌شود. افکت هر اسلاید با کلاس .rsl-t--{نام} تعیین می‌شود،
+   و رفتار اسلاید خروجی با data-fx روی ریشه (افکت اسلاید ورودی).
+   --rsl-d: جهت حرکت (۱ جلو / ۱- عقب)، --rsl-k: همان جهت با درنظرگرفتن RTL/LTR. */
 .rsl__slide {
 	position: absolute;
 	inset: 0;
-	opacity: 0;
+	z-index: 0;
 	visibility: hidden;
-	transition: opacity var(--rsl-speed) ease, visibility 0s linear var(--rsl-speed), transform var(--rsl-speed) ease, filter var(--rsl-speed) ease;
+	pointer-events: none;
+	opacity: var(--t-o, 1);
+	transform: var(--t-t, none);
+	filter: var(--t-f, none);
+	clip-path: var(--t-c, none);
+	transition: none;
+}
+
+.rsl__slide.is-active,
+.rsl__slide.is-prev {
+	visibility: visible;
+	transition:
+		opacity var(--rsl-speed) var(--rsl-te),
+		transform var(--rsl-speed) var(--rsl-te),
+		filter var(--rsl-speed) var(--rsl-te),
+		clip-path var(--rsl-speed) var(--rsl-te);
 }
 
 .rsl__slide.is-active {
+	z-index: 2;
 	opacity: 1;
-	visibility: visible;
-	transition: opacity var(--rsl-speed) ease, visibility 0s, transform var(--rsl-speed) ease, filter var(--rsl-speed) ease;
+	transform: none;
+	filter: none;
+	clip-path: var(--a-c, none);
 }
 
-/* افکت گذار بین اسلایدها */
-.rsl--fx-zoom .rsl__slide:not(.is-active) {
-	transform: scale(1.08);
+.rsl__slide.is-prev {
+	z-index: 1;
+	opacity: 1;
+	transform: none;
+	filter: none;
+	clip-path: var(--a-c, none);
 }
 
-.rsl--fx-blur .rsl__slide:not(.is-active) {
-	filter: blur(14px);
+/* حالت شروع اسلاید ورودی */
+.rsl-t--fade { --t-o: 0; }
+
+.rsl-t--zoom {
+	--t-o: 0;
+	--t-t: scale(1.12);
+}
+
+.rsl-t--blur {
+	--t-o: 0;
+	--t-f: blur(16px);
+}
+
+.rsl-t--cinematic {
+	--t-o: 0;
+	--t-t: scale(1.3);
+	--t-f: blur(18px) brightness(1.6);
+}
+
+.rsl-t--rotate {
+	--t-o: 0;
+	--t-t: rotate(calc(var(--rsl-k) * 6deg)) scale(1.35);
+}
+
+.rsl-t--flip {
+	--t-o: 0;
+	--t-t: perspective(1400px) rotateY(calc(var(--rsl-k) * -75deg)) scale(1.12);
+}
+
+.rsl-t--slide,
+.rsl-t--cover {
+	--t-t: translateX(calc(var(--rsl-k) * -100%));
+}
+
+.rsl-t--slide-up {
+	--t-t: translateY(calc(var(--rsl-d) * 100%));
+}
+
+.rsl-t--wipe {
+	--t-c: inset(0 calc(100% * max(0, var(--rsl-k))) 0 calc(100% * max(0, -1 * var(--rsl-k))));
+	--a-c: inset(0 0 0 0);
+}
+
+.rsl-t--wipe-up {
+	--t-c: inset(calc(100% * max(0, var(--rsl-d))) 0 calc(100% * max(0, -1 * var(--rsl-d))) 0);
+	--a-c: inset(0 0 0 0);
+}
+
+.rsl-t--circle {
+	--t-c: circle(0% at 50% 50%);
+	--a-c: circle(75% at 50% 50%);
+}
+
+.rsl-t--diamond {
+	--t-c: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);
+	--a-c: polygon(50% -60%, 160% 50%, 50% 160%, -60% 50%);
+}
+
+/* حالت خروج اسلاید قبلی */
+.rsl[data-fx="slide"] .rsl__slide.is-prev {
+	transform: translateX(calc(var(--rsl-k) * 30%));
+}
+
+.rsl[data-fx="slide-up"] .rsl__slide.is-prev {
+	transform: translateY(calc(var(--rsl-d) * -30%));
+}
+
+.rsl[data-fx="cover"] .rsl__slide.is-prev {
+	transform: scale(.94);
+	filter: brightness(.5);
+}
+
+.rsl[data-fx="flip"] .rsl__slide.is-prev {
+	transform: perspective(1400px) rotateY(calc(var(--rsl-k) * 30deg)) scale(.92);
+	filter: brightness(.6);
+}
+
+.rsl[data-fx="rotate"] .rsl__slide.is-prev {
+	transform: rotate(calc(var(--rsl-k) * -3deg)) scale(.92);
+	filter: brightness(.7);
+}
+
+.rsl[data-fx="wipe"] .rsl__slide.is-prev,
+.rsl[data-fx="wipe-up"] .rsl__slide.is-prev,
+.rsl[data-fx="circle"] .rsl__slide.is-prev,
+.rsl[data-fx="diamond"] .rsl__slide.is-prev {
+	filter: brightness(.7);
+}
+
+/* منحنی حرکت: افکت‌های حرکتی نرم‌تر، افکت‌های محوشونده ساده */
+.rsl[data-fx="slide"],
+.rsl[data-fx="slide-up"],
+.rsl[data-fx="cover"],
+.rsl[data-fx="wipe"],
+.rsl[data-fx="wipe-up"],
+.rsl[data-fx="circle"],
+.rsl[data-fx="diamond"],
+.rsl[data-fx="flip"],
+.rsl[data-fx="rotate"] {
+	--rsl-te: cubic-bezier(.77, 0, .18, 1);
+}
+
+.rsl[data-fx="cinematic"] {
+	--rsl-te: cubic-bezier(.22, .61, .36, 1);
+}
+
+.rsl[data-fx="none"] .rsl__slide.is-active,
+.rsl[data-fx="none"] .rsl__slide.is-prev {
+	transition: none;
 }
 
 .rsl .rsl__media {
@@ -132,7 +268,8 @@
 	transition: transform 9s linear;
 }
 
-.rsl--kenburns .rsl__slide.is-active img.rsl__media {
+.rsl--kenburns .rsl__slide.is-active img.rsl__media,
+.rsl--kenburns .rsl__slide.is-prev img.rsl__media {
 	transform: scale(1.14);
 }
 
@@ -479,18 +616,9 @@
 	line-height: 1;
 }
 
-/* آیکن‌های آمادهٔ پلاگین */
-.rsl__svg {
-	fill: none;
-	stroke: currentColor;
-	stroke-width: 2.2;
-	stroke-linecap: round;
-	stroke-linejoin: round;
-}
-
-/* فلش «ادامه» در چپ‌چین برعکس می‌شود تا همیشه به سمت جلو باشد */
-.rsl[dir="ltr"] .rsl__ico--arrow .rsl__svg {
-	transform: scaleX(-1);
+/* آیکن‌های کتابخانهٔ المنتور (SVG درون‌خطی) هم‌رنگ متن دکمه */
+.rsl__btn-icon svg {
+	fill: currentColor;
 }
 
 /* افکت هاور دکمه */

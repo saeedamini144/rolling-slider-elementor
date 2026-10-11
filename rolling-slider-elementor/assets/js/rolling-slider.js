@@ -18,7 +18,7 @@
 
 		root.dataset.rslReady = '1';
 
-		var rtl = root.getAttribute('dir') === 'rtl';
+		var rtl = function () { return root.getAttribute("dir") === "rtl"; };
 		var duration = parseInt(root.dataset.duration, 10) || 7000;
 		var editing = document.body.classList.contains('elementor-editor-active');
 		var reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -39,6 +39,7 @@
 		var reasons = {};
 		var resumeTouch = null;
 		var destroyed = false;
+		var prevTimer = null;
 
 		slides.forEach(function (slide, i) {
 			if (slide.classList.contains('is-active')) current = i;
@@ -118,7 +119,7 @@
 
 		function tick() {
 			if (!root.isConnected) { destroy(); return; }   // المنتور ویجت را دوباره رندر کرده
-			go(current + 1);
+			go(current + 1, 1);
 		}
 
 		function setPause(reason, on) {
@@ -146,10 +147,31 @@
 			strip.scrollBy({ left: (r.left + r.width / 2) - (s.left + s.width / 2), behavior: 'smooth' });
 		}
 
-		function go(i) {
+		// اسلاید قبلی تا پایان افکت زیر اسلاید جدید می‌ماند (is-prev) و بعد پنهان می‌شود
+		function settlePrev() {
+			slides.forEach(function (slide) { slide.classList.remove('is-prev'); });
+		}
+
+		function go(i, dir) {
 			i = (i + total) % total;
 			if (started && i === current) return;
+			var from = current;
+			if (!dir) dir = i > from ? 1 : -1;
 			current = i;
+
+			// افکت و جهت حرکت (۱ = جلو، ۱- = عقب) برای CSS
+			root.setAttribute('data-fx', slides[i].getAttribute('data-fx') || root.getAttribute('data-fx'));
+			if (started) {
+				var raw = getComputedStyle(root).getPropertyValue('--rsl-speed').trim();
+				var ms = (parseFloat(raw) || 0) * (/ms$/.test(raw) ? 1 : 1000);
+				if (root.getAttribute('data-fx') === 'none') ms = 0;
+				root.style.setProperty('--rsl-d', dir);
+				void root.offsetWidth; // حالت شروع اسلاید ورودی با جهت جدید ثبت شود
+				settlePrev();
+				slides[from].classList.add('is-prev');
+				clearTimeout(prevTimer);
+				prevTimer = setTimeout(settlePrev, ms * 1000 + 120);
+			}
 
 			slides.forEach(function (slide, n) { slide.classList.toggle('is-active', n === i); });
 			panels.forEach(function (panel, n) { panel.classList.toggle('is-active', n === i); });
@@ -173,8 +195,8 @@
 			tab.addEventListener('click', function () { go(i); });
 			tab.addEventListener('keydown', function (e) {
 				// جهت از دایرکشن واقعی ویجت می‌آید: در راست‌چین چپ = بعدی
-				var forward = rtl ? 'ArrowLeft' : 'ArrowRight';
-				var backward = rtl ? 'ArrowRight' : 'ArrowLeft';
+				var forward = rtl() ? 'ArrowLeft' : 'ArrowRight';
+				var backward = rtl() ? 'ArrowRight' : 'ArrowLeft';
 				var next;
 				if (e.key === forward) next = i + 1;
 				else if (e.key === backward) next = i - 1;
@@ -184,7 +206,7 @@
 				e.preventDefault();
 				next = (next + tabs.length) % tabs.length;
 				tabs[next].focus();
-				go(next);
+				go(next, e.key === backward || e.key === 'Home' ? -1 : 1);
 			});
 		});
 
@@ -236,7 +258,7 @@
 			var dy = e.changedTouches[0].clientY - startY;
 			startX = startY = null;
 			if (Math.abs(dx) < 48 || Math.abs(dx) < Math.abs(dy)) return;
-			go(dx < 0 ? current + 1 : current - 1);
+			go(dx < 0 ? current + 1 : current - 1, dx < 0 ? 1 : -1);
 		}, { passive: true });
 
 		function onWide() { hydrateVideo(current); syncVideos(); }
@@ -246,6 +268,7 @@
 			if (destroyed) return;
 			destroyed = true;
 			clearTimeout(timer);
+			clearTimeout(prevTimer);
 			clearTimeout(resumeTouch);
 			document.removeEventListener('visibilitychange', onVisibility);
 			if (wide.removeEventListener) wide.removeEventListener('change', onWide);

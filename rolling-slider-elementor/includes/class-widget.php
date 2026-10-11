@@ -27,6 +27,9 @@ class Widget extends Widget_Base {
 	/** افکت‌های مجاز ورود متن */
 	const FX = array( 'none', 'fade', 'fade-up', 'fade-down', 'slide-start', 'slide-end', 'zoom-in', 'zoom-out', 'blur', 'flip', 'reveal' );
 
+	/** افکت‌های مجاز تغییر اسلاید */
+	const TRANSITIONS = array( 'cover', 'slide', 'slide-up', 'wipe', 'wipe-up', 'circle', 'diamond', 'cinematic', 'rotate', 'flip', 'zoom', 'blur', 'fade', 'none' );
+
 	public function get_name() {
 		return 'rolling_slider';
 	}
@@ -102,10 +105,22 @@ class Widget extends Widget_Base {
 			)
 		);
 
+		$repeater->add_control(
+			'slide_transition',
+			array(
+				'label'       => esc_html__( 'افکت تغییر به این اسلاید', 'rolling-slider-elementor' ),
+				'description' => esc_html__( 'افکتی که هنگام ورود همین اسلاید اجرا می‌شود. «پیش‌فرض» یعنی همان افکت تنظیمات اسلایدر.', 'rolling-slider-elementor' ),
+				'type'        => Controls_Manager::SELECT,
+				'options'     => array( '' => esc_html__( 'پیش‌فرض (طبق تنظیمات اسلایدر)', 'rolling-slider-elementor' ) ) + $this->transition_options(),
+				'default'     => '',
+				'label_block' => true,
+			)
+		);
+
 		$repeater->start_controls_tabs( 'slide_tabs' );
 
-		/* رسانه */
-		$repeater->start_controls_tab( 'slide_tab_media', array( 'label' => esc_html__( 'رسانه', 'rolling-slider-elementor' ) ) );
+		/* تصاویر */
+		$repeater->start_controls_tab( 'slide_tab_media', array( 'label' => esc_html__( 'تصاویر', 'rolling-slider-elementor' ) ) );
 
 		$repeater->add_control(
 			'media_type',
@@ -172,24 +187,61 @@ class Widget extends Widget_Base {
 			)
 		);
 
+		$media_sel = '{{WRAPPER}} {{CURRENT_ITEM}} .rsl__media';
+
+		$repeater->add_control(
+			'object_position_heading',
+			array(
+				'label'     => esc_html__( 'موقعیت نمایش تصویر', 'rolling-slider-elementor' ),
+				'type'      => Controls_Manager::HEADING,
+				'separator' => 'before',
+			)
+		);
+
 		$repeater->add_responsive_control(
 			'object_position',
 			array(
-				'label'     => esc_html__( 'کانون تصویر', 'rolling-slider-elementor' ),
-				'type'      => Controls_Manager::SELECT,
-				'options'   => array(
-					''              => esc_html__( 'وسط', 'rolling-slider-elementor' ),
-					'center top'    => esc_html__( 'بالا', 'rolling-slider-elementor' ),
-					'center bottom' => esc_html__( 'پایین', 'rolling-slider-elementor' ),
-					'left center'   => esc_html__( 'چپ', 'rolling-slider-elementor' ),
-					'right center'  => esc_html__( 'راست', 'rolling-slider-elementor' ),
+				'label'                => esc_html__( 'موقعیت', 'rolling-slider-elementor' ),
+				'description'          => esc_html__( 'مشخص می‌کند کدام بخش از تصویر/ویدیو در کادر دیده شود؛ برای هر دستگاه جداگانه قابل تنظیم است.', 'rolling-slider-elementor' ),
+				'type'                 => Controls_Manager::SELECT,
+				'options'              => array(
+					''              => esc_html__( 'وسط (پیش‌فرض)', 'rolling-slider-elementor' ),
+					'left top'      => esc_html__( 'بالا چپ', 'rolling-slider-elementor' ),
+					'center top'    => esc_html__( 'بالا وسط', 'rolling-slider-elementor' ),
+					'right top'     => esc_html__( 'بالا راست', 'rolling-slider-elementor' ),
+					'left center'   => esc_html__( 'وسط چپ', 'rolling-slider-elementor' ),
+					'center center' => esc_html__( 'وسط', 'rolling-slider-elementor' ),
+					'right center'  => esc_html__( 'وسط راست', 'rolling-slider-elementor' ),
+					'left bottom'   => esc_html__( 'پایین چپ', 'rolling-slider-elementor' ),
+					'center bottom' => esc_html__( 'پایین وسط', 'rolling-slider-elementor' ),
+					'right bottom'  => esc_html__( 'پایین راست', 'rolling-slider-elementor' ),
+					'custom'        => esc_html__( 'دلخواه (درصد)…', 'rolling-slider-elementor' ),
 				),
-				'default'   => '',
-				'selectors' => array(
-					'{{WRAPPER}} {{CURRENT_ITEM}} .rsl__media' => 'object-position: {{VALUE}};',
-				),
+				'default'              => '',
+				'selectors_dictionary' => array( 'custom' => '50% 50%' ),
+				'selectors'            => array( $media_sel => 'object-position: {{VALUE}};' ),
 			)
 		);
+
+		foreach ( array(
+			'x' => esc_html__( 'موقعیت افقی (٪)', 'rolling-slider-elementor' ),
+			'y' => esc_html__( 'موقعیت عمودی (٪)', 'rolling-slider-elementor' ),
+		) as $axis => $label ) {
+			$repeater->add_responsive_control(
+				"object_pos_{$axis}",
+				array(
+					'label'      => $label,
+					'type'       => Controls_Manager::SLIDER,
+					'size_units' => array( '%' ),
+					'range'      => array( '%' => array( 'min' => 0, 'max' => 100 ) ),
+					'default'    => array( 'size' => 50, 'unit' => '%' ),
+					'condition'  => array( 'object_position' => 'custom' ),
+					'selectors'  => array(
+						$media_sel => 'object-position: {{object_pos_x.SIZE}}{{object_pos_x.UNIT}} {{object_pos_y.SIZE}}{{object_pos_y.UNIT}};',
+					),
+				)
+			);
+		}
 
 		$repeater->end_controls_tab();
 
@@ -207,6 +259,17 @@ class Widget extends Widget_Base {
 		);
 
 		$repeater->add_control(
+			'eyebrow_tag',
+			array(
+				'label'     => esc_html__( 'تگ زیرعنوان', 'rolling-slider-elementor' ),
+				'type'      => Controls_Manager::SELECT,
+				'options'   => $this->html_tags(),
+				'default'   => 'span',
+				'condition' => array( 'eyebrow!' => '' ),
+			)
+		);
+
+		$repeater->add_control(
 			'title',
 			array(
 				'label'       => esc_html__( 'عنوان', 'rolling-slider-elementor' ),
@@ -215,6 +278,18 @@ class Widget extends Widget_Base {
 				'rows'        => 3,
 				'label_block' => true,
 				'dynamic'     => array( 'active' => true ),
+			)
+		);
+
+		$repeater->add_control(
+			'title_tag',
+			array(
+				'label'       => esc_html__( 'تگ عنوان', 'rolling-slider-elementor' ),
+				'description' => esc_html__( 'برای سئو، فقط اولین اسلایدی که H1 دارد H1 می‌ماند و بقیهٔ H1ها خودکار H2 می‌شوند.', 'rolling-slider-elementor' ),
+				'type'        => Controls_Manager::SELECT,
+				'options'     => $this->html_tags(),
+				'default'     => 'h2',
+				'condition'   => array( 'title!' => '' ),
 			)
 		);
 
@@ -292,35 +367,16 @@ class Widget extends Widget_Base {
 			);
 
 			$repeater->add_control(
-				"btn{$n}_icon_preset",
-				array(
-					'label'     => esc_html__( 'آیکن', 'rolling-slider-elementor' ),
-					'type'      => Controls_Manager::SELECT,
-					'options'   => array(
-						'none'     => esc_html__( 'بدون آیکن', 'rolling-slider-elementor' ),
-						'arrow'    => esc_html__( 'فلش (جهت خودکار)', 'rolling-slider-elementor' ),
-						'download' => esc_html__( 'دانلود', 'rolling-slider-elementor' ),
-						'award'    => esc_html__( 'گواهینامه', 'rolling-slider-elementor' ),
-						'phone'    => esc_html__( 'تلفن', 'rolling-slider-elementor' ),
-						'mail'     => esc_html__( 'ایمیل', 'rolling-slider-elementor' ),
-						'play'     => esc_html__( 'پخش', 'rolling-slider-elementor' ),
-						'external' => esc_html__( 'لینک خارجی', 'rolling-slider-elementor' ),
-						'custom'   => esc_html__( 'آیکن دلخواه…', 'rolling-slider-elementor' ),
-					),
-					'default'   => 'arrow',
-					'condition' => array( $show => 'yes' ),
-				)
-			);
-
-			$repeater->add_control(
 				"btn{$n}_icon",
 				array(
-					'label'     => esc_html__( 'آیکن دلخواه', 'rolling-slider-elementor' ),
-					'type'      => Controls_Manager::ICONS,
-					'condition' => array(
-						$show                 => 'yes',
-						"btn{$n}_icon_preset" => 'custom',
+					'label'       => esc_html__( 'آیکن (از کتابخانهٔ آیکن)', 'rolling-slider-elementor' ),
+					'description' => esc_html__( 'هر آیکنی از کتابخانهٔ المنتور (Font Awesome و …) یا SVG خودتان. برای حذف آیکن، آن را پاک کنید.', 'rolling-slider-elementor' ),
+					'type'        => Controls_Manager::ICONS,
+					'default'     => array(
+						'value'   => 1 === $n ? ( is_rtl() ? 'fas fa-arrow-left' : 'fas fa-arrow-right' ) : 'fas fa-download',
+						'library' => 'fa-solid',
 					),
+					'condition'   => array( $show => 'yes' ),
 				)
 			);
 		}
@@ -356,6 +412,11 @@ class Widget extends Widget_Base {
 			);
 		};
 
+		$arrow = array(
+			'value'   => is_rtl() ? 'fas fa-arrow-left' : 'fas fa-arrow-right',
+			'library' => 'fa-solid',
+		);
+
 		return array(
 			array(
 				'_id'                => 'rsl0001',
@@ -371,12 +432,15 @@ class Widget extends Widget_Base {
 				'btn1_text'          => 'Lorem ipsum',
 				'btn1_link'          => $link( '#' ),
 				'btn1_style'         => 'primary',
-				'btn1_icon_preset'   => 'arrow',
+				'btn1_icon'          => $arrow,
 				'btn2_show'          => 'yes',
 				'btn2_text'          => 'Dolor sit amet',
 				'btn2_link'          => $link( '#' ),
 				'btn2_style'         => 'ghost',
-				'btn2_icon_preset'   => 'download',
+				'btn2_icon'          => array(
+					'value'   => 'fas fa-download',
+					'library' => 'fa-solid',
+				),
 			),
 			array(
 				'_id'              => 'rsl0002',
@@ -390,7 +454,7 @@ class Widget extends Widget_Base {
 				'btn1_text'        => 'Ut enim ad minim',
 				'btn1_link'        => $link( '#' ),
 				'btn1_style'       => 'primary',
-				'btn1_icon_preset' => 'arrow',
+				'btn1_icon'        => $arrow,
 			),
 		);
 	}
@@ -463,15 +527,12 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			'transition',
 			array(
-				'label'     => esc_html__( 'افکت گذار بین اسلایدها', 'rolling-slider-elementor' ),
-				'type'      => Controls_Manager::SELECT,
-				'separator' => 'before',
-				'options'   => array(
-					'fade' => esc_html__( 'محو شدن', 'rolling-slider-elementor' ),
-					'zoom' => esc_html__( 'محو + زوم', 'rolling-slider-elementor' ),
-					'blur' => esc_html__( 'محو + بلور', 'rolling-slider-elementor' ),
-				),
-				'default'   => 'fade',
+				'label'       => esc_html__( 'افکت پیش‌فرض تغییر اسلاید', 'rolling-slider-elementor' ),
+				'description' => esc_html__( 'برای هر اسلاید می‌توانید در تب «اسلایدها» افکت جداگانه انتخاب کنید. افکت‌های پرده‌ای و لغزشی با سرعت ۱۰۰۰ تا ۱۴۰۰ میلی‌ثانیه زیباترند.', 'rolling-slider-elementor' ),
+				'type'        => Controls_Manager::SELECT,
+				'separator'   => 'before',
+				'options'     => $this->transition_options(),
+				'default'     => 'cover',
 			)
 		);
 
@@ -482,7 +543,7 @@ class Widget extends Widget_Base {
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 'px' ),
 				'range'      => array( 'px' => array( 'min' => 100, 'max' => 3000, 'step' => 50 ) ),
-				'default'    => array( 'size' => 900, 'unit' => 'px' ),
+				'default'    => array( 'size' => 1100, 'unit' => 'px' ),
 				'selectors'  => array( '{{WRAPPER}} .rsl' => '--rsl-speed: {{SIZE}}ms;' ),
 			)
 		);
@@ -545,41 +606,8 @@ class Widget extends Widget_Base {
 		$this->start_controls_section(
 			'section_markup',
 			array(
-				'label' => esc_html__( 'تگ‌ها و تصویر', 'rolling-slider-elementor' ),
+				'label' => esc_html__( 'اندازهٔ تصویر', 'rolling-slider-elementor' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
-			)
-		);
-
-		$tags = array(
-			'h1'   => 'H1',
-			'h2'   => 'H2',
-			'h3'   => 'H3',
-			'h4'   => 'H4',
-			'h5'   => 'H5',
-			'h6'   => 'H6',
-			'div'  => 'div',
-			'span' => 'span',
-			'p'    => 'p',
-		);
-
-		$this->add_control(
-			'eyebrow_tag',
-			array(
-				'label'   => esc_html__( 'تگ زیرعنوان', 'rolling-slider-elementor' ),
-				'type'    => Controls_Manager::SELECT,
-				'options' => $tags,
-				'default' => 'span',
-			)
-		);
-
-		$this->add_control(
-			'title_tag',
-			array(
-				'label'       => esc_html__( 'تگ عنوان', 'rolling-slider-elementor' ),
-				'description' => esc_html__( 'اگر H1 را انتخاب کنید فقط اسلاید اول H1 می‌شود و بقیه خودکار H2 خواهند بود (برای سئو).', 'rolling-slider-elementor' ),
-				'type'        => Controls_Manager::SELECT,
-				'options'     => $tags,
-				'default'     => 'h2',
 			)
 		);
 
@@ -595,6 +623,40 @@ class Widget extends Widget_Base {
 		);
 
 		$this->end_controls_section();
+	}
+
+	private function html_tags() {
+		return array(
+			'h1'   => 'H1',
+			'h2'   => 'H2',
+			'h3'   => 'H3',
+			'h4'   => 'H4',
+			'h5'   => 'H5',
+			'h6'   => 'H6',
+			'div'  => 'div',
+			'span' => 'span',
+			'p'    => 'p',
+		);
+	}
+
+	/** افکت‌های تغییر اسلاید (کلیدها باید با self::TRANSITIONS و CSS یکی باشند) */
+	private function transition_options() {
+		return array(
+			'cover'     => esc_html__( 'روکش لغزان (Cover)', 'rolling-slider-elementor' ),
+			'slide'     => esc_html__( 'لغزش افقی + پارالاکس', 'rolling-slider-elementor' ),
+			'slide-up'  => esc_html__( 'لغزش عمودی', 'rolling-slider-elementor' ),
+			'wipe'      => esc_html__( 'پردهٔ افقی (Wipe)', 'rolling-slider-elementor' ),
+			'wipe-up'   => esc_html__( 'پردهٔ عمودی', 'rolling-slider-elementor' ),
+			'circle'    => esc_html__( 'دایرهٔ گسترشی (Iris)', 'rolling-slider-elementor' ),
+			'diamond'   => esc_html__( 'لوزی گسترشی', 'rolling-slider-elementor' ),
+			'cinematic' => esc_html__( 'سینمایی (زوم + بلور + نور)', 'rolling-slider-elementor' ),
+			'rotate'    => esc_html__( 'چرخش + زوم', 'rolling-slider-elementor' ),
+			'flip'      => esc_html__( 'چرخش سه‌بعدی', 'rolling-slider-elementor' ),
+			'zoom'      => esc_html__( 'محو + زوم', 'rolling-slider-elementor' ),
+			'blur'      => esc_html__( 'محو + بلور', 'rolling-slider-elementor' ),
+			'fade'      => esc_html__( 'محو شدن (Crossfade)', 'rolling-slider-elementor' ),
+			'none'      => esc_html__( 'بدون افکت (تغییر آنی)', 'rolling-slider-elementor' ),
+		);
 	}
 
 	private function image_size_options() {
@@ -1707,9 +1769,14 @@ class Widget extends Widget_Base {
 			return in_array( $value, $allowed, true ) ? $value : $fallback;
 		};
 
+		// افکت تغییر: پیش‌فرض ویجت، و برای هر اسلاید قابل بازنویسی
+		$default_fx = $choice( isset( $settings['transition'] ) ? $settings['transition'] : '', self::TRANSITIONS, 'cover' );
+		foreach ( $slides as $i => $item ) {
+			$slides[ $i ]['fx'] = $choice( $item['slide_transition'], self::TRANSITIONS, $default_fx );
+		}
+
 		$classes = array(
 			'rsl',
-			'rsl--fx-' . $choice( $settings['transition'], array( 'fade', 'zoom', 'blur' ), 'fade' ),
 			'rsl--veil-' . $choice( $settings['overlay_side'], array( 'start', 'end', 'none' ), 'start' ),
 			'rsl--hover-' . $choice( $settings['btn_hover'], array( 'none', 'lift', 'grow', 'glow', 'icon' ), 'lift' ),
 		);
@@ -1733,6 +1800,7 @@ class Widget extends Widget_Base {
 				'dir'                  => $dir,
 				'aria-roledescription' => 'carousel',
 				'aria-label'           => $settings['aria_label'],
+				'data-fx'              => $default_fx,
 				'data-autoplay'        => $autoplay ? 'yes' : 'no',
 				'data-duration'        => $duration,
 				'data-pause-hover'     => 'yes' === $settings['pause_on_hover'] ? 'yes' : 'no',
@@ -1747,15 +1815,30 @@ class Widget extends Widget_Base {
 			$fx[ $part ] = 'rsl-fx rsl-fx--' . $choice( $value, self::FX, 'fade-up' );
 		}
 
-		$eyebrow_tag = Utils::validate_html_tag( $settings['eyebrow_tag'] );
-		$title_tag   = Utils::validate_html_tag( $settings['title_tag'] );
-		$size        = $settings['image_size'] ? $settings['image_size'] : 'full';
+		$size    = $settings['image_size'] ? $settings['image_size'] : 'full';
+		$has_h1  = false;
+		$headers = array();
+
+		// تگ‌ها برای هر اسلاید جدا انتخاب می‌شوند؛ فقط اولین H1 می‌ماند (سئو)
+		foreach ( $slides as $i => $item ) {
+			$title_tag = Utils::validate_html_tag( $item['title_tag'] );
+			if ( 'h1' === $title_tag ) {
+				if ( $has_h1 ) {
+					$title_tag = 'h2';
+				}
+				$has_h1 = true;
+			}
+			$headers[ $i ] = array(
+				'eyebrow' => Utils::validate_html_tag( $item['eyebrow_tag'] ),
+				'title'   => $title_tag,
+			);
+		}
 		?>
 		<section <?php $this->print_render_attribute_string( 'root' ); ?>>
 
 			<div class="rsl__stage" aria-hidden="true">
 				<?php foreach ( $slides as $i => $item ) : ?>
-					<div class="rsl__slide elementor-repeater-item-<?php echo esc_attr( $item['_id'] ); ?><?php echo $i === $start ? ' is-active' : ''; ?>">
+					<div class="rsl__slide rsl-t--<?php echo esc_attr( $item['fx'] ); ?> elementor-repeater-item-<?php echo esc_attr( $item['_id'] ); ?><?php echo $i === $start ? ' is-active' : ''; ?>" data-fx="<?php echo esc_attr( $item['fx'] ); ?>">
 						<?php $this->render_media( $item, $i === $start, $size ); ?>
 					</div>
 				<?php endforeach; ?>
@@ -1767,7 +1850,8 @@ class Widget extends Widget_Base {
 				<div class="rsl__panels">
 					<?php
 					foreach ( $slides as $i => $item ) :
-						$tag = ( 'h1' === $title_tag && 0 !== $i ) ? 'h2' : $title_tag;
+						$tag         = $headers[ $i ]['title'];
+						$eyebrow_tag = $headers[ $i ]['eyebrow'];
 						?>
 						<div class="rsl__panel elementor-repeater-item-<?php echo esc_attr( $item['_id'] ); ?><?php echo $i === $start ? ' is-active' : ''; ?>"
 							id="rsl-panel-<?php echo esc_attr( $wid . '-' . $i ); ?>" role="tabpanel"
@@ -1822,14 +1906,16 @@ class Widget extends Widget_Base {
 			'eyebrow'      => '',
 			'title'        => '',
 			'content'      => '',
+			'eyebrow_tag'  => 'span',
+			'title_tag'    => 'h2',
+			'slide_transition' => '',
 		);
 		foreach ( array( 1, 2 ) as $n ) {
-			$defaults[ "btn{$n}_show" ]        = '';
-			$defaults[ "btn{$n}_text" ]        = '';
-			$defaults[ "btn{$n}_link" ]        = array();
-			$defaults[ "btn{$n}_style" ]       = 1 === $n ? 'primary' : 'ghost';
-			$defaults[ "btn{$n}_icon_preset" ] = 'none';
-			$defaults[ "btn{$n}_icon" ]        = array();
+			$defaults[ "btn{$n}_show" ]  = '';
+			$defaults[ "btn{$n}_text" ]  = '';
+			$defaults[ "btn{$n}_link" ]  = array();
+			$defaults[ "btn{$n}_style" ] = 1 === $n ? 'primary' : 'ghost';
+			$defaults[ "btn{$n}_icon" ]  = array();
 		}
 		return wp_parse_args( $item, $defaults );
 	}
@@ -1990,39 +2076,16 @@ class Widget extends Widget_Base {
 	}
 
 	private function button_icon( $item, $n ) {
-		$preset = isset( $item[ "btn{$n}_icon_preset" ] ) ? $item[ "btn{$n}_icon_preset" ] : 'none';
+		$icon = isset( $item[ "btn{$n}_icon" ] ) ? $item[ "btn{$n}_icon" ] : array();
 
-		if ( 'none' === $preset ) {
+		if ( empty( $icon['value'] ) ) {
 			return '';
 		}
 
-		if ( 'custom' === $preset ) {
-			if ( empty( $item[ "btn{$n}_icon" ]['value'] ) ) {
-				return '';
-			}
-			ob_start();
-			Icons_Manager::render_icon( $item[ "btn{$n}_icon" ], array( 'aria-hidden' => 'true' ) );
-			return '<span class="rsl__btn-icon">' . ob_get_clean() . '</span>';
-		}
+		ob_start();
+		Icons_Manager::render_icon( $icon, array( 'aria-hidden' => 'true' ) );
+		$html = ob_get_clean();
 
-		$paths = array(
-			'arrow'    => '<path d="M19 12H5"/><path d="m12 19-7-7 7-7"/>',
-			'download' => '<path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/>',
-			'award'    => '<circle cx="12" cy="9" r="5.5"/><path d="m8.5 13.4-1.6 7.1 5.1-2.7 5.1 2.7-1.6-7.1"/>',
-			'phone'    => '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>',
-			'mail'     => '<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="m22 6-10 7L2 6"/>',
-			'play'     => '<path d="M6 4v16l14-8z"/>',
-			'external' => '<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/>',
-		);
-
-		if ( ! isset( $paths[ $preset ] ) ) {
-			return '';
-		}
-
-		return sprintf(
-			'<span class="rsl__btn-icon rsl__ico--%1$s"><svg class="rsl__svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false">%2$s</svg></span>',
-			esc_attr( $preset ),
-			$paths[ $preset ]
-		);
+		return '' === $html ? '' : '<span class="rsl__btn-icon">' . $html . '</span>';
 	}
 }
