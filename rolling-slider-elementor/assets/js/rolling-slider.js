@@ -166,11 +166,15 @@
 				var ms = (parseFloat(raw) || 0) * (/ms$/.test(raw) ? 1 : 1000);
 				if (root.getAttribute('data-fx') === 'none') ms = 0;
 				root.style.setProperty('--rsl-d', dir);
-				void root.offsetWidth; // حالت شروع اسلاید ورودی با جهت جدید ثبت شود
-				settlePrev();
+				// اسلاید مقصد باید پنهان و در «حالت شروع» افکت باشد؛ اگر هنوز is-prev است
+				// (کلیک سریع) به حالت پنهان برمی‌گردد تا افکت دوباره از اول پخش شود
+				slides.forEach(function (slide, n) {
+					if (n !== from) slide.classList.remove('is-prev', 'is-active');
+				});
+				void root.offsetWidth; //حالت شروع اسلاید ورودی با جهت جدید ثبت شود
 				slides[from].classList.add('is-prev');
 				clearTimeout(prevTimer);
-				prevTimer = setTimeout(settlePrev, ms * 1000 + 120);
+				prevTimer = setTimeout(settlePrev, ms + 120);
 			}
 
 			slides.forEach(function (slide, n) { slide.classList.toggle('is-active', n === i); });
