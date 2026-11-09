@@ -139,14 +139,6 @@
 		}
 
 		/* ── ناوبری ───────────────────────────────────────────────────────── */
-		function centerTab(el) {
-			var strip = el && el.parentNode;
-			if (!strip || strip.scrollWidth <= strip.clientWidth + 1) return;
-			var r = el.getBoundingClientRect();
-			var s = strip.getBoundingClientRect();
-			strip.scrollBy({ left: (r.left + r.width / 2) - (s.left + s.width / 2), behavior: 'smooth' });
-		}
-
 		// اسلاید قبلی تا پایان افکت زیر اسلاید جدید می‌ماند (is-prev) و بعد پنهان می‌شود
 		function settlePrev() {
 			slides.forEach(function (slide) { slide.classList.remove('is-prev'); });
@@ -184,8 +176,6 @@
 				tab.setAttribute('aria-selected', on ? 'true' : 'false');
 				tab.tabIndex = on ? 0 : -1;
 			});
-
-			if (started) centerTab(tabs[i]);
 
 			hydrateImage(i);
 			if (!lightMode) hydrateImage((i + 1) % total);

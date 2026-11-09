@@ -35,7 +35,7 @@ class Widget extends Widget_Base {
 	}
 
 	public function get_title() {
-		return esc_html__( 'اسلایدر رولینگ', 'rolling-slider-elementor' );
+		return esc_html__( 'Rolling Slider', 'rolling-slider-elementor' );
 	}
 
 	public function get_icon() {
@@ -87,7 +87,7 @@ class Widget extends Widget_Base {
 		$this->start_controls_section(
 			'section_slides',
 			array(
-				'label' => esc_html__( 'اسلایدها', 'rolling-slider-elementor' ),
+				'label' => esc_html__( 'Slides', 'rolling-slider-elementor' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 			)
 		);
@@ -97,9 +97,9 @@ class Widget extends Widget_Base {
 		$repeater->add_control(
 			'tab_title',
 			array(
-				'label'       => esc_html__( 'عنوان تب ناوبری', 'rolling-slider-elementor' ),
+				'label'       => esc_html__( 'Navigation tab title', 'rolling-slider-elementor' ),
 				'type'        => Controls_Manager::TEXT,
-				'default'     => esc_html__( 'اسلاید جدید', 'rolling-slider-elementor' ),
+				'default'     => esc_html__( 'New slide', 'rolling-slider-elementor' ),
 				'label_block' => true,
 				'dynamic'     => array( 'active' => true ),
 			)
@@ -108,10 +108,10 @@ class Widget extends Widget_Base {
 		$repeater->add_control(
 			'slide_transition',
 			array(
-				'label'       => esc_html__( 'افکت تغییر به این اسلاید', 'rolling-slider-elementor' ),
-				'description' => esc_html__( 'افکتی که هنگام ورود همین اسلاید اجرا می‌شود. «پیش‌فرض» یعنی همان افکت تنظیمات اسلایدر.', 'rolling-slider-elementor' ),
+				'label'       => esc_html__( 'Transition into this slide', 'rolling-slider-elementor' ),
+				'description' => esc_html__( 'The effect played when this slide comes in. "Default" uses the effect from the slider settings.', 'rolling-slider-elementor' ),
 				'type'        => Controls_Manager::SELECT,
-				'options'     => array( '' => esc_html__( 'پیش‌فرض (طبق تنظیمات اسلایدر)', 'rolling-slider-elementor' ) ) + $this->transition_options(),
+				'options'     => array( '' => esc_html__( 'Default (from slider settings)', 'rolling-slider-elementor' ) ) + $this->transition_options(),
 				'default'     => '',
 				'label_block' => true,
 			)
@@ -120,22 +120,22 @@ class Widget extends Widget_Base {
 		$repeater->start_controls_tabs( 'slide_tabs' );
 
 		/* تصاویر */
-		$repeater->start_controls_tab( 'slide_tab_media', array( 'label' => esc_html__( 'تصاویر', 'rolling-slider-elementor' ) ) );
+		$repeater->start_controls_tab( 'slide_tab_media', array( 'label' => esc_html__( 'Media', 'rolling-slider-elementor' ) ) );
 
 		$repeater->add_control(
 			'media_type',
 			array(
-				'label'   => esc_html__( 'نوع رسانه', 'rolling-slider-elementor' ),
+				'label'   => esc_html__( 'Media type', 'rolling-slider-elementor' ),
 				'type'    => Controls_Manager::CHOOSE,
 				'toggle'  => false,
 				'default' => 'image',
 				'options' => array(
 					'image' => array(
-						'title' => esc_html__( 'تصویر', 'rolling-slider-elementor' ),
+						'title' => esc_html__( 'Image', 'rolling-slider-elementor' ),
 						'icon'  => 'eicon-image',
 					),
 					'video' => array(
-						'title' => esc_html__( 'ویدیو', 'rolling-slider-elementor' ),
+						'title' => esc_html__( 'Video', 'rolling-slider-elementor' ),
 						'icon'  => 'eicon-video-camera',
 					),
 				),
@@ -145,7 +145,7 @@ class Widget extends Widget_Base {
 		$repeater->add_control(
 			'image',
 			array(
-				'label'     => esc_html__( 'تصویر', 'rolling-slider-elementor' ),
+				'label'     => esc_html__( 'Image', 'rolling-slider-elementor' ),
 				'type'      => Controls_Manager::MEDIA,
 				'default'   => array( 'url' => Utils::get_placeholder_image_src() ),
 				'dynamic'   => array( 'active' => true ),
@@ -156,7 +156,7 @@ class Widget extends Widget_Base {
 		$repeater->add_control(
 			'video',
 			array(
-				'label'       => esc_html__( 'ویدیو (MP4 / WebM)', 'rolling-slider-elementor' ),
+				'label'       => esc_html__( 'Video (MP4 / WebM)', 'rolling-slider-elementor' ),
 				'type'        => Controls_Manager::MEDIA,
 				'media_types' => array( 'video' ),
 				'dynamic'     => array( 'active' => true ),
@@ -167,8 +167,8 @@ class Widget extends Widget_Base {
 		$repeater->add_control(
 			'video_mobile',
 			array(
-				'label'       => esc_html__( 'ویدیوی سبک موبایل (اختیاری)', 'rolling-slider-elementor' ),
-				'description' => esc_html__( 'اگر انتخاب شود در صفحه‌های کوچک به‌جای ویدیوی اصلی پخش می‌شود و مصرف دیتا را کم می‌کند.', 'rolling-slider-elementor' ),
+				'label'       => esc_html__( 'Lightweight mobile video (optional)', 'rolling-slider-elementor' ),
+				'description' => esc_html__( 'If set, it plays instead of the main video on small screens to save data.', 'rolling-slider-elementor' ),
 				'type'        => Controls_Manager::MEDIA,
 				'media_types' => array( 'video' ),
 				'dynamic'     => array( 'active' => true ),
@@ -179,8 +179,8 @@ class Widget extends Widget_Base {
 		$repeater->add_control(
 			'poster',
 			array(
-				'label'       => esc_html__( 'پوستر ویدیو', 'rolling-slider-elementor' ),
-				'description' => esc_html__( 'تا لود شدن ویدیو (یا وقتی دیتا‌سیور فعال است) نمایش داده می‌شود.', 'rolling-slider-elementor' ),
+				'label'       => esc_html__( 'Video poster', 'rolling-slider-elementor' ),
+				'description' => esc_html__( 'Shown until the video loads (or when Data Saver is on).', 'rolling-slider-elementor' ),
 				'type'        => Controls_Manager::MEDIA,
 				'dynamic'     => array( 'active' => true ),
 				'condition'   => array( 'media_type' => 'video' ),
@@ -192,7 +192,7 @@ class Widget extends Widget_Base {
 		$repeater->add_control(
 			'object_position_heading',
 			array(
-				'label'     => esc_html__( 'موقعیت نمایش تصویر', 'rolling-slider-elementor' ),
+				'label'     => esc_html__( 'Image focal point', 'rolling-slider-elementor' ),
 				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 			)
@@ -201,21 +201,21 @@ class Widget extends Widget_Base {
 		$repeater->add_responsive_control(
 			'object_position',
 			array(
-				'label'                => esc_html__( 'موقعیت', 'rolling-slider-elementor' ),
-				'description'          => esc_html__( 'مشخص می‌کند کدام بخش از تصویر/ویدیو در کادر دیده شود؛ برای هر دستگاه جداگانه قابل تنظیم است.', 'rolling-slider-elementor' ),
+				'label'                => esc_html__( 'Position', 'rolling-slider-elementor' ),
+				'description'          => esc_html__( 'Which part of the image/video stays in frame. Can be set separately for each device.', 'rolling-slider-elementor' ),
 				'type'                 => Controls_Manager::SELECT,
 				'options'              => array(
-					''              => esc_html__( 'وسط (پیش‌فرض)', 'rolling-slider-elementor' ),
-					'left top'      => esc_html__( 'بالا چپ', 'rolling-slider-elementor' ),
-					'center top'    => esc_html__( 'بالا وسط', 'rolling-slider-elementor' ),
-					'right top'     => esc_html__( 'بالا راست', 'rolling-slider-elementor' ),
-					'left center'   => esc_html__( 'وسط چپ', 'rolling-slider-elementor' ),
-					'center center' => esc_html__( 'وسط', 'rolling-slider-elementor' ),
-					'right center'  => esc_html__( 'وسط راست', 'rolling-slider-elementor' ),
-					'left bottom'   => esc_html__( 'پایین چپ', 'rolling-slider-elementor' ),
-					'center bottom' => esc_html__( 'پایین وسط', 'rolling-slider-elementor' ),
-					'right bottom'  => esc_html__( 'پایین راست', 'rolling-slider-elementor' ),
-					'custom'        => esc_html__( 'دلخواه (درصد)…', 'rolling-slider-elementor' ),
+					''              => esc_html__( 'Center (default)', 'rolling-slider-elementor' ),
+					'left top'      => esc_html__( 'Top left', 'rolling-slider-elementor' ),
+					'center top'    => esc_html__( 'Top center', 'rolling-slider-elementor' ),
+					'right top'     => esc_html__( 'Top right', 'rolling-slider-elementor' ),
+					'left center'   => esc_html__( 'Center left', 'rolling-slider-elementor' ),
+					'center center' => esc_html__( 'Center', 'rolling-slider-elementor' ),
+					'right center'  => esc_html__( 'Center right', 'rolling-slider-elementor' ),
+					'left bottom'   => esc_html__( 'Bottom left', 'rolling-slider-elementor' ),
+					'center bottom' => esc_html__( 'Bottom center', 'rolling-slider-elementor' ),
+					'right bottom'  => esc_html__( 'Bottom right', 'rolling-slider-elementor' ),
+					'custom'        => esc_html__( 'Custom (percent)…', 'rolling-slider-elementor' ),
 				),
 				'default'              => '',
 				'selectors_dictionary' => array( 'custom' => '50% 50%' ),
@@ -224,8 +224,8 @@ class Widget extends Widget_Base {
 		);
 
 		foreach ( array(
-			'x' => esc_html__( 'موقعیت افقی (٪)', 'rolling-slider-elementor' ),
-			'y' => esc_html__( 'موقعیت عمودی (٪)', 'rolling-slider-elementor' ),
+			'x' => esc_html__( 'Horizontal position (%)', 'rolling-slider-elementor' ),
+			'y' => esc_html__( 'Vertical position (%)', 'rolling-slider-elementor' ),
 		) as $axis => $label ) {
 			$repeater->add_responsive_control(
 				"object_pos_{$axis}",
@@ -246,12 +246,12 @@ class Widget extends Widget_Base {
 		$repeater->end_controls_tab();
 
 		/* متن */
-		$repeater->start_controls_tab( 'slide_tab_text', array( 'label' => esc_html__( 'متن', 'rolling-slider-elementor' ) ) );
+		$repeater->start_controls_tab( 'slide_tab_text', array( 'label' => esc_html__( 'Text', 'rolling-slider-elementor' ) ) );
 
 		$repeater->add_control(
 			'eyebrow',
 			array(
-				'label'       => esc_html__( 'زیرعنوان', 'rolling-slider-elementor' ),
+				'label'       => esc_html__( 'Eyebrow', 'rolling-slider-elementor' ),
 				'type'        => Controls_Manager::TEXT,
 				'label_block' => true,
 				'dynamic'     => array( 'active' => true ),
@@ -261,7 +261,7 @@ class Widget extends Widget_Base {
 		$repeater->add_control(
 			'eyebrow_tag',
 			array(
-				'label'     => esc_html__( 'تگ زیرعنوان', 'rolling-slider-elementor' ),
+				'label'     => esc_html__( 'Eyebrow HTML tag', 'rolling-slider-elementor' ),
 				'type'      => Controls_Manager::SELECT,
 				'options'   => $this->html_tags(),
 				'default'   => 'span',
@@ -272,8 +272,8 @@ class Widget extends Widget_Base {
 		$repeater->add_control(
 			'title',
 			array(
-				'label'       => esc_html__( 'عنوان', 'rolling-slider-elementor' ),
-				'description' => esc_html__( 'برای رنگ تاکیدی از <b>…</b> و برای شکستن خط از <br> استفاده کنید.', 'rolling-slider-elementor' ),
+				'label'       => esc_html__( 'Title', 'rolling-slider-elementor' ),
+				'description' => esc_html__( 'Use <b>…</b> for the accent color and <br> for a line break.', 'rolling-slider-elementor' ),
 				'type'        => Controls_Manager::TEXTAREA,
 				'rows'        => 3,
 				'label_block' => true,
@@ -284,8 +284,8 @@ class Widget extends Widget_Base {
 		$repeater->add_control(
 			'title_tag',
 			array(
-				'label'       => esc_html__( 'تگ عنوان', 'rolling-slider-elementor' ),
-				'description' => esc_html__( 'برای سئو، فقط اولین اسلایدی که H1 دارد H1 می‌ماند و بقیهٔ H1ها خودکار H2 می‌شوند.', 'rolling-slider-elementor' ),
+				'label'       => esc_html__( 'Title HTML tag', 'rolling-slider-elementor' ),
+				'description' => esc_html__( 'For SEO, only the first slide set to H1 keeps it; any other H1 is output as H2.', 'rolling-slider-elementor' ),
 				'type'        => Controls_Manager::SELECT,
 				'options'     => $this->html_tags(),
 				'default'     => 'h2',
@@ -296,7 +296,7 @@ class Widget extends Widget_Base {
 		$repeater->add_control(
 			'content',
 			array(
-				'label'   => esc_html__( 'محتوا', 'rolling-slider-elementor' ),
+				'label'   => esc_html__( 'Content', 'rolling-slider-elementor' ),
 				'type'    => Controls_Manager::WYSIWYG,
 				'dynamic' => array( 'active' => true ),
 			)
@@ -305,7 +305,7 @@ class Widget extends Widget_Base {
 		$repeater->end_controls_tab();
 
 		/* دکمه‌ها */
-		$repeater->start_controls_tab( 'slide_tab_buttons', array( 'label' => esc_html__( 'دکمه‌ها', 'rolling-slider-elementor' ) ) );
+		$repeater->start_controls_tab( 'slide_tab_buttons', array( 'label' => esc_html__( 'Buttons', 'rolling-slider-elementor' ) ) );
 
 		foreach ( array( 1, 2 ) as $n ) {
 			$show = "btn{$n}_show";
@@ -314,7 +314,7 @@ class Widget extends Widget_Base {
 				"btn{$n}_heading",
 				array(
 					/* translators: %d: button number */
-					'label'     => sprintf( esc_html__( 'دکمه %d', 'rolling-slider-elementor' ), $n ),
+					'label'     => sprintf( esc_html__( 'Button %d', 'rolling-slider-elementor' ), $n ),
 					'type'      => Controls_Manager::HEADING,
 					'separator' => 2 === $n ? 'before' : 'none',
 				)
@@ -323,7 +323,7 @@ class Widget extends Widget_Base {
 			$repeater->add_control(
 				$show,
 				array(
-					'label'        => esc_html__( 'نمایش دکمه', 'rolling-slider-elementor' ),
+					'label'        => esc_html__( 'Show button', 'rolling-slider-elementor' ),
 					'type'         => Controls_Manager::SWITCHER,
 					'return_value' => 'yes',
 					'default'      => '',
@@ -333,7 +333,7 @@ class Widget extends Widget_Base {
 			$repeater->add_control(
 				"btn{$n}_text",
 				array(
-					'label'       => esc_html__( 'متن دکمه', 'rolling-slider-elementor' ),
+					'label'       => esc_html__( 'Button text', 'rolling-slider-elementor' ),
 					'type'        => Controls_Manager::TEXT,
 					'label_block' => true,
 					'dynamic'     => array( 'active' => true ),
@@ -344,7 +344,7 @@ class Widget extends Widget_Base {
 			$repeater->add_control(
 				"btn{$n}_link",
 				array(
-					'label'       => esc_html__( 'لینک', 'rolling-slider-elementor' ),
+					'label'       => esc_html__( 'Link', 'rolling-slider-elementor' ),
 					'type'        => Controls_Manager::URL,
 					'label_block' => true,
 					'dynamic'     => array( 'active' => true ),
@@ -355,11 +355,11 @@ class Widget extends Widget_Base {
 			$repeater->add_control(
 				"btn{$n}_style",
 				array(
-					'label'     => esc_html__( 'ظاهر دکمه', 'rolling-slider-elementor' ),
+					'label'     => esc_html__( 'Button style', 'rolling-slider-elementor' ),
 					'type'      => Controls_Manager::SELECT,
 					'options'   => array(
-						'primary' => esc_html__( 'اصلی (پر)', 'rolling-slider-elementor' ),
-						'ghost'   => esc_html__( 'ثانویه (شفاف)', 'rolling-slider-elementor' ),
+						'primary' => esc_html__( 'Primary (solid)', 'rolling-slider-elementor' ),
+						'ghost'   => esc_html__( 'Secondary (outline)', 'rolling-slider-elementor' ),
 					),
 					'default'   => 1 === $n ? 'primary' : 'ghost',
 					'condition' => array( $show => 'yes' ),
@@ -369,8 +369,8 @@ class Widget extends Widget_Base {
 			$repeater->add_control(
 				"btn{$n}_icon",
 				array(
-					'label'       => esc_html__( 'آیکن (از کتابخانهٔ آیکن)', 'rolling-slider-elementor' ),
-					'description' => esc_html__( 'هر آیکنی از کتابخانهٔ المنتور (Font Awesome و …) یا SVG خودتان. برای حذف آیکن، آن را پاک کنید.', 'rolling-slider-elementor' ),
+					'label'       => esc_html__( 'Icon (from the icon library)', 'rolling-slider-elementor' ),
+					'description' => esc_html__( 'Any icon from the Elementor library (Font Awesome, …) or your own SVG. Clear it to remove the icon.', 'rolling-slider-elementor' ),
 					'type'        => Controls_Manager::ICONS,
 					'default'     => array(
 						'value'   => 1 === $n ? ( is_rtl() ? 'fas fa-arrow-left' : 'fas fa-arrow-right' ) : 'fas fa-download',
@@ -387,7 +387,7 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			'slides',
 			array(
-				'label'       => esc_html__( 'اسلایدها', 'rolling-slider-elementor' ),
+				'label'       => esc_html__( 'Slides', 'rolling-slider-elementor' ),
 				'type'        => Controls_Manager::REPEATER,
 				'fields'      => $repeater->get_controls(),
 				'default'     => $this->default_slides(),
@@ -465,7 +465,7 @@ class Widget extends Widget_Base {
 		$this->start_controls_section(
 			'section_settings',
 			array(
-				'label' => esc_html__( 'تنظیمات اسلایدر', 'rolling-slider-elementor' ),
+				'label' => esc_html__( 'Slider settings', 'rolling-slider-elementor' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 			)
 		);
@@ -473,7 +473,7 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			'autoplay',
 			array(
-				'label'        => esc_html__( 'پخش خودکار', 'rolling-slider-elementor' ),
+				'label'        => esc_html__( 'Autoplay', 'rolling-slider-elementor' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default'      => 'yes',
@@ -483,7 +483,7 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			'autoplay_duration',
 			array(
-				'label'     => esc_html__( 'مدت نمایش هر اسلاید (میلی‌ثانیه)', 'rolling-slider-elementor' ),
+				'label'     => esc_html__( 'Time per slide (ms)', 'rolling-slider-elementor' ),
 				'type'      => Controls_Manager::NUMBER,
 				'min'       => 2000,
 				'max'       => 30000,
@@ -496,7 +496,7 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			'pause_on_hover',
 			array(
-				'label'        => esc_html__( 'توقف با هاور موس', 'rolling-slider-elementor' ),
+				'label'        => esc_html__( 'Pause on hover', 'rolling-slider-elementor' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default'      => 'yes',
@@ -507,7 +507,7 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			'enable_swipe',
 			array(
-				'label'        => esc_html__( 'سوایپ در موبایل', 'rolling-slider-elementor' ),
+				'label'        => esc_html__( 'Swipe on touch devices', 'rolling-slider-elementor' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default'      => 'yes',
@@ -517,7 +517,7 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			'show_tabs',
 			array(
-				'label'        => esc_html__( 'نمایش تب‌های ناوبری', 'rolling-slider-elementor' ),
+				'label'        => esc_html__( 'Show navigation tabs', 'rolling-slider-elementor' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default'      => 'yes',
@@ -527,8 +527,8 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			'transition',
 			array(
-				'label'       => esc_html__( 'افکت پیش‌فرض تغییر اسلاید', 'rolling-slider-elementor' ),
-				'description' => esc_html__( 'برای هر اسلاید می‌توانید در تب «اسلایدها» افکت جداگانه انتخاب کنید. افکت‌های پرده‌ای و لغزشی با سرعت ۱۰۰۰ تا ۱۴۰۰ میلی‌ثانیه زیباترند.', 'rolling-slider-elementor' ),
+				'label'       => esc_html__( 'Default slide transition', 'rolling-slider-elementor' ),
+				'description' => esc_html__( 'Each slide can override this in the "Slides" section. Wipe and slide effects look best at 1000–1400 ms.', 'rolling-slider-elementor' ),
 				'type'        => Controls_Manager::SELECT,
 				'separator'   => 'before',
 				'options'     => $this->transition_options(),
@@ -539,7 +539,7 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			'transition_speed',
 			array(
-				'label'      => esc_html__( 'سرعت گذار (ms)', 'rolling-slider-elementor' ),
+				'label'      => esc_html__( 'Transition speed (ms)', 'rolling-slider-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 'px' ),
 				'range'      => array( 'px' => array( 'min' => 100, 'max' => 3000, 'step' => 50 ) ),
@@ -551,7 +551,7 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			'kenburns',
 			array(
-				'label'        => esc_html__( 'حرکت آرام تصویر (Ken Burns)', 'rolling-slider-elementor' ),
+				'label'        => esc_html__( 'Slow image zoom (Ken Burns)', 'rolling-slider-elementor' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default'      => 'yes',
@@ -561,14 +561,14 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			'direction',
 			array(
-				'label'       => esc_html__( 'جهت ویجت', 'rolling-slider-elementor' ),
-				'description' => esc_html__( '«خودکار» یعنی بر اساس زبان سایت در هستهٔ وردپرس (راست‌چین یا چپ‌چین). فقط اگر خواستید برای همین ویجت تغییرش دهید.', 'rolling-slider-elementor' ),
+				'label'       => esc_html__( 'Widget direction', 'rolling-slider-elementor' ),
+				'description' => esc_html__( '"Auto" follows the WordPress site language (RTL or LTR). Change it only to override this widget.', 'rolling-slider-elementor' ),
 				'type'        => Controls_Manager::SELECT,
 				'separator'   => 'before',
 				'options'     => array(
-					'auto' => esc_html__( 'خودکار (طبق وردپرس)', 'rolling-slider-elementor' ),
-					'rtl'  => esc_html__( 'راست‌چین (RTL)', 'rolling-slider-elementor' ),
-					'ltr'  => esc_html__( 'چپ‌چین (LTR)', 'rolling-slider-elementor' ),
+					'auto' => esc_html__( 'Auto (from WordPress)', 'rolling-slider-elementor' ),
+					'rtl'  => esc_html__( 'Right to left (RTL)', 'rolling-slider-elementor' ),
+					'ltr'  => esc_html__( 'Left to right (LTR)', 'rolling-slider-elementor' ),
 				),
 				'default'     => 'auto',
 			)
@@ -577,9 +577,9 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			'aria_label',
 			array(
-				'label'       => esc_html__( 'برچسب دسترس‌پذیری', 'rolling-slider-elementor' ),
+				'label'       => esc_html__( 'Accessible label', 'rolling-slider-elementor' ),
 				'type'        => Controls_Manager::TEXT,
-				'default'     => esc_html__( 'اسلایدر معرفی', 'rolling-slider-elementor' ),
+				'default'     => esc_html__( 'Featured slider', 'rolling-slider-elementor' ),
 				'label_block' => true,
 			)
 		);
@@ -587,8 +587,8 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			'editor_slide',
 			array(
-				'label'       => esc_html__( 'اسلاید نمایشی در ویرایشگر', 'rolling-slider-elementor' ),
-				'description' => esc_html__( 'فقط در ویرایشگر المنتور اعمال می‌شود تا بتوانید اسلاید دلخواه را ببینید؛ در سایت اثری ندارد.', 'rolling-slider-elementor' ),
+				'label'       => esc_html__( 'Slide shown in the editor', 'rolling-slider-elementor' ),
+				'description' => esc_html__( 'Applies only inside the Elementor editor so you can preview a given slide. It has no effect on the live site.', 'rolling-slider-elementor' ),
 				'type'        => Controls_Manager::NUMBER,
 				'min'         => 1,
 				'step'        => 1,
@@ -606,7 +606,7 @@ class Widget extends Widget_Base {
 		$this->start_controls_section(
 			'section_markup',
 			array(
-				'label' => esc_html__( 'اندازهٔ تصویر', 'rolling-slider-elementor' ),
+				'label' => esc_html__( 'Image size', 'rolling-slider-elementor' ),
 				'tab'   => Controls_Manager::TAB_CONTENT,
 			)
 		);
@@ -614,8 +614,8 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			'image_size',
 			array(
-				'label'       => esc_html__( 'اندازهٔ تصویر', 'rolling-slider-elementor' ),
-				'description' => esc_html__( 'مرورگر خودش از بین اندازه‌های موجود (srcset) مناسب‌ترین را برمی‌دارد.', 'rolling-slider-elementor' ),
+				'label'       => esc_html__( 'Image size', 'rolling-slider-elementor' ),
+				'description' => esc_html__( 'The browser picks the best fit from the available sizes (srcset).', 'rolling-slider-elementor' ),
 				'type'        => Controls_Manager::SELECT,
 				'options'     => $this->image_size_options(),
 				'default'     => 'full',
@@ -642,20 +642,20 @@ class Widget extends Widget_Base {
 	/** افکت‌های تغییر اسلاید (کلیدها باید با self::TRANSITIONS و CSS یکی باشند) */
 	private function transition_options() {
 		return array(
-			'cover'     => esc_html__( 'روکش لغزان (Cover)', 'rolling-slider-elementor' ),
-			'slide'     => esc_html__( 'لغزش افقی + پارالاکس', 'rolling-slider-elementor' ),
-			'slide-up'  => esc_html__( 'لغزش عمودی', 'rolling-slider-elementor' ),
-			'wipe'      => esc_html__( 'پردهٔ افقی (Wipe)', 'rolling-slider-elementor' ),
-			'wipe-up'   => esc_html__( 'پردهٔ عمودی', 'rolling-slider-elementor' ),
-			'circle'    => esc_html__( 'دایرهٔ گسترشی (Iris)', 'rolling-slider-elementor' ),
-			'diamond'   => esc_html__( 'لوزی گسترشی', 'rolling-slider-elementor' ),
-			'cinematic' => esc_html__( 'سینمایی (زوم + بلور + نور)', 'rolling-slider-elementor' ),
-			'rotate'    => esc_html__( 'چرخش + زوم', 'rolling-slider-elementor' ),
-			'flip'      => esc_html__( 'چرخش سه‌بعدی', 'rolling-slider-elementor' ),
-			'zoom'      => esc_html__( 'محو + زوم', 'rolling-slider-elementor' ),
-			'blur'      => esc_html__( 'محو + بلور', 'rolling-slider-elementor' ),
-			'fade'      => esc_html__( 'محو شدن (Crossfade)', 'rolling-slider-elementor' ),
-			'none'      => esc_html__( 'بدون افکت (تغییر آنی)', 'rolling-slider-elementor' ),
+			'cover'     => esc_html__( 'Cover', 'rolling-slider-elementor' ),
+			'slide'     => esc_html__( 'Horizontal slide + parallax', 'rolling-slider-elementor' ),
+			'slide-up'  => esc_html__( 'Vertical slide', 'rolling-slider-elementor' ),
+			'wipe'      => esc_html__( 'Horizontal wipe', 'rolling-slider-elementor' ),
+			'wipe-up'   => esc_html__( 'Vertical wipe', 'rolling-slider-elementor' ),
+			'circle'    => esc_html__( 'Expanding circle (iris)', 'rolling-slider-elementor' ),
+			'diamond'   => esc_html__( 'Expanding diamond', 'rolling-slider-elementor' ),
+			'cinematic' => esc_html__( 'Cinematic (zoom + blur + light)', 'rolling-slider-elementor' ),
+			'rotate'    => esc_html__( 'Rotate + zoom', 'rolling-slider-elementor' ),
+			'flip'      => esc_html__( '3D flip', 'rolling-slider-elementor' ),
+			'zoom'      => esc_html__( 'Fade + zoom', 'rolling-slider-elementor' ),
+			'blur'      => esc_html__( 'Fade + blur', 'rolling-slider-elementor' ),
+			'fade'      => esc_html__( 'Crossfade', 'rolling-slider-elementor' ),
+			'none'      => esc_html__( 'None (instant)', 'rolling-slider-elementor' ),
 		);
 	}
 
@@ -664,7 +664,7 @@ class Widget extends Widget_Base {
 		foreach ( get_intermediate_image_sizes() as $size ) {
 			$options[ $size ] = ucwords( str_replace( array( '_', '-' ), ' ', $size ) );
 		}
-		$options['full'] = esc_html__( 'اندازهٔ کامل (Full)', 'rolling-slider-elementor' );
+		$options['full'] = esc_html__( 'Full size', 'rolling-slider-elementor' );
 		return $options;
 	}
 
@@ -679,15 +679,15 @@ class Widget extends Widget_Base {
 
 		return array(
 			'start'  => array(
-				'title' => esc_html__( 'ابتدای خط (راست در RTL، چپ در LTR)', 'rolling-slider-elementor' ),
+				'title' => esc_html__( 'Start (right in RTL, left in LTR)', 'rolling-slider-elementor' ),
 				'icon'  => 'eicon-text-align-' . $start,
 			),
 			'center' => array(
-				'title' => esc_html__( 'وسط', 'rolling-slider-elementor' ),
+				'title' => esc_html__( 'Center', 'rolling-slider-elementor' ),
 				'icon'  => 'eicon-text-align-center',
 			),
 			'end'    => array(
-				'title' => esc_html__( 'انتهای خط (چپ در RTL، راست در LTR)', 'rolling-slider-elementor' ),
+				'title' => esc_html__( 'End (left in RTL, right in LTR)', 'rolling-slider-elementor' ),
 				'icon'  => 'eicon-text-align-' . $end,
 			),
 		);
@@ -714,7 +714,7 @@ class Widget extends Widget_Base {
 		$this->add_responsive_control(
 			$name,
 			array(
-				'label'                => esc_html__( 'تراز', 'rolling-slider-elementor' ),
+				'label'                => esc_html__( 'Alignment', 'rolling-slider-elementor' ),
 				'type'                 => Controls_Manager::CHOOSE,
 				'options'              => $this->align_options(),
 				'default'              => 'start',
@@ -729,20 +729,20 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			"{$prefix}_fx",
 			array(
-				'label'   => esc_html__( 'افکت ورود', 'rolling-slider-elementor' ),
+				'label'   => esc_html__( 'Entrance effect', 'rolling-slider-elementor' ),
 				'type'    => Controls_Manager::SELECT,
 				'options' => array(
-					'none'        => esc_html__( 'بدون افکت', 'rolling-slider-elementor' ),
-					'fade'        => esc_html__( 'محو شدن', 'rolling-slider-elementor' ),
-					'fade-up'     => esc_html__( 'محو + از پایین', 'rolling-slider-elementor' ),
-					'fade-down'   => esc_html__( 'محو + از بالا', 'rolling-slider-elementor' ),
-					'slide-start' => esc_html__( 'لغزش از ابتدا', 'rolling-slider-elementor' ),
-					'slide-end'   => esc_html__( 'لغزش از انتها', 'rolling-slider-elementor' ),
-					'zoom-in'     => esc_html__( 'زوم از کوچک', 'rolling-slider-elementor' ),
-					'zoom-out'    => esc_html__( 'زوم از بزرگ', 'rolling-slider-elementor' ),
-					'blur'        => esc_html__( 'ظاهر شدن از بلور', 'rolling-slider-elementor' ),
-					'flip'        => esc_html__( 'چرخش سه‌بعدی', 'rolling-slider-elementor' ),
-					'reveal'      => esc_html__( 'پرده‌ای (Reveal)', 'rolling-slider-elementor' ),
+					'none'        => esc_html__( 'None', 'rolling-slider-elementor' ),
+					'fade'        => esc_html__( 'Fade', 'rolling-slider-elementor' ),
+					'fade-up'     => esc_html__( 'Fade up', 'rolling-slider-elementor' ),
+					'fade-down'   => esc_html__( 'Fade down', 'rolling-slider-elementor' ),
+					'slide-start' => esc_html__( 'Slide from start', 'rolling-slider-elementor' ),
+					'slide-end'   => esc_html__( 'Slide from end', 'rolling-slider-elementor' ),
+					'zoom-in'     => esc_html__( 'Zoom in', 'rolling-slider-elementor' ),
+					'zoom-out'    => esc_html__( 'Zoom out', 'rolling-slider-elementor' ),
+					'blur'        => esc_html__( 'Unblur', 'rolling-slider-elementor' ),
+					'flip'        => esc_html__( '3D flip', 'rolling-slider-elementor' ),
+					'reveal'      => esc_html__( 'Reveal', 'rolling-slider-elementor' ),
 				),
 				'default' => 'fade-up',
 			)
@@ -751,7 +751,7 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			"{$prefix}_fx_dist",
 			array(
-				'label'      => esc_html__( 'مسافت حرکت', 'rolling-slider-elementor' ),
+				'label'      => esc_html__( 'Travel distance', 'rolling-slider-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 'px' ),
 				'range'      => array( 'px' => array( 'min' => 4, 'max' => 120 ) ),
@@ -764,7 +764,7 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			"{$prefix}_fx_dur",
 			array(
-				'label'      => esc_html__( 'مدت افکت (ms)', 'rolling-slider-elementor' ),
+				'label'      => esc_html__( 'Effect duration (ms)', 'rolling-slider-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 'px' ),
 				'range'      => array( 'px' => array( 'min' => 100, 'max' => 2500, 'step' => 50 ) ),
@@ -777,7 +777,7 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			"{$prefix}_fx_delay",
 			array(
-				'label'      => esc_html__( 'تأخیر (ms)', 'rolling-slider-elementor' ),
+				'label'      => esc_html__( 'Delay (ms)', 'rolling-slider-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 'px' ),
 				'range'      => array( 'px' => array( 'min' => 0, 'max' => 2500, 'step' => 20 ) ),
@@ -814,12 +814,12 @@ class Widget extends Widget_Base {
 	 * ==================================================================== */
 
 	private function style_box() {
-		$this->section( 'style_box', esc_html__( 'کادر و چیدمان', 'rolling-slider-elementor' ) );
+		$this->section( 'style_box', esc_html__( 'Box & layout', 'rolling-slider-elementor' ) );
 
 		$this->add_control(
 			'accent_color',
 			array(
-				'label'     => esc_html__( 'رنگ تاکیدی', 'rolling-slider-elementor' ),
+				'label'     => esc_html__( 'Accent color', 'rolling-slider-elementor' ),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#f2a736',
 				'selectors' => array( '{{WRAPPER}} .rsl' => '--rsl-accent: {{VALUE}};' ),
@@ -829,7 +829,7 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			'bg_color',
 			array(
-				'label'     => esc_html__( 'رنگ پس‌زمینه (قبل از لود رسانه)', 'rolling-slider-elementor' ),
+				'label'     => esc_html__( 'Background color (before media loads)', 'rolling-slider-elementor' ),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#091625',
 				'selectors' => array( '{{WRAPPER}} .rsl' => '--rsl-deep: {{VALUE}};' ),
@@ -839,7 +839,7 @@ class Widget extends Widget_Base {
 		$this->add_responsive_control(
 			'min_height',
 			array(
-				'label'          => esc_html__( 'حداقل ارتفاع', 'rolling-slider-elementor' ),
+				'label'          => esc_html__( 'Minimum height', 'rolling-slider-elementor' ),
 				'type'           => Controls_Manager::SLIDER,
 				'size_units'     => array( 'px', 'vh' ),
 				'range'          => array(
@@ -856,7 +856,7 @@ class Widget extends Widget_Base {
 		$this->add_responsive_control(
 			'box_radius',
 			array(
-				'label'          => esc_html__( 'گردی گوشه‌ها', 'rolling-slider-elementor' ),
+				'label'          => esc_html__( 'Border radius', 'rolling-slider-elementor' ),
 				'type'           => Controls_Manager::DIMENSIONS,
 				'size_units'     => array( 'px', '%' ),
 				'mobile_default' => array(
@@ -871,13 +871,13 @@ class Widget extends Widget_Base {
 			)
 		);
 
-		$this->heading( 'box_content_heading', esc_html__( 'جایگاه محتوا', 'rolling-slider-elementor' ) );
+		$this->heading( 'box_content_heading', esc_html__( 'Content placement', 'rolling-slider-elementor' ) );
 
 		$this->add_control(
 			'container_width',
 			array(
-				'label'      => esc_html__( 'عرض کانتینر سایت', 'rolling-slider-elementor' ),
-				'description' => esc_html__( 'محتوا و تب‌ها با این عرض هم‌تراز با بقیهٔ سایت وسط‌چین می‌شوند.', 'rolling-slider-elementor' ),
+				'label'      => esc_html__( 'Site container width', 'rolling-slider-elementor' ),
+				'description' => esc_html__( 'Content and tabs are centered at this width to line up with the rest of the site.', 'rolling-slider-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 'px' ),
 				'range'      => array( 'px' => array( 'min' => 600, 'max' => 2000 ) ),
@@ -889,7 +889,7 @@ class Widget extends Widget_Base {
 		$this->add_responsive_control(
 			'gutter',
 			array(
-				'label'      => esc_html__( 'حداقل فاصله از لبه‌ها', 'rolling-slider-elementor' ),
+				'label'      => esc_html__( 'Minimum edge spacing', 'rolling-slider-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 'px' ),
 				'range'      => array( 'px' => array( 'min' => 0, 'max' => 240 ) ),
@@ -900,7 +900,7 @@ class Widget extends Widget_Base {
 		$this->add_responsive_control(
 			'pad_block',
 			array(
-				'label'      => esc_html__( 'فاصلهٔ عمودی', 'rolling-slider-elementor' ),
+				'label'      => esc_html__( 'Vertical padding', 'rolling-slider-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 'px' ),
 				'range'      => array( 'px' => array( 'min' => 0, 'max' => 240 ) ),
@@ -911,7 +911,7 @@ class Widget extends Widget_Base {
 		$this->add_responsive_control(
 			'panel_width',
 			array(
-				'label'      => esc_html__( 'حداکثر عرض بلوک متن', 'rolling-slider-elementor' ),
+				'label'      => esc_html__( 'Text block max width', 'rolling-slider-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 'px', '%' ),
 				'range'      => array(
@@ -929,19 +929,19 @@ class Widget extends Widget_Base {
 		$this->add_responsive_control(
 			'panel_h',
 			array(
-				'label'     => esc_html__( 'جای بلوک متن (افقی)', 'rolling-slider-elementor' ),
+				'label'     => esc_html__( 'Text block position (horizontal)', 'rolling-slider-elementor' ),
 				'type'      => Controls_Manager::CHOOSE,
 				'options'   => array(
 					'flex-start' => array(
-						'title' => esc_html__( 'ابتدا', 'rolling-slider-elementor' ),
+						'title' => esc_html__( 'Start', 'rolling-slider-elementor' ),
 						'icon'  => 'eicon-h-align-' . $start,
 					),
 					'center'     => array(
-						'title' => esc_html__( 'وسط', 'rolling-slider-elementor' ),
+						'title' => esc_html__( 'Center', 'rolling-slider-elementor' ),
 						'icon'  => 'eicon-h-align-center',
 					),
 					'flex-end'   => array(
-						'title' => esc_html__( 'انتها', 'rolling-slider-elementor' ),
+						'title' => esc_html__( 'End', 'rolling-slider-elementor' ),
 						'icon'  => 'eicon-h-align-' . $end,
 					),
 				),
@@ -953,19 +953,19 @@ class Widget extends Widget_Base {
 		$this->add_responsive_control(
 			'panel_v',
 			array(
-				'label'          => esc_html__( 'جای بلوک متن (عمودی)', 'rolling-slider-elementor' ),
+				'label'          => esc_html__( 'Text block position (vertical)', 'rolling-slider-elementor' ),
 				'type'           => Controls_Manager::CHOOSE,
 				'options'        => array(
 					'flex-start' => array(
-						'title' => esc_html__( 'بالا', 'rolling-slider-elementor' ),
+						'title' => esc_html__( 'Top', 'rolling-slider-elementor' ),
 						'icon'  => 'eicon-v-align-top',
 					),
 					'center'     => array(
-						'title' => esc_html__( 'وسط', 'rolling-slider-elementor' ),
+						'title' => esc_html__( 'Center', 'rolling-slider-elementor' ),
 						'icon'  => 'eicon-v-align-middle',
 					),
 					'flex-end'   => array(
-						'title' => esc_html__( 'پایین', 'rolling-slider-elementor' ),
+						'title' => esc_html__( 'Bottom', 'rolling-slider-elementor' ),
 						'icon'  => 'eicon-v-align-bottom',
 					),
 				),
@@ -979,12 +979,12 @@ class Widget extends Widget_Base {
 	}
 
 	private function style_media() {
-		$this->section( 'style_media', esc_html__( 'رسانه و پوشش', 'rolling-slider-elementor' ) );
+		$this->section( 'style_media', esc_html__( 'Media & overlay', 'rolling-slider-elementor' ) );
 
 		$this->add_control(
 			'overlay_color',
 			array(
-				'label'     => esc_html__( 'رنگ پوشش', 'rolling-slider-elementor' ),
+				'label'     => esc_html__( 'Overlay color', 'rolling-slider-elementor' ),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#17324f',
 				'selectors' => array( '{{WRAPPER}} .rsl' => '--rsl-ov: {{VALUE}};' ),
@@ -994,13 +994,13 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			'overlay_side',
 			array(
-				'label'       => esc_html__( 'گرادیان کناری', 'rolling-slider-elementor' ),
-				'description' => esc_html__( 'از سمت ابتدا یا انتهای خط شروع می‌شود (جهت بر اساس RTL/LTR خودکار است).', 'rolling-slider-elementor' ),
+				'label'       => esc_html__( 'Side gradient', 'rolling-slider-elementor' ),
+				'description' => esc_html__( 'Starts from the start or end side (follows RTL/LTR automatically).', 'rolling-slider-elementor' ),
 				'type'        => Controls_Manager::SELECT,
 				'options'     => array(
-					'start' => esc_html__( 'از ابتدا', 'rolling-slider-elementor' ),
-					'end'   => esc_html__( 'از انتها', 'rolling-slider-elementor' ),
-					'none'  => esc_html__( 'بدون گرادیان کناری', 'rolling-slider-elementor' ),
+					'start' => esc_html__( 'From start', 'rolling-slider-elementor' ),
+					'end'   => esc_html__( 'From end', 'rolling-slider-elementor' ),
+					'none'  => esc_html__( 'No side gradient', 'rolling-slider-elementor' ),
 				),
 				'default'     => 'start',
 			)
@@ -1009,7 +1009,7 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			'overlay_side_opacity',
 			array(
-				'label'     => esc_html__( 'شدت گرادیان کناری', 'rolling-slider-elementor' ),
+				'label'     => esc_html__( 'Side gradient strength', 'rolling-slider-elementor' ),
 				'type'      => Controls_Manager::SLIDER,
 				'range'     => array( 'px' => array( 'min' => 0, 'max' => 1, 'step' => 0.02 ) ),
 				'default'   => array( 'size' => 0.9 ),
@@ -1021,7 +1021,7 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			'overlay_bottom_opacity',
 			array(
-				'label'     => esc_html__( 'شدت گرادیان پایین', 'rolling-slider-elementor' ),
+				'label'     => esc_html__( 'Bottom gradient strength', 'rolling-slider-elementor' ),
 				'type'      => Controls_Manager::SLIDER,
 				'range'     => array( 'px' => array( 'min' => 0, 'max' => 1, 'step' => 0.02 ) ),
 				'default'   => array( 'size' => 0.94 ),
@@ -1032,7 +1032,7 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			'overlay_flat_opacity',
 			array(
-				'label'     => esc_html__( 'تیره‌کنندهٔ یکدست', 'rolling-slider-elementor' ),
+				'label'     => esc_html__( 'Flat darkening', 'rolling-slider-elementor' ),
 				'type'      => Controls_Manager::SLIDER,
 				'range'     => array( 'px' => array( 'min' => 0, 'max' => 1, 'step' => 0.02 ) ),
 				'default'   => array( 'size' => 0 ),
@@ -1054,7 +1054,7 @@ class Widget extends Widget_Base {
 	private function style_eyebrow() {
 		$sel = '{{WRAPPER}} .rsl__eyebrow';
 
-		$this->section( 'style_eyebrow', esc_html__( 'زیرعنوان', 'rolling-slider-elementor' ) );
+		$this->section( 'style_eyebrow', esc_html__( 'Eyebrow', 'rolling-slider-elementor' ) );
 
 		$this->add_fx( 'eyebrow', $sel, 0 );
 		$this->add_align( 'eyebrow_align', $sel );
@@ -1062,7 +1062,7 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			'eyebrow_dot',
 			array(
-				'label'        => esc_html__( 'نقطهٔ تزئینی', 'rolling-slider-elementor' ),
+				'label'        => esc_html__( 'Decorative dot', 'rolling-slider-elementor' ),
 				'type'         => Controls_Manager::SWITCHER,
 				'return_value' => 'yes',
 				'default'      => 'yes',
@@ -1073,7 +1073,7 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			'eyebrow_dot_color',
 			array(
-				'label'     => esc_html__( 'رنگ نقطه', 'rolling-slider-elementor' ),
+				'label'     => esc_html__( 'Dot color', 'rolling-slider-elementor' ),
 				'type'      => Controls_Manager::COLOR,
 				'condition' => array( 'eyebrow_dot' => 'yes' ),
 				'selectors' => array( $sel => '--rsl-dot: {{VALUE}};' ),
@@ -1083,7 +1083,7 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			'eyebrow_color',
 			array(
-				'label'     => esc_html__( 'رنگ متن', 'rolling-slider-elementor' ),
+				'label'     => esc_html__( 'Text color', 'rolling-slider-elementor' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array( $sel => 'color: {{VALUE}};' ),
 			)
@@ -1117,7 +1117,7 @@ class Widget extends Widget_Base {
 		$this->add_responsive_control(
 			'eyebrow_radius',
 			array(
-				'label'      => esc_html__( 'گردی گوشه‌ها', 'rolling-slider-elementor' ),
+				'label'      => esc_html__( 'Border radius', 'rolling-slider-elementor' ),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => array( 'px', '%' ),
 				'selectors'  => array( $sel => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ),
@@ -1127,7 +1127,7 @@ class Widget extends Widget_Base {
 		$this->add_responsive_control(
 			'eyebrow_padding',
 			array(
-				'label'      => esc_html__( 'فاصلهٔ داخلی', 'rolling-slider-elementor' ),
+				'label'      => esc_html__( 'Padding', 'rolling-slider-elementor' ),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => array( 'px', 'em' ),
 				'selectors'  => array( $sel => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ),
@@ -1137,7 +1137,7 @@ class Widget extends Widget_Base {
 		$this->add_responsive_control(
 			'eyebrow_gap',
 			array(
-				'label'      => esc_html__( 'فاصلهٔ تا عنوان', 'rolling-slider-elementor' ),
+				'label'      => esc_html__( 'Gap to title', 'rolling-slider-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 'px' ),
 				'range'      => array( 'px' => array( 'min' => 0, 'max' => 80 ) ),
@@ -1148,7 +1148,7 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			'eyebrow_blur',
 			array(
-				'label'      => esc_html__( 'بلور پس‌زمینه', 'rolling-slider-elementor' ),
+				'label'      => esc_html__( 'Backdrop blur', 'rolling-slider-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 'px' ),
 				'range'      => array( 'px' => array( 'min' => 0, 'max' => 30 ) ),
@@ -1170,7 +1170,7 @@ class Widget extends Widget_Base {
 	private function style_title() {
 		$sel = '{{WRAPPER}} .rsl__title';
 
-		$this->section( 'style_title', esc_html__( 'عنوان', 'rolling-slider-elementor' ) );
+		$this->section( 'style_title', esc_html__( 'Title', 'rolling-slider-elementor' ) );
 
 		$this->add_fx( 'title', $sel, 80 );
 		$this->add_align( 'title_align', $sel );
@@ -1178,7 +1178,7 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			'title_color',
 			array(
-				'label'     => esc_html__( 'رنگ متن', 'rolling-slider-elementor' ),
+				'label'     => esc_html__( 'Text color', 'rolling-slider-elementor' ),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => '#ffffff',
 				'separator' => 'before',
@@ -1189,8 +1189,8 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			'title_highlight',
 			array(
-				'label'       => esc_html__( 'رنگ بخش تاکیدی (b / mark)', 'rolling-slider-elementor' ),
-				'description' => esc_html__( 'خالی = همان رنگ تاکیدی ویجت.', 'rolling-slider-elementor' ),
+				'label'       => esc_html__( 'Accent text color (b / mark)', 'rolling-slider-elementor' ),
+				'description' => esc_html__( 'Empty = the widget accent color.', 'rolling-slider-elementor' ),
 				'type'        => Controls_Manager::COLOR,
 				'selectors'   => array( $sel => '--rsl-hl: {{VALUE}};' ),
 			)
@@ -1234,10 +1234,10 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			'title_blend',
 			array(
-				'label'     => esc_html__( 'حالت ترکیب (Blend)', 'rolling-slider-elementor' ),
+				'label'     => esc_html__( 'Blend mode', 'rolling-slider-elementor' ),
 				'type'      => Controls_Manager::SELECT,
 				'options'   => array(
-					''            => esc_html__( 'عادی', 'rolling-slider-elementor' ),
+					''            => esc_html__( 'Normal', 'rolling-slider-elementor' ),
 					'overlay'     => 'Overlay',
 					'soft-light'  => 'Soft light',
 					'difference'  => 'Difference',
@@ -1254,7 +1254,7 @@ class Widget extends Widget_Base {
 	private function style_content() {
 		$sel = '{{WRAPPER}} .rsl__content';
 
-		$this->section( 'style_content', esc_html__( 'محتوا', 'rolling-slider-elementor' ) );
+		$this->section( 'style_content', esc_html__( 'Content', 'rolling-slider-elementor' ) );
 
 		$this->add_fx( 'content', $sel, 160 );
 		$this->add_align( 'content_align', $sel );
@@ -1262,7 +1262,7 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			'content_color',
 			array(
-				'label'     => esc_html__( 'رنگ متن', 'rolling-slider-elementor' ),
+				'label'     => esc_html__( 'Text color', 'rolling-slider-elementor' ),
 				'type'      => Controls_Manager::COLOR,
 				'default'   => 'rgba(255,255,255,0.78)',
 				'separator' => 'before',
@@ -1273,7 +1273,7 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			'content_strong',
 			array(
-				'label'     => esc_html__( 'رنگ متن پررنگ', 'rolling-slider-elementor' ),
+				'label'     => esc_html__( 'Bold text color', 'rolling-slider-elementor' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array( $sel => '--rsl-strong: {{VALUE}};' ),
 			)
@@ -1282,7 +1282,7 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			'content_link',
 			array(
-				'label'     => esc_html__( 'رنگ لینک‌ها', 'rolling-slider-elementor' ),
+				'label'     => esc_html__( 'Link color', 'rolling-slider-elementor' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array( $sel => '--rsl-link: {{VALUE}};' ),
 			)
@@ -1307,7 +1307,7 @@ class Widget extends Widget_Base {
 		$this->add_responsive_control(
 			'content_width',
 			array(
-				'label'      => esc_html__( 'حداکثر عرض', 'rolling-slider-elementor' ),
+				'label'      => esc_html__( 'Max width', 'rolling-slider-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 'px', '%' ),
 				'range'      => array(
@@ -1322,7 +1322,7 @@ class Widget extends Widget_Base {
 		$this->add_responsive_control(
 			'content_gap',
 			array(
-				'label'      => esc_html__( 'فاصله از عنوان', 'rolling-slider-elementor' ),
+				'label'      => esc_html__( 'Gap from title', 'rolling-slider-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 'px' ),
 				'range'      => array( 'px' => array( 'min' => 0, 'max' => 100 ) ),
@@ -1333,7 +1333,7 @@ class Widget extends Widget_Base {
 		$this->add_responsive_control(
 			'content_para_gap',
 			array(
-				'label'      => esc_html__( 'فاصلهٔ بین پاراگراف‌ها', 'rolling-slider-elementor' ),
+				'label'      => esc_html__( 'Paragraph spacing', 'rolling-slider-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 'em' ),
 				'range'      => array( 'em' => array( 'min' => 0, 'max' => 3, 'step' => 0.1 ) ),
@@ -1347,7 +1347,7 @@ class Widget extends Widget_Base {
 	private function style_buttons() {
 		$sel = '{{WRAPPER}} .rsl__btn';
 
-		$this->section( 'style_buttons', esc_html__( 'دکمه‌ها', 'rolling-slider-elementor' ) );
+		$this->section( 'style_buttons', esc_html__( 'Buttons', 'rolling-slider-elementor' ) );
 
 		$this->add_fx( 'actions', '{{WRAPPER}} .rsl__actions', 240 );
 		$this->add_align( 'actions_align', '{{WRAPPER}} .rsl__actions', 'flex' );
@@ -1355,7 +1355,7 @@ class Widget extends Widget_Base {
 		$this->add_responsive_control(
 			'actions_gap_top',
 			array(
-				'label'      => esc_html__( 'فاصله از محتوا', 'rolling-slider-elementor' ),
+				'label'      => esc_html__( 'Gap from content', 'rolling-slider-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 'px' ),
 				'range'      => array( 'px' => array( 'min' => 0, 'max' => 120 ) ),
@@ -1366,7 +1366,7 @@ class Widget extends Widget_Base {
 		$this->add_responsive_control(
 			'actions_gap',
 			array(
-				'label'      => esc_html__( 'فاصلهٔ بین دکمه‌ها', 'rolling-slider-elementor' ),
+				'label'      => esc_html__( 'Space between buttons', 'rolling-slider-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 'px' ),
 				'range'      => array( 'px' => array( 'min' => 0, 'max' => 60 ) ),
@@ -1377,15 +1377,15 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			'btn_hover',
 			array(
-				'label'     => esc_html__( 'افکت هاور', 'rolling-slider-elementor' ),
+				'label'     => esc_html__( 'Hover effect', 'rolling-slider-elementor' ),
 				'type'      => Controls_Manager::SELECT,
 				'separator' => 'before',
 				'options'   => array(
-					'none' => esc_html__( 'بدون افکت', 'rolling-slider-elementor' ),
-					'lift' => esc_html__( 'بالا رفتن', 'rolling-slider-elementor' ),
-					'grow' => esc_html__( 'بزرگ شدن', 'rolling-slider-elementor' ),
-					'glow' => esc_html__( 'درخشش (سایه رنگی)', 'rolling-slider-elementor' ),
-					'icon' => esc_html__( 'حرکت آیکن', 'rolling-slider-elementor' ),
+					'none' => esc_html__( 'None', 'rolling-slider-elementor' ),
+					'lift' => esc_html__( 'Lift', 'rolling-slider-elementor' ),
+					'grow' => esc_html__( 'Grow', 'rolling-slider-elementor' ),
+					'glow' => esc_html__( 'Glow (colored shadow)', 'rolling-slider-elementor' ),
+					'icon' => esc_html__( 'Nudge icon', 'rolling-slider-elementor' ),
 				),
 				'default'   => 'lift',
 			)
@@ -1394,11 +1394,11 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			'btn_icon_position',
 			array(
-				'label'   => esc_html__( 'جای آیکن', 'rolling-slider-elementor' ),
+				'label'   => esc_html__( 'Icon position', 'rolling-slider-elementor' ),
 				'type'    => Controls_Manager::SELECT,
 				'options' => array(
-					'end'   => esc_html__( 'بعد از متن', 'rolling-slider-elementor' ),
-					'start' => esc_html__( 'قبل از متن', 'rolling-slider-elementor' ),
+					'end'   => esc_html__( 'After text', 'rolling-slider-elementor' ),
+					'start' => esc_html__( 'Before text', 'rolling-slider-elementor' ),
 				),
 				'default' => 'end',
 			)
@@ -1407,7 +1407,7 @@ class Widget extends Widget_Base {
 		$this->add_responsive_control(
 			'btn_icon_size',
 			array(
-				'label'      => esc_html__( 'اندازهٔ آیکن', 'rolling-slider-elementor' ),
+				'label'      => esc_html__( 'Icon size', 'rolling-slider-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 'px' ),
 				'range'      => array( 'px' => array( 'min' => 8, 'max' => 48 ) ),
@@ -1418,7 +1418,7 @@ class Widget extends Widget_Base {
 		$this->add_responsive_control(
 			'btn_icon_gap',
 			array(
-				'label'      => esc_html__( 'فاصلهٔ آیکن و متن', 'rolling-slider-elementor' ),
+				'label'      => esc_html__( 'Icon spacing', 'rolling-slider-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 'px' ),
 				'range'      => array( 'px' => array( 'min' => 0, 'max' => 30 ) ),
@@ -1438,7 +1438,7 @@ class Widget extends Widget_Base {
 		$this->add_responsive_control(
 			'btn_min_height',
 			array(
-				'label'      => esc_html__( 'ارتفاع دکمه', 'rolling-slider-elementor' ),
+				'label'      => esc_html__( 'Button height', 'rolling-slider-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 'px' ),
 				'range'      => array( 'px' => array( 'min' => 24, 'max' => 120 ) ),
@@ -1449,7 +1449,7 @@ class Widget extends Widget_Base {
 		$this->add_responsive_control(
 			'btn_padding',
 			array(
-				'label'      => esc_html__( 'فاصلهٔ داخلی', 'rolling-slider-elementor' ),
+				'label'      => esc_html__( 'Padding', 'rolling-slider-elementor' ),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => array( 'px', 'em' ),
 				'selectors'  => array( $sel => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ),
@@ -1459,7 +1459,7 @@ class Widget extends Widget_Base {
 		$this->add_responsive_control(
 			'btn_radius',
 			array(
-				'label'      => esc_html__( 'گردی گوشه‌ها', 'rolling-slider-elementor' ),
+				'label'      => esc_html__( 'Border radius', 'rolling-slider-elementor' ),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => array( 'px', '%' ),
 				'selectors'  => array( $sel => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ),
@@ -1467,8 +1467,8 @@ class Widget extends Widget_Base {
 		);
 
 		$variants = array(
-			'primary' => esc_html__( 'دکمهٔ اصلی', 'rolling-slider-elementor' ),
-			'ghost'   => esc_html__( 'دکمهٔ ثانویه (شفاف)', 'rolling-slider-elementor' ),
+			'primary' => esc_html__( 'Primary button', 'rolling-slider-elementor' ),
+			'ghost'   => esc_html__( 'Secondary button (outline)', 'rolling-slider-elementor' ),
 		);
 
 		foreach ( $variants as $key => $label ) {
@@ -1478,12 +1478,12 @@ class Widget extends Widget_Base {
 			$this->start_controls_tabs( "btn_{$key}_tabs" );
 
 			/* عادی */
-			$this->start_controls_tab( "btn_{$key}_normal", array( 'label' => esc_html__( 'عادی', 'rolling-slider-elementor' ) ) );
+			$this->start_controls_tab( "btn_{$key}_normal", array( 'label' => esc_html__( 'Normal', 'rolling-slider-elementor' ) ) );
 
 			$this->add_control(
 				"btn_{$key}_color",
 				array(
-					'label'     => esc_html__( 'رنگ متن', 'rolling-slider-elementor' ),
+					'label'     => esc_html__( 'Text color', 'rolling-slider-elementor' ),
 					'type'      => Controls_Manager::COLOR,
 					'selectors' => array( $v => 'color: {{VALUE}};' ),
 				)
@@ -1517,12 +1517,12 @@ class Widget extends Widget_Base {
 			$this->end_controls_tab();
 
 			/* هاور */
-			$this->start_controls_tab( "btn_{$key}_hover_tab", array( 'label' => esc_html__( 'هاور', 'rolling-slider-elementor' ) ) );
+			$this->start_controls_tab( "btn_{$key}_hover_tab", array( 'label' => esc_html__( 'Hover', 'rolling-slider-elementor' ) ) );
 
 			$this->add_control(
 				"btn_{$key}_color_h",
 				array(
-					'label'     => esc_html__( 'رنگ متن', 'rolling-slider-elementor' ),
+					'label'     => esc_html__( 'Text color', 'rolling-slider-elementor' ),
 					'type'      => Controls_Manager::COLOR,
 					'selectors' => array( $v . ':hover, ' . $v . ':focus-visible' => 'color: {{VALUE}};' ),
 				)
@@ -1540,7 +1540,7 @@ class Widget extends Widget_Base {
 			$this->add_control(
 				"btn_{$key}_border_h",
 				array(
-					'label'     => esc_html__( 'رنگ کادر', 'rolling-slider-elementor' ),
+					'label'     => esc_html__( 'Border color', 'rolling-slider-elementor' ),
 					'type'      => Controls_Manager::COLOR,
 					'selectors' => array( $v . ':hover, ' . $v . ':focus-visible' => 'border-color: {{VALUE}};' ),
 				)
@@ -1561,7 +1561,7 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			'btn_ghost_blur',
 			array(
-				'label'      => esc_html__( 'بلور پس‌زمینهٔ دکمهٔ ثانویه', 'rolling-slider-elementor' ),
+				'label'      => esc_html__( 'Secondary button backdrop blur', 'rolling-slider-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 'px' ),
 				'range'      => array( 'px' => array( 'min' => 0, 'max' => 30 ) ),
@@ -1576,56 +1576,59 @@ class Widget extends Widget_Base {
 	private function style_tabs() {
 		$sel = '{{WRAPPER}} .rsl__tab';
 
-		$this->section( 'style_tabs', esc_html__( 'تب‌های ناوبری', 'rolling-slider-elementor' ) );
+		$this->section( 'style_tabs', esc_html__( 'Navigation tabs', 'rolling-slider-elementor' ) );
 
+		// تب‌ها همیشه در شبکه چیده می‌شوند؛ «خودکار» = یک ستون برای هر اسلاید (موبایل حداکثر ۳)
 		$this->add_responsive_control(
-			'tabs_layout',
+			'tabs_cols',
 			array(
-				'label'                => esc_html__( 'چیدمان تب‌ها', 'rolling-slider-elementor' ),
-				'type'                 => Controls_Manager::SELECT,
-				'options'              => array(
-					'scroll' => esc_html__( 'یک ردیف (اسکرول افقی)', 'rolling-slider-elementor' ),
-					'grid'   => esc_html__( 'شبکه (بدون اسکرول)', 'rolling-slider-elementor' ),
-				),
-				'default'              => 'scroll',
-				'tablet_default'       => 'scroll',
-				'mobile_default'       => 'grid',
-				'selectors_dictionary' => array(
-					'scroll' => 'display: flex; overflow-x: auto; scroll-snap-type: x proximity; text-align: start;',
-					'grid'   => 'display: grid; grid-template-columns: repeat(var(--rsl-cols, 3), minmax(0, 1fr)); overflow: visible; scroll-snap-type: none; text-align: center;',
-				),
-				'selectors'            => array( '{{WRAPPER}} .rsl__tabs' => '{{VALUE}}' ),
+				'label'       => esc_html__( 'Columns', 'rolling-slider-elementor' ),
+				'description' => esc_html__( 'Tabs are laid out in a grid. "Auto" gives each slide its own column (at most 3 columns on mobile).', 'rolling-slider-elementor' ),
+				'type'        => Controls_Manager::SELECT,
+				'options'     => array( '' => esc_html__( 'Auto', 'rolling-slider-elementor' ) ) + array_combine( range( 1, 8 ), range( 1, 8 ) ),
+				'default'     => '',
+				'selectors'   => array( '{{WRAPPER}} .rsl' => '--rsl-cols: {{VALUE}};' ),
 			)
 		);
 
 		$this->add_responsive_control(
-			'tabs_cols',
+			'tabs_align',
 			array(
-				'label'          => esc_html__( 'تعداد ستون (حالت شبکه)', 'rolling-slider-elementor' ),
-				'type'           => Controls_Manager::SELECT,
-				'options'        => array( 1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5, 6 => 6 ),
-				'default'        => 5,
-				'tablet_default' => 5,
-				'mobile_default' => 3,
-				'selectors'      => array( '{{WRAPPER}} .rsl' => '--rsl-cols: {{VALUE}};' ),
+				'label'          => esc_html__( 'Tab text alignment', 'rolling-slider-elementor' ),
+				'type'           => Controls_Manager::CHOOSE,
+				'options'        => $this->align_options(),
+				'default'        => 'start',
+				'mobile_default' => 'center',
+				'selectors'      => array( '{{WRAPPER}} .rsl__tabs' => 'text-align: {{VALUE}};' ),
 			)
 		);
 
 		$this->add_responsive_control(
 			'tabs_gap',
 			array(
-				'label'      => esc_html__( 'فاصلهٔ بین تب‌ها', 'rolling-slider-elementor' ),
+				'label'      => esc_html__( 'Column gap', 'rolling-slider-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 'px' ),
 				'range'      => array( 'px' => array( 'min' => 0, 'max' => 100 ) ),
-				'selectors'  => array( '{{WRAPPER}} .rsl__tabs' => 'gap: {{SIZE}}{{UNIT}};' ),
+				'selectors'  => array( '{{WRAPPER}} .rsl__tabs' => 'column-gap: {{SIZE}}{{UNIT}};' ),
+			)
+		);
+
+		$this->add_responsive_control(
+			'tabs_row_gap',
+			array(
+				'label'      => esc_html__( 'Row gap', 'rolling-slider-elementor' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => array( 'px' ),
+				'range'      => array( 'px' => array( 'min' => 0, 'max' => 60 ) ),
+				'selectors'  => array( '{{WRAPPER}} .rsl__tabs' => 'row-gap: {{SIZE}}{{UNIT}};' ),
 			)
 		);
 
 		$this->add_responsive_control(
 			'tabs_pb',
 			array(
-				'label'          => esc_html__( 'فاصلهٔ پایین نوار تب', 'rolling-slider-elementor' ),
+				'label'          => esc_html__( 'Space below tabs', 'rolling-slider-elementor' ),
 				'type'           => Controls_Manager::SLIDER,
 				'size_units'     => array( 'px' ),
 				'range'          => array( 'px' => array( 'min' => 0, 'max' => 120 ) ),
@@ -1647,7 +1650,7 @@ class Widget extends Widget_Base {
 		$this->add_responsive_control(
 			'tabs_padding',
 			array(
-				'label'      => esc_html__( 'فاصلهٔ داخلی تب', 'rolling-slider-elementor' ),
+				'label'      => esc_html__( 'Tab padding', 'rolling-slider-elementor' ),
 				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => array( 'px', 'em' ),
 				'selectors'  => array( $sel => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};' ),
@@ -1657,9 +1660,9 @@ class Widget extends Widget_Base {
 		$this->start_controls_tabs( 'tabs_state' );
 
 		$states = array(
-			'normal' => array( esc_html__( 'عادی', 'rolling-slider-elementor' ), $sel ),
-			'hover'  => array( esc_html__( 'هاور', 'rolling-slider-elementor' ), $sel . ':hover' ),
-			'active' => array( esc_html__( 'فعال', 'rolling-slider-elementor' ), $sel . '[aria-selected="true"]' ),
+			'normal' => array( esc_html__( 'Normal', 'rolling-slider-elementor' ), $sel ),
+			'hover'  => array( esc_html__( 'Hover', 'rolling-slider-elementor' ), $sel . ':hover' ),
+			'active' => array( esc_html__( 'Active', 'rolling-slider-elementor' ), $sel . '[aria-selected="true"]' ),
 		);
 
 		foreach ( $states as $state => $info ) {
@@ -1668,7 +1671,7 @@ class Widget extends Widget_Base {
 			$this->add_control(
 				"tabs_color_{$state}",
 				array(
-					'label'     => esc_html__( 'رنگ متن', 'rolling-slider-elementor' ),
+					'label'     => esc_html__( 'Text color', 'rolling-slider-elementor' ),
 					'type'      => Controls_Manager::COLOR,
 					'selectors' => array( $info[1] => 'color: {{VALUE}};' ),
 				)
@@ -1679,12 +1682,12 @@ class Widget extends Widget_Base {
 
 		$this->end_controls_tabs();
 
-		$this->heading( 'tabs_rail_heading', esc_html__( 'ریل پیشرفت و خط بالا', 'rolling-slider-elementor' ) );
+		$this->heading( 'tabs_rail_heading', esc_html__( 'Progress rail & top line', 'rolling-slider-elementor' ) );
 
 		$this->add_control(
 			'tabs_rail',
 			array(
-				'label'     => esc_html__( 'رنگ ریل', 'rolling-slider-elementor' ),
+				'label'     => esc_html__( 'Rail color', 'rolling-slider-elementor' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array( '{{WRAPPER}} .rsl' => '--rsl-rail: {{VALUE}};' ),
 			)
@@ -1693,8 +1696,8 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			'tabs_fill',
 			array(
-				'label'       => esc_html__( 'رنگ پرشونده', 'rolling-slider-elementor' ),
-				'description' => esc_html__( 'خالی = رنگ تاکیدی ویجت.', 'rolling-slider-elementor' ),
+				'label'       => esc_html__( 'Fill color', 'rolling-slider-elementor' ),
+				'description' => esc_html__( 'Empty = the widget accent color.', 'rolling-slider-elementor' ),
 				'type'        => Controls_Manager::COLOR,
 				'selectors'   => array( '{{WRAPPER}} .rsl' => '--rsl-fill: {{VALUE}};' ),
 			)
@@ -1703,7 +1706,7 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			'tabs_rail_h',
 			array(
-				'label'      => esc_html__( 'ضخامت ریل', 'rolling-slider-elementor' ),
+				'label'      => esc_html__( 'Rail thickness', 'rolling-slider-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 'px' ),
 				'range'      => array( 'px' => array( 'min' => 1, 'max' => 12 ) ),
@@ -1714,7 +1717,7 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			'tabs_line_color',
 			array(
-				'label'     => esc_html__( 'رنگ خط بالای تب‌ها', 'rolling-slider-elementor' ),
+				'label'     => esc_html__( 'Top line color', 'rolling-slider-elementor' ),
 				'type'      => Controls_Manager::COLOR,
 				'selectors' => array( '{{WRAPPER}} .rsl__tabs' => 'border-top-color: {{VALUE}};' ),
 			)
@@ -1723,7 +1726,7 @@ class Widget extends Widget_Base {
 		$this->add_control(
 			'tabs_line_w',
 			array(
-				'label'      => esc_html__( 'ضخامت خط بالای تب‌ها', 'rolling-slider-elementor' ),
+				'label'      => esc_html__( 'Top line thickness', 'rolling-slider-elementor' ),
 				'type'       => Controls_Manager::SLIDER,
 				'size_units' => array( 'px' ),
 				'range'      => array( 'px' => array( 'min' => 0, 'max' => 8 ) ),
@@ -1805,7 +1808,7 @@ class Widget extends Widget_Base {
 				'data-duration'        => $duration,
 				'data-pause-hover'     => 'yes' === $settings['pause_on_hover'] ? 'yes' : 'no',
 				'data-swipe'           => 'yes' === $settings['enable_swipe'] ? 'yes' : 'no',
-				'style'                => '--rsl-duration:' . $duration . 'ms;',
+				'style'                => sprintf( '--rsl-duration:%dms;--rsl-n:%d;--rsl-n-m:%d;', $duration, $count, min( $count, 3 ) ),
 			)
 		);
 
@@ -1939,7 +1942,7 @@ class Widget extends Widget_Base {
 		}
 		if ( '' === $label ) {
 			/* translators: %d: slide number */
-			$label = sprintf( esc_html__( 'اسلاید %d', 'rolling-slider-elementor' ), $index + 1 );
+			$label = sprintf( esc_html__( 'Slide %d', 'rolling-slider-elementor' ), $index + 1 );
 		}
 		return $label;
 	}

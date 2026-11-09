@@ -1,0 +1,569 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Rolling Slider for Elementor 1.1.0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Domain: rolling-slider-elementor\n"
+"Language: fa_IR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "\"Auto\" follows the WordPress site language (RTL or LTR). Change it only to override this widget."
+msgstr "«خودکار» یعنی بر اساس زبان سایت در هستهٔ وردپرس (راست‌چین یا چپ‌چین). فقط اگر خواستید برای همین ویجت تغییرش دهید."
+
+#, php-format
+msgid "\"Rolling Slider\" requires Elementor %1$s or newer. Please update Elementor."
+msgstr "پلاگین «اسلایدر رولینگ» به المنتور نسخهٔ %1$s یا بالاتر نیاز دارد. لطفاً المنتور را به‌روزرسانی کنید."
+
+#, php-format
+msgid "\"Rolling Slider\" requires PHP %1$s or newer."
+msgstr "پلاگین «اسلایدر رولینگ» به PHP نسخهٔ %1$s یا بالاتر نیاز دارد."
+
+msgid "\"Rolling Slider\" requires the Elementor plugin. Please install and activate it."
+msgstr "پلاگین «اسلایدر رولینگ» برای کار کردن به افزونهٔ المنتور (Elementor) نیاز دارد. لطفاً آن را نصب و فعال کنید."
+
+msgid "3D flip"
+msgstr "چرخش سه‌بعدی"
+
+msgid "Accent color"
+msgstr "رنگ تاکیدی"
+
+msgid "Accent text color (b / mark)"
+msgstr "رنگ بخش تاکیدی (b / mark)"
+
+msgid "Accessible label"
+msgstr "برچسب دسترس‌پذیری"
+
+msgid "Active"
+msgstr "فعال"
+
+msgid "After text"
+msgstr "بعد از متن"
+
+msgid "Alignment"
+msgstr "تراز"
+
+msgid "Any icon from the Elementor library (Font Awesome, …) or your own SVG. Clear it to remove the icon."
+msgstr "هر آیکنی از کتابخانهٔ المنتور (Font Awesome و …) یا SVG خودتان. برای حذف آیکن، آن را پاک کنید."
+
+msgid "Applies only inside the Elementor editor so you can preview a given slide. It has no effect on the live site."
+msgstr "فقط در ویرایشگر المنتور اعمال می‌شود تا بتوانید اسلاید دلخواه را ببینید؛ در سایت اثری ندارد."
+
+msgid "Auto"
+msgstr "خودکار"
+
+msgid "Auto (from WordPress)"
+msgstr "خودکار (طبق وردپرس)"
+
+msgid "Autoplay"
+msgstr "پخش خودکار"
+
+msgid "Backdrop blur"
+msgstr "بلور پس‌زمینه"
+
+msgid "Background color (before media loads)"
+msgstr "رنگ پس‌زمینه (قبل از لود رسانه)"
+
+msgid "Before text"
+msgstr "قبل از متن"
+
+msgid "Blend mode"
+msgstr "حالت ترکیب (Blend)"
+
+msgid "Bold text color"
+msgstr "رنگ متن پررنگ"
+
+msgid "Border color"
+msgstr "رنگ کادر"
+
+msgid "Border radius"
+msgstr "گردی گوشه‌ها"
+
+msgid "Bottom"
+msgstr "پایین"
+
+msgid "Bottom center"
+msgstr "پایین وسط"
+
+msgid "Bottom gradient strength"
+msgstr "شدت گرادیان پایین"
+
+msgid "Bottom left"
+msgstr "پایین چپ"
+
+msgid "Bottom right"
+msgstr "پایین راست"
+
+msgid "Box & layout"
+msgstr "کادر و چیدمان"
+
+#, php-format
+msgid "Button %d"
+msgstr "دکمه %d"
+
+msgid "Button height"
+msgstr "ارتفاع دکمه"
+
+msgid "Button style"
+msgstr "ظاهر دکمه"
+
+msgid "Button text"
+msgstr "متن دکمه"
+
+msgid "Buttons"
+msgstr "دکمه‌ها"
+
+msgid "Center"
+msgstr "وسط"
+
+msgid "Center (default)"
+msgstr "وسط (پیش‌فرض)"
+
+msgid "Center left"
+msgstr "وسط چپ"
+
+msgid "Center right"
+msgstr "وسط راست"
+
+msgid "Cinematic (zoom + blur + light)"
+msgstr "سینمایی (زوم + بلور + نور)"
+
+msgid "Column gap"
+msgstr "فاصلهٔ افقی بین تب‌ها"
+
+msgid "Columns"
+msgstr "تعداد ستون"
+
+msgid "Content"
+msgstr "محتوا"
+
+msgid "Content and tabs are centered at this width to line up with the rest of the site."
+msgstr "محتوا و تب‌ها با این عرض هم‌تراز با بقیهٔ سایت وسط‌چین می‌شوند."
+
+msgid "Content placement"
+msgstr "جایگاه محتوا"
+
+msgid "Cover"
+msgstr "روکش لغزان (Cover)"
+
+msgid "Crossfade"
+msgstr "محو شدن (Crossfade)"
+
+msgid "Custom (percent)…"
+msgstr "دلخواه (درصد)…"
+
+msgid "Decorative dot"
+msgstr "نقطهٔ تزئینی"
+
+msgid "Default (from slider settings)"
+msgstr "پیش‌فرض (طبق تنظیمات اسلایدر)"
+
+msgid "Default slide transition"
+msgstr "افکت پیش‌فرض تغییر اسلاید"
+
+msgid "Delay (ms)"
+msgstr "تأخیر (ms)"
+
+msgid "Dot color"
+msgstr "رنگ نقطه"
+
+msgid "Each slide can override this in the \"Slides\" section. Wipe and slide effects look best at 1000–1400 ms."
+msgstr "برای هر اسلاید می‌توانید در تب «اسلایدها» افکت جداگانه انتخاب کنید. افکت‌های پرده‌ای و لغزشی با سرعت ۱۰۰۰ تا ۱۴۰۰ میلی‌ثانیه زیباترند."
+
+msgid "Effect duration (ms)"
+msgstr "مدت افکت (ms)"
+
+msgid "Empty = the widget accent color."
+msgstr "خالی = همان رنگ تاکیدی ویجت."
+
+msgid "End"
+msgstr "انتها"
+
+msgid "End (left in RTL, right in LTR)"
+msgstr "انتهای خط (چپ در RTL، راست در LTR)"
+
+msgid "Entrance effect"
+msgstr "افکت ورود"
+
+msgid "Expanding circle (iris)"
+msgstr "دایرهٔ گسترشی (Iris)"
+
+msgid "Expanding diamond"
+msgstr "لوزی گسترشی"
+
+msgid "Eyebrow"
+msgstr "زیرعنوان"
+
+msgid "Eyebrow HTML tag"
+msgstr "تگ زیرعنوان"
+
+msgid "Fade"
+msgstr "محو شدن"
+
+msgid "Fade + blur"
+msgstr "محو + بلور"
+
+msgid "Fade + zoom"
+msgstr "محو + زوم"
+
+msgid "Fade down"
+msgstr "محو + از بالا"
+
+msgid "Fade up"
+msgstr "محو + از پایین"
+
+msgid "Featured slider"
+msgstr "اسلایدر معرفی"
+
+msgid "Fill color"
+msgstr "رنگ پرشونده"
+
+msgid "Flat darkening"
+msgstr "تیره‌کنندهٔ یکدست"
+
+msgid "For SEO, only the first slide set to H1 keeps it; any other H1 is output as H2."
+msgstr "برای سئو، فقط اولین اسلایدی که H1 دارد H1 می‌ماند و بقیهٔ H1ها خودکار H2 می‌شوند."
+
+msgid "From end"
+msgstr "از انتها"
+
+msgid "From start"
+msgstr "از ابتدا"
+
+msgid "Full size"
+msgstr "اندازهٔ کامل (Full)"
+
+msgid "Full-width Elementor slider (image or video) with navigation tabs, editable text and buttons per slide, entrance effects, and full RTL/LTR support based on the WordPress language."
+msgstr "ویجت اسلایدر تمام‌عرض (تصویر / ویدیو) با تب‌های ناوبری، متن‌های قابل ویرایش، دکمه، افکت‌های ورود و پشتیبانی کامل از راست‌چین/چپ‌چین بر اساس هسته وردپرس."
+
+msgid "Gap from content"
+msgstr "فاصله از محتوا"
+
+msgid "Gap from title"
+msgstr "فاصله از عنوان"
+
+msgid "Gap to title"
+msgstr "فاصلهٔ تا عنوان"
+
+msgid "Glow (colored shadow)"
+msgstr "درخشش (سایه رنگی)"
+
+msgid "Grow"
+msgstr "بزرگ شدن"
+
+msgid "Horizontal position (%)"
+msgstr "موقعیت افقی (٪)"
+
+msgid "Horizontal slide + parallax"
+msgstr "لغزش افقی + پارالاکس"
+
+msgid "Horizontal wipe"
+msgstr "پردهٔ افقی (Wipe)"
+
+msgid "Hover"
+msgstr "هاور"
+
+msgid "Hover effect"
+msgstr "افکت هاور"
+
+msgid "Icon (from the icon library)"
+msgstr "آیکن (از کتابخانهٔ آیکن)"
+
+msgid "Icon position"
+msgstr "جای آیکن"
+
+msgid "Icon size"
+msgstr "اندازهٔ آیکن"
+
+msgid "Icon spacing"
+msgstr "فاصلهٔ آیکن و متن"
+
+msgid "If set, it plays instead of the main video on small screens to save data."
+msgstr "اگر انتخاب شود در صفحه‌های کوچک به‌جای ویدیوی اصلی پخش می‌شود و مصرف دیتا را کم می‌کند."
+
+msgid "Image"
+msgstr "تصویر"
+
+msgid "Image focal point"
+msgstr "موقعیت نمایش تصویر"
+
+msgid "Image size"
+msgstr "اندازهٔ تصویر"
+
+msgid "Left to right (LTR)"
+msgstr "چپ‌چین (LTR)"
+
+msgid "Lift"
+msgstr "بالا رفتن"
+
+msgid "Lightweight mobile video (optional)"
+msgstr "ویدیوی سبک موبایل (اختیاری)"
+
+msgid "Link"
+msgstr "لینک"
+
+msgid "Link color"
+msgstr "رنگ لینک‌ها"
+
+msgid "Max width"
+msgstr "حداکثر عرض"
+
+msgid "Media"
+msgstr "تصاویر"
+
+msgid "Media & overlay"
+msgstr "رسانه و پوشش"
+
+msgid "Media type"
+msgstr "نوع رسانه"
+
+msgid "Minimum edge spacing"
+msgstr "حداقل فاصله از لبه‌ها"
+
+msgid "Minimum height"
+msgstr "حداقل ارتفاع"
+
+msgid "Navigation tab title"
+msgstr "عنوان تب ناوبری"
+
+msgid "Navigation tabs"
+msgstr "تب‌های ناوبری"
+
+msgid "New slide"
+msgstr "اسلاید جدید"
+
+msgid "No side gradient"
+msgstr "بدون گرادیان کناری"
+
+msgid "None"
+msgstr "بدون افکت"
+
+msgid "None (instant)"
+msgstr "بدون افکت (تغییر آنی)"
+
+msgid "Normal"
+msgstr "عادی"
+
+msgid "Nudge icon"
+msgstr "حرکت آیکن"
+
+msgid "Overlay color"
+msgstr "رنگ پوشش"
+
+msgid "Padding"
+msgstr "فاصلهٔ داخلی"
+
+msgid "Paragraph spacing"
+msgstr "فاصلهٔ بین پاراگراف‌ها"
+
+msgid "Pause on hover"
+msgstr "توقف با هاور موس"
+
+msgid "Position"
+msgstr "موقعیت"
+
+msgid "Primary (solid)"
+msgstr "اصلی (پر)"
+
+msgid "Primary button"
+msgstr "دکمهٔ اصلی"
+
+msgid "Progress rail & top line"
+msgstr "ریل پیشرفت و خط بالا"
+
+msgid "Rail color"
+msgstr "رنگ ریل"
+
+msgid "Rail thickness"
+msgstr "ضخامت ریل"
+
+msgid "Reveal"
+msgstr "پرده‌ای (Reveal)"
+
+msgid "Right to left (RTL)"
+msgstr "راست‌چین (RTL)"
+
+msgid "Rolling Slider"
+msgstr "اسلایدر رولینگ"
+
+msgid "Rolling Slider for Elementor"
+msgstr "اسلایدر رولینگ برای المنتور"
+
+msgid "Rotate + zoom"
+msgstr "چرخش + زوم"
+
+msgid "Row gap"
+msgstr "فاصلهٔ عمودی بین ردیف‌ها"
+
+msgid "Secondary (outline)"
+msgstr "ثانویه (شفاف)"
+
+msgid "Secondary button (outline)"
+msgstr "دکمهٔ ثانویه (شفاف)"
+
+msgid "Secondary button backdrop blur"
+msgstr "بلور پس‌زمینهٔ دکمهٔ ثانویه"
+
+msgid "Show button"
+msgstr "نمایش دکمه"
+
+msgid "Show navigation tabs"
+msgstr "نمایش تب‌های ناوبری"
+
+msgid "Shown until the video loads (or when Data Saver is on)."
+msgstr "تا لود شدن ویدیو (یا وقتی دیتا‌سیور فعال است) نمایش داده می‌شود."
+
+msgid "Side gradient"
+msgstr "گرادیان کناری"
+
+msgid "Side gradient strength"
+msgstr "شدت گرادیان کناری"
+
+msgid "Site container width"
+msgstr "عرض کانتینر سایت"
+
+#, php-format
+msgid "Slide %d"
+msgstr "اسلاید %d"
+
+msgid "Slide from end"
+msgstr "لغزش از انتها"
+
+msgid "Slide from start"
+msgstr "لغزش از ابتدا"
+
+msgid "Slide shown in the editor"
+msgstr "اسلاید نمایشی در ویرایشگر"
+
+msgid "Slider settings"
+msgstr "تنظیمات اسلایدر"
+
+msgid "Slides"
+msgstr "اسلایدها"
+
+msgid "Slow image zoom (Ken Burns)"
+msgstr "حرکت آرام تصویر (Ken Burns)"
+
+msgid "Space below tabs"
+msgstr "فاصلهٔ پایین نوار تب"
+
+msgid "Space between buttons"
+msgstr "فاصلهٔ بین دکمه‌ها"
+
+msgid "Start"
+msgstr "ابتدا"
+
+msgid "Start (right in RTL, left in LTR)"
+msgstr "ابتدای خط (راست در RTL، چپ در LTR)"
+
+msgid "Starts from the start or end side (follows RTL/LTR automatically)."
+msgstr "از سمت ابتدا یا انتهای خط شروع می‌شود (جهت بر اساس RTL/LTR خودکار است)."
+
+msgid "Swipe on touch devices"
+msgstr "سوایپ در موبایل"
+
+msgid "Tab padding"
+msgstr "فاصلهٔ داخلی تب"
+
+msgid "Tab text alignment"
+msgstr "تراز متن تب"
+
+msgid "Tabs are laid out in a grid. \"Auto\" gives each slide its own column (at most 3 columns on mobile)."
+msgstr "تب‌ها در شبکه چیده می‌شوند. «خودکار» یعنی یک ستون برای هر اسلاید (در موبایل حداکثر ۳ ستون)."
+
+msgid "Text"
+msgstr "متن"
+
+msgid "Text block max width"
+msgstr "حداکثر عرض بلوک متن"
+
+msgid "Text block position (horizontal)"
+msgstr "جای بلوک متن (افقی)"
+
+msgid "Text block position (vertical)"
+msgstr "جای بلوک متن (عمودی)"
+
+msgid "Text color"
+msgstr "رنگ متن"
+
+msgid "The browser picks the best fit from the available sizes (srcset)."
+msgstr "مرورگر خودش از بین اندازه‌های موجود (srcset) مناسب‌ترین را برمی‌دارد."
+
+msgid "The effect played when this slide comes in. \"Default\" uses the effect from the slider settings."
+msgstr "افکتی که هنگام ورود همین اسلاید اجرا می‌شود. «پیش‌فرض» یعنی همان افکت تنظیمات اسلایدر."
+
+msgid "Time per slide (ms)"
+msgstr "مدت نمایش هر اسلاید (میلی‌ثانیه)"
+
+msgid "Title"
+msgstr "عنوان"
+
+msgid "Title HTML tag"
+msgstr "تگ عنوان"
+
+msgid "Top"
+msgstr "بالا"
+
+msgid "Top center"
+msgstr "بالا وسط"
+
+msgid "Top left"
+msgstr "بالا چپ"
+
+msgid "Top line color"
+msgstr "رنگ خط بالای تب‌ها"
+
+msgid "Top line thickness"
+msgstr "ضخامت خط بالای تب‌ها"
+
+msgid "Top right"
+msgstr "بالا راست"
+
+msgid "Transition into this slide"
+msgstr "افکت تغییر به این اسلاید"
+
+msgid "Transition speed (ms)"
+msgstr "سرعت گذار (ms)"
+
+msgid "Travel distance"
+msgstr "مسافت حرکت"
+
+msgid "Unblur"
+msgstr "ظاهر شدن از بلور"
+
+msgid "Use <b>…</b> for the accent color and <br> for a line break."
+msgstr "برای رنگ تاکیدی از <b>…</b> و برای شکستن خط از <br> استفاده کنید."
+
+msgid "Vertical padding"
+msgstr "فاصلهٔ عمودی"
+
+msgid "Vertical position (%)"
+msgstr "موقعیت عمودی (٪)"
+
+msgid "Vertical slide"
+msgstr "لغزش عمودی"
+
+msgid "Vertical wipe"
+msgstr "پردهٔ عمودی"
+
+msgid "Video"
+msgstr "ویدیو"
+
+msgid "Video (MP4 / WebM)"
+msgstr "ویدیو (MP4 / WebM)"
+
+msgid "Video poster"
+msgstr "پوستر ویدیو"
+
+msgid "Which part of the image/video stays in frame. Can be set separately for each device."
+msgstr "مشخص می‌کند کدام بخش از تصویر/ویدیو در کادر دیده شود؛ برای هر دستگاه جداگانه قابل تنظیم است."
+
+msgid "Widget direction"
+msgstr "جهت ویجت"
+
+msgid "Zoom in"
+msgstr "زوم از کوچک"
+
+msgid "Zoom out"
+msgstr "زوم از بزرگ"
+

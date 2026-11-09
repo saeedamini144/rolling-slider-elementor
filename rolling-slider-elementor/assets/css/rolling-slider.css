@@ -30,7 +30,6 @@
 	--rsl-rail-h: 3px;
 	--rsl-ico: 18px;
 	--rsl-duration: 7000ms;
-	--rsl-cols: 3;
 	--rsl-te: ease;
 	--rsl-d: 1;
 	--rsl-k: calc(var(--rsl-s, 1) * var(--rsl-d, 1));
@@ -645,26 +644,20 @@
 	padding: 0 var(--rsl-pad-inline) var(--rsl-pad-block);
 }
 
+/* تب‌ها همیشه در شبکه‌اند (بدون اسکرول)؛ تعداد ستون از پنل می‌آید (--rsl-cols)
+   و اگر «خودکار» باشد برابر تعداد اسلایدهاست (--rsl-n که PHP روی ریشه می‌نویسد) */
 .rsl__tabs {
-	display: flex;
-	gap: clamp(14px, 2.4vw, 44px);
+	display: grid;
+	grid-template-columns: repeat(var(--rsl-cols, var(--rsl-n, 3)), minmax(0, 1fr));
+	gap: 4px clamp(14px, 2.4vw, 44px);
 	align-items: stretch;
-	overflow-x: auto;
 	padding-bottom: 35px;
 	border-top: 1px solid rgba(255, 255, 255, .16);
-	scrollbar-width: none;
-	-ms-overflow-style: none;
-	scroll-snap-type: x proximity;
 	text-align: start;
-}
-
-.rsl__tabs::-webkit-scrollbar {
-	display: none;
 }
 
 .rsl .rsl__tabs button.rsl__tab {
 	position: relative;
-	flex: 0 0 auto;
 	min-width: 0;
 	margin: 0;
 	padding: 16px 0 18px;
@@ -674,7 +667,6 @@
 	box-shadow: none;
 	-webkit-appearance: none;
 	appearance: none;
-	scroll-snap-align: end;
 	font-family: inherit;
 	font-size: clamp(.82rem, 1.05vw, 1rem);
 	font-weight: 500;
@@ -781,15 +773,11 @@
 		padding: 0 16px;
 	}
 
-	/* تب‌ها در شبکه جا می‌گیرند، نه اسکرول افقی */
+	/* حالت خودکار در موبایل حداکثر ۳ ستون است (--rsl-n-m) */
 	.rsl__tabs {
-		display: grid;
-		grid-template-columns: repeat(var(--rsl-cols), minmax(0, 1fr));
+		grid-template-columns: repeat(var(--rsl-cols, var(--rsl-n-m, 3)), minmax(0, 1fr));
 		column-gap: 10px;
-		row-gap: 4px;
-		overflow: visible;
 		padding-bottom: 0;
-		scroll-snap-type: none;
 		text-align: center;
 	}
 

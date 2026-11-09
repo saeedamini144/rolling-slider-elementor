@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name:       اسلایدر رولینگ برای المنتور
+ * Plugin Name:       Rolling Slider for Elementor
  * Plugin URI: https://github.com/saeedamini144/sirstone-hero-slider
- * Description:       ویجت اسلایدر تمام‌عرض (تصویر / ویدیو) با تب‌های ناوبری، متن‌های قابل ویرایش، دکمه، افکت‌های ورود و پشتیبانی کامل از راست‌چین/چپ‌چین بر اساس هسته وردپرس.
- * Version:           1.0.0 
+ * Description:       Full-width Elementor slider (image or video) with navigation tabs, editable text and buttons per slide, entrance effects, and full RTL/LTR support based on the WordPress language.
+ * Version:           1.1.0
  * Author: Saeed Amini
  * Author URI: https://github.com/saeedamini144
  * Requires at least: 6.0
@@ -18,7 +18,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'RSL_VERSION', '1.0.0' );
+define( 'RSL_VERSION', '1.1.0' );
 define( 'RSL_FILE', __FILE__ );
 define( 'RSL_PATH', plugin_dir_path( __FILE__ ) );
 define( 'RSL_URL', plugin_dir_url( __FILE__ ) );
@@ -46,7 +46,8 @@ final class Rolling_Slider_Plugin {
 	}
 
 	public function init() {
-		load_plugin_textdomain( 'rolling-slider-elementor', false, dirname( plugin_basename( RSL_FILE ) ) . '/languages' );
+		// ترجمه بر اساس زبان وردپرس (در پیشخوان و ویرایشگر: زبان کاربر). فایل‌ها در /languages
+		add_action( 'init', array( $this, 'load_textdomain' ) );
 
 		if ( version_compare( PHP_VERSION, self::MIN_PHP, '<' ) ) {
 			add_action( 'admin_notices', array( $this, 'notice_php' ) );
@@ -66,6 +67,10 @@ final class Rolling_Slider_Plugin {
 		add_action( 'elementor/widgets/register', array( $this, 'register_widgets' ) );
 		add_action( 'elementor/frontend/after_register_styles', array( $this, 'register_styles' ) );
 		add_action( 'elementor/frontend/after_register_scripts', array( $this, 'register_scripts' ) );
+	}
+
+	public function load_textdomain() {
+		load_plugin_textdomain( 'rolling-slider-elementor', false, dirname( plugin_basename( RSL_FILE ) ) . '/languages' );
 	}
 
 	/**
@@ -92,21 +97,21 @@ final class Rolling_Slider_Plugin {
 		$this->notice(
 			sprintf(
 				/* translators: 1: required PHP version */
-				esc_html__( 'پلاگین «اسلایدر رولینگ» به PHP نسخهٔ %1$s یا بالاتر نیاز دارد.', 'rolling-slider-elementor' ),
+				esc_html__( '"Rolling Slider" requires PHP %1$s or newer.', 'rolling-slider-elementor' ),
 				self::MIN_PHP
 			)
 		);
 	}
 
 	public function notice_missing_elementor() {
-		$this->notice( esc_html__( 'پلاگین «اسلایدر رولینگ» برای کار کردن به افزونهٔ المنتور (Elementor) نیاز دارد. لطفاً آن را نصب و فعال کنید.', 'rolling-slider-elementor' ) );
+		$this->notice( esc_html__( '"Rolling Slider" requires the Elementor plugin. Please install and activate it.', 'rolling-slider-elementor' ) );
 	}
 
 	public function notice_elementor_version() {
 		$this->notice(
 			sprintf(
 				/* translators: 1: required Elementor version */
-				esc_html__( 'پلاگین «اسلایدر رولینگ» به المنتور نسخهٔ %1$s یا بالاتر نیاز دارد. لطفاً المنتور را به‌روزرسانی کنید.', 'rolling-slider-elementor' ),
+				esc_html__( '"Rolling Slider" requires Elementor %1$s or newer. Please update Elementor.', 'rolling-slider-elementor' ),
 				self::MIN_ELEMENTOR
 			)
 		);

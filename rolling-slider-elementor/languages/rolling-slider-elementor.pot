@@ -1,0 +1,567 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Rolling Slider for Elementor 1.1.0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Domain: rolling-slider-elementor\n"
+
+msgid "\"Auto\" follows the WordPress site language (RTL or LTR). Change it only to override this widget."
+msgstr ""
+
+#, php-format
+msgid "\"Rolling Slider\" requires Elementor %1$s or newer. Please update Elementor."
+msgstr ""
+
+#, php-format
+msgid "\"Rolling Slider\" requires PHP %1$s or newer."
+msgstr ""
+
+msgid "\"Rolling Slider\" requires the Elementor plugin. Please install and activate it."
+msgstr ""
+
+msgid "3D flip"
+msgstr ""
+
+msgid "Accent color"
+msgstr ""
+
+msgid "Accent text color (b / mark)"
+msgstr ""
+
+msgid "Accessible label"
+msgstr ""
+
+msgid "Active"
+msgstr ""
+
+msgid "After text"
+msgstr ""
+
+msgid "Alignment"
+msgstr ""
+
+msgid "Any icon from the Elementor library (Font Awesome, …) or your own SVG. Clear it to remove the icon."
+msgstr ""
+
+msgid "Applies only inside the Elementor editor so you can preview a given slide. It has no effect on the live site."
+msgstr ""
+
+msgid "Auto"
+msgstr ""
+
+msgid "Auto (from WordPress)"
+msgstr ""
+
+msgid "Autoplay"
+msgstr ""
+
+msgid "Backdrop blur"
+msgstr ""
+
+msgid "Background color (before media loads)"
+msgstr ""
+
+msgid "Before text"
+msgstr ""
+
+msgid "Blend mode"
+msgstr ""
+
+msgid "Bold text color"
+msgstr ""
+
+msgid "Border color"
+msgstr ""
+
+msgid "Border radius"
+msgstr ""
+
+msgid "Bottom"
+msgstr ""
+
+msgid "Bottom center"
+msgstr ""
+
+msgid "Bottom gradient strength"
+msgstr ""
+
+msgid "Bottom left"
+msgstr ""
+
+msgid "Bottom right"
+msgstr ""
+
+msgid "Box & layout"
+msgstr ""
+
+#, php-format
+msgid "Button %d"
+msgstr ""
+
+msgid "Button height"
+msgstr ""
+
+msgid "Button style"
+msgstr ""
+
+msgid "Button text"
+msgstr ""
+
+msgid "Buttons"
+msgstr ""
+
+msgid "Center"
+msgstr ""
+
+msgid "Center (default)"
+msgstr ""
+
+msgid "Center left"
+msgstr ""
+
+msgid "Center right"
+msgstr ""
+
+msgid "Cinematic (zoom + blur + light)"
+msgstr ""
+
+msgid "Column gap"
+msgstr ""
+
+msgid "Columns"
+msgstr ""
+
+msgid "Content"
+msgstr ""
+
+msgid "Content and tabs are centered at this width to line up with the rest of the site."
+msgstr ""
+
+msgid "Content placement"
+msgstr ""
+
+msgid "Cover"
+msgstr ""
+
+msgid "Crossfade"
+msgstr ""
+
+msgid "Custom (percent)…"
+msgstr ""
+
+msgid "Decorative dot"
+msgstr ""
+
+msgid "Default (from slider settings)"
+msgstr ""
+
+msgid "Default slide transition"
+msgstr ""
+
+msgid "Delay (ms)"
+msgstr ""
+
+msgid "Dot color"
+msgstr ""
+
+msgid "Each slide can override this in the \"Slides\" section. Wipe and slide effects look best at 1000–1400 ms."
+msgstr ""
+
+msgid "Effect duration (ms)"
+msgstr ""
+
+msgid "Empty = the widget accent color."
+msgstr ""
+
+msgid "End"
+msgstr ""
+
+msgid "End (left in RTL, right in LTR)"
+msgstr ""
+
+msgid "Entrance effect"
+msgstr ""
+
+msgid "Expanding circle (iris)"
+msgstr ""
+
+msgid "Expanding diamond"
+msgstr ""
+
+msgid "Eyebrow"
+msgstr ""
+
+msgid "Eyebrow HTML tag"
+msgstr ""
+
+msgid "Fade"
+msgstr ""
+
+msgid "Fade + blur"
+msgstr ""
+
+msgid "Fade + zoom"
+msgstr ""
+
+msgid "Fade down"
+msgstr ""
+
+msgid "Fade up"
+msgstr ""
+
+msgid "Featured slider"
+msgstr ""
+
+msgid "Fill color"
+msgstr ""
+
+msgid "Flat darkening"
+msgstr ""
+
+msgid "For SEO, only the first slide set to H1 keeps it; any other H1 is output as H2."
+msgstr ""
+
+msgid "From end"
+msgstr ""
+
+msgid "From start"
+msgstr ""
+
+msgid "Full size"
+msgstr ""
+
+msgid "Full-width Elementor slider (image or video) with navigation tabs, editable text and buttons per slide, entrance effects, and full RTL/LTR support based on the WordPress language."
+msgstr ""
+
+msgid "Gap from content"
+msgstr ""
+
+msgid "Gap from title"
+msgstr ""
+
+msgid "Gap to title"
+msgstr ""
+
+msgid "Glow (colored shadow)"
+msgstr ""
+
+msgid "Grow"
+msgstr ""
+
+msgid "Horizontal position (%)"
+msgstr ""
+
+msgid "Horizontal slide + parallax"
+msgstr ""
+
+msgid "Horizontal wipe"
+msgstr ""
+
+msgid "Hover"
+msgstr ""
+
+msgid "Hover effect"
+msgstr ""
+
+msgid "Icon (from the icon library)"
+msgstr ""
+
+msgid "Icon position"
+msgstr ""
+
+msgid "Icon size"
+msgstr ""
+
+msgid "Icon spacing"
+msgstr ""
+
+msgid "If set, it plays instead of the main video on small screens to save data."
+msgstr ""
+
+msgid "Image"
+msgstr ""
+
+msgid "Image focal point"
+msgstr ""
+
+msgid "Image size"
+msgstr ""
+
+msgid "Left to right (LTR)"
+msgstr ""
+
+msgid "Lift"
+msgstr ""
+
+msgid "Lightweight mobile video (optional)"
+msgstr ""
+
+msgid "Link"
+msgstr ""
+
+msgid "Link color"
+msgstr ""
+
+msgid "Max width"
+msgstr ""
+
+msgid "Media"
+msgstr ""
+
+msgid "Media & overlay"
+msgstr ""
+
+msgid "Media type"
+msgstr ""
+
+msgid "Minimum edge spacing"
+msgstr ""
+
+msgid "Minimum height"
+msgstr ""
+
+msgid "Navigation tab title"
+msgstr ""
+
+msgid "Navigation tabs"
+msgstr ""
+
+msgid "New slide"
+msgstr ""
+
+msgid "No side gradient"
+msgstr ""
+
+msgid "None"
+msgstr ""
+
+msgid "None (instant)"
+msgstr ""
+
+msgid "Normal"
+msgstr ""
+
+msgid "Nudge icon"
+msgstr ""
+
+msgid "Overlay color"
+msgstr ""
+
+msgid "Padding"
+msgstr ""
+
+msgid "Paragraph spacing"
+msgstr ""
+
+msgid "Pause on hover"
+msgstr ""
+
+msgid "Position"
+msgstr ""
+
+msgid "Primary (solid)"
+msgstr ""
+
+msgid "Primary button"
+msgstr ""
+
+msgid "Progress rail & top line"
+msgstr ""
+
+msgid "Rail color"
+msgstr ""
+
+msgid "Rail thickness"
+msgstr ""
+
+msgid "Reveal"
+msgstr ""
+
+msgid "Right to left (RTL)"
+msgstr ""
+
+msgid "Rolling Slider"
+msgstr ""
+
+msgid "Rolling Slider for Elementor"
+msgstr ""
+
+msgid "Rotate + zoom"
+msgstr ""
+
+msgid "Row gap"
+msgstr ""
+
+msgid "Secondary (outline)"
+msgstr ""
+
+msgid "Secondary button (outline)"
+msgstr ""
+
+msgid "Secondary button backdrop blur"
+msgstr ""
+
+msgid "Show button"
+msgstr ""
+
+msgid "Show navigation tabs"
+msgstr ""
+
+msgid "Shown until the video loads (or when Data Saver is on)."
+msgstr ""
+
+msgid "Side gradient"
+msgstr ""
+
+msgid "Side gradient strength"
+msgstr ""
+
+msgid "Site container width"
+msgstr ""
+
+#, php-format
+msgid "Slide %d"
+msgstr ""
+
+msgid "Slide from end"
+msgstr ""
+
+msgid "Slide from start"
+msgstr ""
+
+msgid "Slide shown in the editor"
+msgstr ""
+
+msgid "Slider settings"
+msgstr ""
+
+msgid "Slides"
+msgstr ""
+
+msgid "Slow image zoom (Ken Burns)"
+msgstr ""
+
+msgid "Space below tabs"
+msgstr ""
+
+msgid "Space between buttons"
+msgstr ""
+
+msgid "Start"
+msgstr ""
+
+msgid "Start (right in RTL, left in LTR)"
+msgstr ""
+
+msgid "Starts from the start or end side (follows RTL/LTR automatically)."
+msgstr ""
+
+msgid "Swipe on touch devices"
+msgstr ""
+
+msgid "Tab padding"
+msgstr ""
+
+msgid "Tab text alignment"
+msgstr ""
+
+msgid "Tabs are laid out in a grid. \"Auto\" gives each slide its own column (at most 3 columns on mobile)."
+msgstr ""
+
+msgid "Text"
+msgstr ""
+
+msgid "Text block max width"
+msgstr ""
+
+msgid "Text block position (horizontal)"
+msgstr ""
+
+msgid "Text block position (vertical)"
+msgstr ""
+
+msgid "Text color"
+msgstr ""
+
+msgid "The browser picks the best fit from the available sizes (srcset)."
+msgstr ""
+
+msgid "The effect played when this slide comes in. \"Default\" uses the effect from the slider settings."
+msgstr ""
+
+msgid "Time per slide (ms)"
+msgstr ""
+
+msgid "Title"
+msgstr ""
+
+msgid "Title HTML tag"
+msgstr ""
+
+msgid "Top"
+msgstr ""
+
+msgid "Top center"
+msgstr ""
+
+msgid "Top left"
+msgstr ""
+
+msgid "Top line color"
+msgstr ""
+
+msgid "Top line thickness"
+msgstr ""
+
+msgid "Top right"
+msgstr ""
+
+msgid "Transition into this slide"
+msgstr ""
+
+msgid "Transition speed (ms)"
+msgstr ""
+
+msgid "Travel distance"
+msgstr ""
+
+msgid "Unblur"
+msgstr ""
+
+msgid "Use <b>…</b> for the accent color and <br> for a line break."
+msgstr ""
+
+msgid "Vertical padding"
+msgstr ""
+
+msgid "Vertical position (%)"
+msgstr ""
+
+msgid "Vertical slide"
+msgstr ""
+
+msgid "Vertical wipe"
+msgstr ""
+
+msgid "Video"
+msgstr ""
+
+msgid "Video (MP4 / WebM)"
+msgstr ""
+
+msgid "Video poster"
+msgstr ""
+
+msgid "Which part of the image/video stays in frame. Can be set separately for each device."
+msgstr ""
+
+msgid "Widget direction"
+msgstr ""
+
+msgid "Zoom in"
+msgstr ""
+
+msgid "Zoom out"
+msgstr ""
+
